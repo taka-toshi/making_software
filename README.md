@@ -1,5 +1,9 @@
 # making_software
 
+### requirement
+
+- sqlite3
+
 ### How to git
 
 - copy
@@ -33,3 +37,7 @@
   git pull origin main
 
   git pull origin master
+
+### Other
+
+- database.db はなければ自動で作成されます。password とユーザー名がある database.db なので git には上げないでください。
