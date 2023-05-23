@@ -1,0 +1,2 @@
+usernameがちゃんと送られておらず、username=""となっている
+pass_strも同様に、passwordがちゃんと送られておらず、password=""となっている

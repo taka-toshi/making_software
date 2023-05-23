@@ -112,50 +112,29 @@ public class Client {
             }
             out.println(username); // 3
             out.println(pass_str); // 4
+            // usernameとpass_strが入力されるまで以下のコードを実行しない
+            while (true) {
+                if (username == null || pass_str == null || username == "" || pass_str == "") {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    break;
+                }
+            }
 
             if (option[0] == 1) {
                 Boolean LOGIN = false;
-                LOGIN = Boolean.parseBoolean(in.readLine());
+                LOGIN = Boolean.parseBoolean(in.readLine()); // 5
                 if (LOGIN == true) {
                     System.out.println("ログインしました!");
-                    // create chat room
-                    // while (true) {
-                    // System.out.println(
-                    // "1.create chat, 2.join chat, 3.start chat, 4.exit");
-                    // Integer option2 = Integer.parseInt(sc.nextLine());
-
-                    // out.println(option2); // 5
-                    // if (option2 == 1) {
-                    // System.out.println("チャットルーム名を入力してください");
-                    // String room_name = sc.nextLine();
-                    // out.println(room_name);
-                    // System.out.println("チャットルームを作成しました");
-                    // // System.out.println("チャットルームを作成しませんでした");
-                    // } else if (option2 == 2) {
-                    // System.out.println(
-                    // "参加するチャットルーム名を入力してください");
-                    // String room_name = sc.nextLine();
-                    // out.println(room_name);
-                    // System.out.println("チャットルームに参加しました");
-                    // // System.out.println("チャットルームに参加しませんでした");
-                    // } else if (option2 == 3) {
-                    // System.out.println("チャットを開始します");
-                    // while (true) {
-                    // String str = in.readLine();
-                    // if (str.equals("END"))
-                    // break;
-                    // System.out.println(str);
-                    // }
-                    // } else if (option2 == 4) {
-                    // System.out.println("終了します");
-                    // break;
-                    // }
-                    // }
                 } else {
                     System.out.println("ログインできませんできた");
                 }
             } else if (option[0] == 2) {
-                System.out.println(in.readLine());
+                System.out.println(in.readLine()); // 6
             }
         } finally {
             System.out.println("closing...");
