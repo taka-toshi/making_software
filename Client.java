@@ -2,6 +2,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import javax.swing.*;
+import java.math.BigInteger;
+import java.security.*;
 
 import java.awt.Rectangle;
 import java.awt.event.*;
@@ -98,6 +100,7 @@ public class Client {
             String username = tf_user.getText();
             char[] pass = tf_pass.getPassword();
             String pass_str = new String(pass);
+            String hash_pass = make_hash(pass_str);
 
             while (true) {
                 if (ok[0] == null) {
@@ -110,14 +113,26 @@ public class Client {
                     break;
                 }
             }
+            // usernameとpass_strが入力されるまで以下のコードを実行しない
+            while (true) {
+                if (username == null || pass_str == null || username == "" || pass_str == "") {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    break;
+                }
+            }
             out.println(username); // 3
-            out.println(pass_str); // 4
+            out.println(hash_pass); // 4
 
             if (option[0] == 1) {
                 Boolean LOGIN = false;
                 LOGIN = Boolean.parseBoolean(in.readLine());
                 if (LOGIN == true) {
-                    System.out.println("ログインしました!");
+                    System.out.println("ログインしました!"); // 5
                     // create chat room
                     // while (true) {
                     // System.out.println(
@@ -152,15 +167,25 @@ public class Client {
                     // }
                     // }
                 } else {
-                    System.out.println("ログインできませんできた");
+                    System.out.println("ログインできませんでした");
                 }
             } else if (option[0] == 2) {
                 System.out.println(in.readLine());
             }
         } finally {
-            System.out.println("closing...");
+            System.out.println("closing..."); // 6
             socket.close();
             sc.close();
         }
     }
+
+    // sha-256ハッシュ値を返す
+    public static String make_hash(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getBytes());
+            return String.format("%064x", new BigInteger(1, md.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
 }
