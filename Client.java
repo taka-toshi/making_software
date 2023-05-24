@@ -130,9 +130,9 @@ public class Client {
 
             if (option[0] == 1) {
                 Boolean LOGIN = false;
-                LOGIN = Boolean.parseBoolean(in.readLine());
+                LOGIN = Boolean.parseBoolean(in.readLine()); // 5
                 if (LOGIN == true) {
-                    System.out.println("ログインしました!"); // 5
+                    System.out.println("ログインしました!");
                     // create chat room
                     // while (true) {
                     // System.out.println(
@@ -167,7 +167,7 @@ public class Client {
                     // }
                     // }
                 } else {
-                    System.out.println("ログインできませんでした"); // 6
+                    System.out.println("ログインできませんでした");
                 }
             } else if (option[0] == 2) {
                 System.out.println(in.readLine()); // 6
