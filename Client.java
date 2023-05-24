@@ -134,7 +134,7 @@ public class Client {
                 if (LOGIN == true) {
                     System.out.println("ログインしました!");
                 } else {
-                    System.out.println("ログインできませんできた");
+                    System.out.println("ログインできませんでした");
                 }
             } else if (option[0] == 2) {
                 System.out.println(in.readLine()); // 6
