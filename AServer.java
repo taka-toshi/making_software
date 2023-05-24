@@ -46,7 +46,7 @@ public class AServer {
                     Boolean LOGIN = false;
                     if (list_data.size() == 1) {
                         LOGIN = true;
-                        out.println(LOGIN);
+                        out.println(LOGIN); // 5
                         // while (true) {
                         // Integer option2 = Integer.parseInt(in.readLine()); // 5
                         // File chat_log;
@@ -97,17 +97,17 @@ public class AServer {
                         // }
                         // }
                     } else {
-                        out.println(LOGIN);
+                        out.println(LOGIN); // 5
                     }
                 } else if (option == 2) {
                     List<String> list_data2 = new ArrayList<String>();
                     list_data2 = check_user(db, username);
                     if (list_data2.size() == 1) {
                         if (Integer.parseInt(list_data2.get(0)) == 1) {
-                            out.println("'" + username + "'というユーザーが存在します");
+                            out.println("'" + username + "'というユーザーが存在します"); // 6
                         } else {
                             add_user(db, username, hash_pass);
-                            out.println("ユーザーを追加しました");
+                            out.println("ユーザーを追加しました"); // 6
                         }
                     }
                 }
