@@ -167,13 +167,13 @@ public class Client {
                     // }
                     // }
                 } else {
-                    System.out.println("ログインできませんでした");
+                    System.out.println("ログインできませんでした"); // 6
                 }
             } else if (option[0] == 2) {
-                System.out.println(in.readLine());
+                System.out.println(in.readLine()); // 6
             }
         } finally {
-            System.out.println("closing..."); // 6
+            System.out.println("closing...");
             socket.close();
             sc.close();
         }
@@ -188,4 +188,5 @@ public class Client {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
 }
