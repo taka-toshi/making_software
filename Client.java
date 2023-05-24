@@ -2,6 +2,8 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import javax.swing.*;
+import java.math.BigInteger;
+import java.security.*;
 
 import java.awt.Rectangle;
 import java.awt.event.*;
@@ -98,6 +100,7 @@ public class Client {
             String username = tf_user.getText();
             char[] pass = tf_pass.getPassword();
             String pass_str = new String(pass);
+            String hash_pass = make_hash(pass_str);
 
             while (true) {
                 if (ok[0] == null) {
@@ -110,8 +113,6 @@ public class Client {
                     break;
                 }
             }
-            out.println(username); // 3
-            out.println(pass_str); // 4
             // usernameとpass_strが入力されるまで以下のコードを実行しない
             while (true) {
                 if (username == null || pass_str == null || username == "" || pass_str == "") {
@@ -124,6 +125,8 @@ public class Client {
                     break;
                 }
             }
+            out.println(username); // 3
+            out.println(hash_pass); // 4
 
             if (option[0] == 1) {
                 Boolean LOGIN = false;
@@ -140,6 +143,17 @@ public class Client {
             System.out.println("closing...");
             socket.close();
             sc.close();
+        }
+    }
+
+    // sha-256ハッシュ値を返す
+    public static String make_hash(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA256");
+            md.update(password.getBytes());
+            return String.format("%064x", new BigInteger(1, md.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 }
