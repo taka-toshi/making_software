@@ -33,7 +33,7 @@ public class Client {
 
             System.out.println("ユーザー名を入力してください");
             String username = sc.nextLine();
-            System.out.println("パスワードを入力してください");
+            System.out.println("パスワードを入力してください");
             String pass = sc.nextLine();
 
             String hash_pass = make_hash(pass);
@@ -48,7 +48,7 @@ public class Client {
                 if (LOGIN == true) {
                     System.out.println("ログインしました!");
                 } else {
-                    System.out.println("ログインできませんできた");
+                    System.out.println("ログインできませんでした");
                 }
             } else if (option == 2) {
                 System.out.println(in.readLine()); // 6
