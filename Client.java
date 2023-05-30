@@ -1,10 +1,10 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.math.BigInteger;
-import java.security.*;
+//import java.math.BigInteger;
+//import java.security.*;
 
-public class Client {
+public class Client extends func {
 
     public static void main(String[] args) throws IOException {
 
@@ -57,17 +57,6 @@ public class Client {
             System.out.println("closing...");
             socket.close();
             sc.close();
-        }
-    }
-
-    // sha-256ハッシュ値を返す
-    public static String make_hash(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes());
-            return String.format("%064x", new BigInteger(1, md.digest()));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
         }
     }
 }
