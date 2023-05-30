@@ -12,8 +12,8 @@ public class AServer extends func {
 
     public AServer(String dbPath, int port) throws IOException {
         db = new File(dbPath);
-        PORT = port;
-        s = new ServerSocket(PORT);
+        PORT = port; // ポート番号をプログラムの引数で与える
+        s = new ServerSocket(PORT); // ソケットを作成する
     }
 
     public void start() throws IOException {
