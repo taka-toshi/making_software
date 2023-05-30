@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AServer extends func {
     private File db;
-    private int PORT;
+    private final int PORT;
     private ServerSocket s;
 
     public AServer(String dbPath, int port) throws IOException {
