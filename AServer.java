@@ -10,7 +10,7 @@ public class AServer extends func {
     private final int PORT;
     private ServerSocket s;
 
-    public AServer(String dbPath, int port) throws IOException {
+    public AServer(String dbPath, int port) throws IOException { // コンストラクタ
         db = new File(dbPath);
         PORT = port; // ポート番号をプログラムの引数で与える
         s = new ServerSocket(PORT); // ソケットを作成する
@@ -78,7 +78,7 @@ public class AServer extends func {
     }
 
     public static void main(String[] args) throws IOException {
-        AServer server = new AServer("database.db", 8080);
+        AServer server = new AServer("database.db", 8080); // インスタンスを作成する
         server.start();
     }
 }
