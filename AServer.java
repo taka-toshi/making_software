@@ -1,11 +1,11 @@
 import java.io.*;
-import java.math.BigInteger;
+//import java.math.BigInteger;
 import java.net.*;
-import java.security.*;
+//import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AServer {
+public class AServer extends func{
 
     // public static final int PORT = 8080; // ポート番号を設定する．
 
@@ -193,16 +193,5 @@ public class AServer {
         List<String> data = new ArrayList<String>();
         data = execute_sql_return_data(db, sql);
         return data;
-    }
-
-    // sha-256ハッシュ値を返す
-    public static String make_hash(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes());
-            return String.format("%064x", new BigInteger(1, md.digest()));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
