@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class AServer extends func {
 
     // public static final int PORT = 8080; // ポート番号を設定する．
