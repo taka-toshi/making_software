@@ -68,6 +68,8 @@ public class AServer extends func {
                                     List<String> list_data2 = new ArrayList<String>();
                                     list_data2 = check_chat_room(db, room_name);
 
+                                    //チャットルームがあるか、リストから探す
+
                                     //if (list_data2.size() == 1) {
                                     if (Integer.parseInt(list_data2.get(0)) == 1) {
                                         out.println("'" + room_name + "'というチャットルームが存在します");
