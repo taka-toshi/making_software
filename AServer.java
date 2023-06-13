@@ -8,8 +8,6 @@ import java.util.List;
 
 public class AServer extends func{
 
-    // public static final int PORT = 8080; // ポート番号を設定する．
-
     public static void main(String[] args) throws IOException {
         File db = new File("database.db");
         if (!db.exists()) {
