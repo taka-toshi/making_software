@@ -111,7 +111,6 @@ public class Client extends func{
 
             tf_pass.setColumns(10);
             tf_user.setColumns(10);
-            tf_pass.setColumns(10);
             label_user.setBounds(390, 200, 150, 25);
             label_pass.setBounds(390, 275, 150, 25);
             tf_user.setBounds(545, 200, 150, 25);
@@ -178,17 +177,22 @@ public class Client extends func{
 
                             //System.out.println("チャットルームを作成しました");
                             //System.out.println("チャットルームを作成しませんでした");
+
                             System.out.println(in.readLine());
+
                         } else if (option2 == 2) {
                             System.out.println("参加するチャットルーム名を入力してください");
                             String room_name = sc.nextLine();
                             out.println(room_name);
-                            System.out.println("チャットルームに参加しました");
-                            System.out.println("チャットルームに参加しませんでした");
+
+                            //System.out.println("チャットルームに参加しました");
+                            //System.out.println("チャットルームに参加しませんでした");
+
                         } else if (option2 == 3) {
                             System.out.println("チャットを開始します");
                             while (true) {
                                 String str = in.readLine();
+
                                 if (str.equals("END"))break;
                                 System.out.println(str);
                             }

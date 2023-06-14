@@ -63,49 +63,49 @@ public class AServer extends func {
                                     List<String> list_data2 = new ArrayList<String>();
                                     list_data2 = check_chat_room(db, room_name);
 
-                                    //チャットルームがあるか、リストから探す
+                                    if (list_data2.size() == 1) {
+                                        if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                            out.println("'" + room_name + "'というチャットルームが存在します");
+                                        } else {
+                                            //チャットルームの名前をテーブルに追加
+                                            //create_chat_room(db2, room_name);
+                                            add_chatname(db, room_name);
 
-                                    //if (list_data2.size() == 1) {
-                                    if (Integer.parseInt(list_data2.get(0)) == 1) {
-                                        out.println("'" + room_name + "'というチャットルームが存在します");
-                                    } else {
-                                        //create_chat_room(db2, room_name);
-                                        //チャットルームの名前をテーブルに追加
-                                        add_chatname(db, room_name);
-
-                                        chat_log = new File(room_name + "_chat_log.txt");
-                                        chat_log.createNewFile();
-                                        out.println("チャットルームを作成しました");
+                                            chat_log = new File(room_name + "_chat_log.txt");
+                                            chat_log.createNewFile();
+                                            out.println("チャットルームを作成しました");
+                                        }
                                     }
-                                    //}
                                 } else if (option2 == 2) {
                                     String room_name = in.readLine();
-                                    //config room and join chat room
+                                    //ルームを探して、チャットルームに参加する
                                     List<String> list_data2 = new ArrayList<String>();
                                     //list_data2 = check_chat_room(db2, room_name);
                                     list_data2 = check_chat_room(db, room_name);
                                     out.println(room_name + "に参加できました");
+
                                 } else if (option2 == 3) {       
-                            //ユーザーが参加しているチャットルームを表示
-                            //    List<String> list_data2 = new ArrayList<String>();
-                            //   list_data2 = show_chat_room(db2, username);
-                            //   out.println(list_data2);
-                            // String room_name = in.readLine();
-                            // chat_log = new File(room_name + "_chat_log.txt");
-                            // // chat log
-                            // BufferedReader chat_log_reader = new BufferedReader(
-                            // new FileReader(chat_log));
-                            // String chat_log_line;
-                            // while ((chat_log_line = chat_log_reader.readLine()) != null) {
-                            // out.println(chat_log_line);
-                            // }
-                            // chat_log_reader.close();
-                            // // chat log
-                            // PrintWriter chat_log_writer = new PrintWriter(
-                            // new BufferedWriter(new FileWriter(chat_log, true)));
-                            // String chat_log_data = in.readLine();
-                            // chat_log_writer.println(chat_log_data);
-                            // chat_log_writer.close();
+                                    //ユーザーが参加しているチャットルームを表示
+                                    List<String> list_data2 = new ArrayList<String>();
+                                    //list_data2 = show_chat_room(db2, username);
+                                    //list_data2 = show_chat_room(db, username);
+                                    out.println(list_data2);
+                                    String room_name = in.readLine();
+                                    chat_log = new File(room_name + "_chat_log.txt");
+
+                                    // chat log
+                                    BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
+                                    String chat_log_line;
+                                    while ((chat_log_line = chat_log_reader.readLine()) != null) {
+                                        out.println(chat_log_line);
+                                    }
+                                    chat_log_reader.close();
+
+                                    // chat log
+                                    PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
+                                    String chat_log_data = in.readLine();
+                                    chat_log_writer.println(chat_log_data);
+                                    chat_log_writer.close();
                                 } else if (option2 == 4) {
                                     break;
                                 }
@@ -118,7 +118,7 @@ public class AServer extends func {
                         list_data2 = check_user(db, username);
                         if (list_data2.size() == 1) {
                             if (Integer.parseInt(list_data2.get(0)) == 1) {
-                                out.println("'" + username + "'というユーザーが存在します"); // 6
+                                out.println("'" + username + "'というユーザーが存在します"); // 7
                             } else {
                                 add_user(db, username, hash_pass);
                                 out.println("ユーザーを追加しました"); // 7
