@@ -1,2 +1,4 @@
 usernameがちゃんと送られておらず、username=""となっている
+→ok_btn.addActionListenerの関数内で、"String username = tf_user.getText();"、"out.println(username);"、”out.println(hash_pass);”をする必要あり（6/14）
 pass_strも同様に、passwordがちゃんと送られておらず、password=""となっている
+→上記と同様（6/14）
