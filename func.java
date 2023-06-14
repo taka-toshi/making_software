@@ -56,6 +56,12 @@ public class func {
         execute_sql(db, sql);
     }
 
+    // add chatroom's name to database
+    public static void add_chatname(File db, String room_name) {
+        String sql = "INSERT INTO chatnametable(room_name) VALUES ('" + room_name + "')";
+        execute_sql(db, sql);
+    }
+
     // login user
     public static List<String> login_user(
             File db,
