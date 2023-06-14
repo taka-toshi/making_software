@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AServer extends func {
-
     public static void main(String[] args) throws IOException {
         //データベースの設定
         File db = new File("database.db");
@@ -29,9 +28,10 @@ public class AServer extends func {
         try {
             Socket socket = s.accept(); // コネクション設定要求を待つ
             try {
-                 /*---------------------------------------------------------------------------------------- */
+                /*---------------------------------------------------------------------------------------- */
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
                 PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
+
                 out.println("Serverと接続しました。"); // 1
 
                 /*---------------------------------------------------------------------------------------- */

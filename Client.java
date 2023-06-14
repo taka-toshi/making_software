@@ -9,7 +9,6 @@ import java.awt.Rectangle;
 import java.awt.event.*;
 
 public class Client extends func{
-
     public static void main(String[] args) throws IOException {
 
         Scanner sc = new Scanner(System.in);
@@ -21,11 +20,8 @@ public class Client extends func{
 
         try {
             /*---------------------------------------------------------------------------------------- */
-            // System.out.println("socket = " + socket);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
-            
-            System.out.println(in.readLine()); // 1
 
             // frameを実装する
             JFrame frame = new JFrame("MyApplication");
@@ -34,6 +30,8 @@ public class Client extends func{
             Rectangle table = new Rectangle(1000, 500);
             frame.setBounds(table);//frameのサイズを指定→table
             frame.setLocationRelativeTo(null);//画面の真ん中にframeを表示
+
+            System.out.println(in.readLine()); // 1
 
             /*---------------------------------------------------------------------------------------- */
             //パネルp1をframeに追加する
@@ -48,7 +46,7 @@ public class Client extends func{
             login_btn.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     option[0] = 1;
-                    out.println(option[0]); 
+                    out.println(option[0]); // 2
                 }
             });
 
@@ -57,7 +55,7 @@ public class Client extends func{
             signup_btn.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     option[0] = 2;
-                    out.println(option[0]); 
+                    out.println(option[0]);// 2 
                 }
             });
 
@@ -93,7 +91,7 @@ public class Client extends func{
             JLabel label_pass = new JLabel("パスワード：");
             JTextField tf_user = new JTextField();
             JPasswordField tf_pass = new JPasswordField();
-            String username = tf_user.getText();
+            //String username = tf_user.getText();
             char[] pass = tf_pass.getPassword();
             String pass_str = new String(pass);
             String hash_pass = make_hash(pass_str);
@@ -104,6 +102,7 @@ public class Client extends func{
             ok_btn.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     ok[0] = true;
+                    String username = tf_user.getText();
                     out.println(ok[0]);//3
                     out.println(username);// 4
                     out.println(hash_pass);// 5
