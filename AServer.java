@@ -31,7 +31,10 @@ public class AServer extends func {
                 System.out.println(e);
             }
         }
+        //usernameとpasswordを保存するテーブルを制作
         create_table(db);
+        //チャットルームの名前を保存するテーブルを制作
+        create_table_chatname(db);
 
         try {
             Socket socket = s.accept(); // コネクション設定要求を待つ
