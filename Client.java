@@ -12,25 +12,22 @@ public class Client extends func {
 
         final int PORT = 8080;
         InetAddress addr = InetAddress.getByName("localhost"); // IP アドレスへの変換
-        // System.out.println("addr = " + addr);
-        // Socket socket = new Socket(addr, JabberServer.PORT); // ソケットの生成
+        
         Socket socket = new Socket(addr, PORT); // ソケットの生成
         try {
-            // System.out.println("socket = " + socket);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
-            PrintWriter out = new PrintWriter(
-                    new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),
-                    true); // 送信バッファ設定
+            /*---------------------------------------------------------------------------------------- */
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
+            
             System.out.println(in.readLine()); // 1
 
+            /*---------------------------------------------------------------------------------------- */
             // login and signup
             System.out.println("1: login , 2: signup");
             Integer option = Integer.parseInt(sc.nextLine());
-
-            // optionの値が決まるまで以下のコードを実行しないようにする必要性があるかもしれない
             out.println(option); // 2
 
+            /*---------------------------------------------------------------------------------------- */
             System.out.println("ユーザー名を入力してください");
             String username = sc.nextLine();
             System.out.println("パスワードを入力してください");
@@ -38,21 +35,57 @@ public class Client extends func {
 
             String hash_pass = make_hash(pass);
 
-            // username,passが入力されるまで以下のコードを実行しないようにする必要性があるかもしれない
             out.println(username); // 3
             out.println(hash_pass); // 4
 
+            /*---------------------------------------------------------------------------------------- */
             if (option == 1) {
                 Boolean LOGIN = false;
                 LOGIN = Boolean.parseBoolean(in.readLine()); // 5
                 if (LOGIN == true) {
                     System.out.println("ログインしました!");
+                    while(true){
+                        System.out.println("1.新規作成, 2.既存に参加, 3.始める, 4.退出する");
+                        Integer option2 = Integer.parseInt(sc.nextLine());// 6
+
+                        out.println(option2); // 6
+
+                        if (option2 == 1) {
+                            System.out.println("チャットルーム名を入力してください");
+                            String room_name = sc.nextLine();
+                            out.println(room_name);
+
+                            //System.out.println("チャットルームを作成しました");
+                            //System.out.println("チャットルームを作成しませんでした");
+                            System.out.println(in.readLine());
+                        } else if (option2 == 2) {
+                            System.out.println("参加するチャットルーム名を入力してください");
+                            String room_name = sc.nextLine();
+                            out.println(room_name);
+                            System.out.println("チャットルームに参加しました");
+                            System.out.println("チャットルームに参加しませんでした");
+                        } else if (option2 == 3) {
+                            System.out.println("チャットを開始します");
+                            while (true) {
+                                String str = in.readLine();
+                                if (str.equals("END"))break;
+                                System.out.println(str);
+                            }
+                        } else if (option2 == 4) {
+                            System.out.println("終了します");
+                            break;
+                        }
+                    }
                 } else {
                     System.out.println("ログインできませんでした");
                 }
+            
+            /*---------------------------------------------------------------------------------------- */
             } else if (option == 2) {
                 System.out.println(in.readLine()); // 6
             }
+
+            /*---------------------------------------------------------------------------------------- */
         } finally {
             System.out.println("closing...");
             socket.close();
