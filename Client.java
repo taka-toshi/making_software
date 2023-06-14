@@ -59,6 +59,7 @@ public class Client extends func {
                             out.println(room_name);// 7
 
                             System.out.println(in.readLine());// 8
+                            System.out.println("");
                         
                         /*---------------------------------------------------------------------------------------- */
                         } else if (option2 == 2) {// 2.既存に参加

@@ -6,8 +6,8 @@ import java.security.*;
 
 
 public class func {
-     // execute sql
-     public static void execute_sql(File db, String sql) {
+    // execute sql
+    public static void execute_sql(File db, String sql) {
         String[] cmd = { "sqlite3", db.getAbsolutePath(), sql };
         try {
             Process p = Runtime.getRuntime().exec(cmd);
@@ -18,7 +18,6 @@ public class func {
             System.out.println(e);
         }
     }
-    
 
     // execute_sql_return_data
     public static List<String> execute_sql_return_data(File db, String sql) {
@@ -49,7 +48,7 @@ public class func {
 
     // create table　for chatroom's name
     public static void create_table_chatname(File db) {
-        String sql = "CREATE TABLE IF NOT EXISTS chatnametable (id INTEGER PRIMARY KEY AUTOINCREMENT, chatname TEXT)";
+        String sql = "CREATE TABLE IF NOT EXISTS chatnametable (id INTEGER PRIMARY KEY AUTOINCREMENT, room_name TEXT)";
         execute_sql(db, sql);
     }
 
