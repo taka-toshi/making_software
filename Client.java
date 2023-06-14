@@ -16,8 +16,7 @@ public class Client extends func{
 
         final int PORT = 8080;
         InetAddress addr = InetAddress.getByName("localhost"); // IP アドレスへの変換
-        // System.out.println("addr = " + addr);
-        // Socket socket = new Socket(addr, JabberServer.PORT); // ソケットの生成
+
         Socket socket = new Socket(addr, PORT); // ソケットの生成
 
         try {
@@ -35,7 +34,6 @@ public class Client extends func{
             Rectangle table = new Rectangle(1000, 500);
             frame.setBounds(table);//frameのサイズを指定→table
             frame.setLocationRelativeTo(null);//画面の真ん中にframeを表示
-
 
             /*---------------------------------------------------------------------------------------- */
             //パネルp1をframeに追加する
@@ -83,7 +81,6 @@ public class Client extends func{
                 }
             }
             //out.println(option[0]); // 2
-
 
             /*---------------------------------------------------------------------------------------- */
             frame.getContentPane().removeAll();//パネルp1を取り除く

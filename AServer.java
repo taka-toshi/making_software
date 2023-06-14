@@ -7,8 +7,6 @@ import java.util.List;
 
 public class AServer extends func {
 
-    // public static final int PORT = 8080; // ポート番号を設定する．
-
     public static void main(String[] args) throws IOException {
         //データベースの設定
         File db = new File("database.db");
@@ -36,17 +34,14 @@ public class AServer extends func {
                 PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
                 out.println("Serverと接続しました。"); // 1
 
-
                 /*---------------------------------------------------------------------------------------- */
                 Integer option = Integer.parseInt(in.readLine()); // 2
-
 
                 /*---------------------------------------------------------------------------------------- */
                 Boolean ok = Boolean.parseBoolean(in.readLine());//3
                 String username = in.readLine(); // 4
                 String pass = in.readLine(); // 5
                 String hash_pass = make_hash(pass);
-
 
                 /*---------------------------------------------------------------------------------------- */
                 if (ok){
