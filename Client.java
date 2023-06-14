@@ -44,7 +44,8 @@ public class Client extends func {
                 LOGIN = Boolean.parseBoolean(in.readLine()); // 5
                 if (LOGIN == true) {
                     System.out.println("ログインしました!");
-                    
+                    System.out.println("");
+
                     while(true){
                         System.out.println("1.新規作成, 2.既存に参加, 3.始める, 4.退出する");
                         Integer option2 = Integer.parseInt(sc.nextLine());// 6
@@ -55,20 +56,18 @@ public class Client extends func {
                         if (option2 == 1) {// 1.新規作成
                             System.out.println("チャットルーム名を入力してください");
                             String room_name = sc.nextLine();
-                            out.println(room_name);
+                            out.println(room_name);// 7
 
-                            //System.out.println("チャットルームを作成しました");
-                            //System.out.println("チャットルームを作成しませんでした");
-                            System.out.println(in.readLine());
+                            System.out.println(in.readLine());// 8
                         
                         /*---------------------------------------------------------------------------------------- */
                         } else if (option2 == 2) {// 2.既存に参加
                             System.out.println("参加するチャットルーム名を入力してください");
                             String room_name = sc.nextLine();
-                            out.println(room_name);
-                            System.out.println("チャットルームに参加しました");
-                            System.out.println("チャットルームに参加しませんでした");
-                        
+                            out.println(room_name);// 9
+                            
+                            System.out.println(in.readLine());// 10
+
                         /*---------------------------------------------------------------------------------------- */
                         } else if (option2 == 3) {// 3.始める
                             System.out.println("チャットを開始します");

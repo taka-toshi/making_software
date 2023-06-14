@@ -64,7 +64,9 @@ public class func {
 
     // add chatroom's name to database
     public static void add_chatname(File db, String room_name) {
-        String sql = "INSERT INTO chatnametable(room_name) VALUES ('" + room_name + "')";
+        String sql = "INSERT INTO chatnametable(room_name) VALUES ('" + 
+                room_name + 
+                "')";
         execute_sql(db, sql);
     }
 
@@ -95,10 +97,12 @@ public class func {
 
     // check room
     public static List<String> check_chat_room(File db, String room_name){
-        String sql = "SELECT  EXISTS(SELECT * FROM chatnametable WHERE room_name = '" + room_name + "')AS customer_check;";
-        List<String> data = new ArrayList<String>();
-        data = execute_sql_return_data(db, sql);
-        return data;
+        String sql = "SELECT  EXISTS(SELECT * FROM chatnametable WHERE room_name = '" + 
+                room_name + 
+                "')AS customer_check;";
+        List<String> data2 = new ArrayList<String>();
+        data2 = execute_sql_return_data(db, sql);
+        return data2;
     }
     
 

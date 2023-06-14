@@ -5,7 +5,6 @@ import java.util.List;
 
 public class AServer extends func {
     private File db;
-    //private File db2;
     private final int PORT;
     private ServerSocket s;
 
@@ -14,14 +13,6 @@ public class AServer extends func {
         PORT = port; // ポート番号をプログラムの引数で与える
         s = new ServerSocket(PORT); // ソケットを作成する
     }
-
-    /* 
-    public AServer2 (String dbPath, int port) throws IOException { // コンストラクタ
-        db2 = new File(dbPath);
-        PORT = port; // ポート番号をプログラムの引数で与える
-        s = new ServerSocket(PORT); // ソケットを作成する
-    }
-    */
 
     public void start() throws IOException {
         if (!db.exists()) {
@@ -77,41 +68,55 @@ public class AServer extends func {
                         /*---------------------------------------------------------------------------------------- */
                         if (option2 == 1) {// 1.新規作成
                             //チャットルームの名前を受信
-                            String room_name = in.readLine();
+                            String room_name = in.readLine();// 7
+                            //System.out.println(room_name);
 
+                            add_chatname(db, room_name);
+                            chat_log = new File(room_name + "_chat_log.txt");
+                            chat_log.createNewFile();
+
+                            out.println("チャットルームを作成しました");// 8
+                            
+                            /* 
                             //チャットルームがあるかdbから探す
                             List<String> list_data2 = new ArrayList<String>();
                             list_data2 = check_chat_room(db, room_name);
 
                             if (list_data2.size() == 1) {
                                 if (Integer.parseInt(list_data2.get(0)) == 1) {
-                                    out.println("'" + room_name + "'というチャットルームが存在します");
+                                    out.println("'" + room_name + "'というチャットルームが存在します。別のチャットルーム名を入力してください。");// 8
                                 } else {
-                                    //create_chat_room(db2, room_name);
                                     //チャットルームの名前をテーブルに追加
                                     add_chatname(db, room_name);
 
                                     chat_log = new File(room_name + "_chat_log.txt");
                                     chat_log.createNewFile();
-                                    out.println("チャットルームを作成しました");
+
+                                    out.println("チャットルームを作成しました");// 8
                                 }
                             }
+                            */
                         
                         /*---------------------------------------------------------------------------------------- */
                         } else if (option2 == 2) {// 2.既存に参加
-                            String room_name = in.readLine();
-                            //config room and join chat room
+                            String room_name = in.readLine();// 9
+
+                            //ルームをdbから探してチャットルームに参加する
                             List<String> list_data2 = new ArrayList<String>();
-                            //list_data2 = check_chat_room(db2, room_name);
                             list_data2 = check_chat_room(db, room_name);
-                            out.println(room_name + "に参加できました");
-                        
+
+                            if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                out.println(room_name + "に参加できました");// 10
+                            }else {
+                                out.println(room_name + "に参加できませんでした");// 10
+                            }
+
                         /*---------------------------------------------------------------------------------------- */
                         } else if (option2 == 3) {// 3.始める
                             //ユーザーが参加しているチャットルームを表示
                             List<String> list_data2 = new ArrayList<String>();
                             //list_data2 = show_chat_room(db2, username);
-                            list_data2 = show_chat_room(db, username);
+                            //list_data2 = show_chat_room(db, username);
                             out.println(list_data2);
                             String room_name = in.readLine();
                             chat_log = new File(room_name + "_chat_log.txt");
