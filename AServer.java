@@ -1,15 +1,11 @@
 import java.io.*;
-import java.math.BigInteger;
 import java.net.*;
-import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AServer {
-
-    // public static final int PORT = 8080; // ポート番号を設定する．
-
+public class AServer extends func {
     public static void main(String[] args) throws IOException {
+        //データベースの設定
         File db = new File("database.db");
         if (!db.exists()) {
             try {
@@ -18,142 +14,318 @@ public class AServer {
                 System.out.println(e);
             }
         }
+
+        //usernameとpasswordを保存するテーブルを制作
         create_table(db);
+        //チャットルームの名前を保存するテーブルを制作
+        create_table_chatname(db);
 
         final int PORT = 8080; // ポート番号をプログラムの引数で与える
+
         ServerSocket s = new ServerSocket(PORT); // ソケットを作成する
-        // System.out.println("Started: " + s);
+
         try {
-            Socket socket = s.accept(); // コネクション設定要求を待つ
+            Socket socket = s.accept();// コネクション設定要求を待つ
             try {
-                // System.out.println("Connection accepted: " + socket);
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
-                PrintWriter out = new PrintWriter(
-                        new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),
-                        true); // 送信バッファ設定
+            /*---------------------------------------------------------------------------------------- */
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
 
-                out.println("Serverと接続しました。"); // 1
-                Integer option = Integer.parseInt(in.readLine()); // 2
-                String username = in.readLine(); // 3
-                String pass = in.readLine(); // 4
+            out.println("Serverと接続しました。"); // 1
 
-                String hash_pass = make_hash(pass);
+            /*---------------------------------------------------------------------------------------- */
+            Integer option = Integer.parseInt(in.readLine()); // 2
 
-                if (option == 1) {
-                    List<String> list_data = new ArrayList<String>();
-                    list_data = login_user(db, username, hash_pass);
-                    Boolean LOGIN = false;
-                    if (list_data.size() == 1) {
-                        LOGIN = true;
-                        out.println(LOGIN); // 5
-                    } else {
-                        out.println(LOGIN); // 5
-                    }
-                } else if (option == 2) {
-                    List<String> list_data2 = new ArrayList<String>();
-                    list_data2 = check_user(db, username);
-                    if (list_data2.size() == 1) {
-                        if (Integer.parseInt(list_data2.get(0)) == 1) {
-                            out.println("'" + username + "'というユーザーが存在します"); // 6
-                        } else {
-                            add_user(db, username, hash_pass);
-                            out.println("ユーザーを追加しました"); // 6
+            /*---------------------------------------------------------------------------------------- */
+            String username = in.readLine(); // 3
+            String pass = in.readLine(); // 4
+
+            String hash_pass = make_hash(pass);
+
+            /*---------------------------------------------------------------------------------------- */
+            if (option == 1) {
+                List<String> list_data = new ArrayList<String>();
+                list_data = login_user(db, username, hash_pass);
+                Boolean LOGIN = false;
+                if (list_data.size() == 1) {
+                    LOGIN = true;
+                    out.println(LOGIN); // 5
+
+                    while(true){
+                        Integer option2 = Integer.parseInt(in.readLine()); // 6
+                        File chat_log;
+
+                        /*---------------------------------------------------------------------------------------- */
+                        if (option2 == 1) {// 1.新規作成
+                            //チャットルームの名前を受信
+                            String room_name = in.readLine();// 7
+                            
+                            
+                            //チャットルームがあるかdbから探す
+                            List<String> list_data2 = new ArrayList<String>();
+                            list_data2 = check_chat_room(db, room_name);
+
+                            if (list_data2.size() == 1) {
+                                if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                    out.println("'" + room_name + "'というチャットルームが存在します。別のチャットルーム名を入力してください。");// 8
+                                } else {
+                                    //チャットルームの名前をテーブルに追加
+                                    add_chatname(db, room_name);
+
+                                    chat_log = new File(room_name + "_chat_log.txt");
+                                    chat_log.createNewFile();
+
+                                    out.println("チャットルームを作成しました!");// 8
+                                }
+                            }
+                            
+                        
+                        /*---------------------------------------------------------------------------------------- */
+                        } else if (option2 == 2) {// 2.既存に参加
+                            String room_name = in.readLine();// 9
+
+                            //ルームをdbから探してチャットルームに参加する
+                            List<String> list_data2 = new ArrayList<String>();
+                            list_data2 = check_chat_room(db, room_name);
+
+                            if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                out.println(room_name + "に参加できました!");// 10
+                                out.println(room_name);// 11
+                                
+                                chat_log = new File(room_name + "_chat_log.txt");//新規にチャットルームが作成されるとできる
+                                
+                                while(true){
+                                    BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
+                                    PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
+                                    /* 
+                                    String chat_log_line;
+                                    while ((chat_log_line = chat_log_reader.readLine()) != null) {
+                                        out.println(chat_log_line);// 13
+                                    }
+                                    */
+                                    chat_log_reader.close();
+                                    
+                                    String chat_log_data = in.readLine();// 12
+                                    chat_log_writer.println(chat_log_data);
+                                    chat_log_writer.close();
+                                    
+                                    if (chat_log_data.equals("END")){
+                                        break;
+                                    }
+                                }
+                                
+                            }else {
+                                out.println(room_name + "に参加できませんでした。");// 10
+                            }
+                        
+                        /*---------------------------------------------------------------------------------------- */
+                        } else if (option2 == 3) {// 3.退出する
+                            break;
+                        
+                        /*---------------------------------------------------------------------------------------- */
                         }
                     }
+                } else {
+                    out.println(LOGIN); // 5
                 }
+
+            /*---------------------------------------------------------------------------------------- */
+            } else if (option == 2) {
+                List<String> list_data2 = new ArrayList<String>();
+                list_data2 = check_user(db, username);
+                if (list_data2.size() == 1) {
+                    if (Integer.parseInt(list_data2.get(0)) == 1) {
+                        out.println("'" + username + "'というユーザーが存在します"); // 6
+                    } else {
+                        add_user(db, username, hash_pass);
+                        out.println("ユーザーを追加しました"); // 6
+                    }
+                }
+            } else {
+                Boolean LOGIN = false;
+                out.println(LOGIN); // 5
+            }
+            /*---------------------------------------------------------------------------------------- */
             } finally {
-                System.out.println("closing...");
-                socket.close();
+            System.out.println("closing...");
+            socket.close();
             }
         } finally {
             s.close();
         }
     }
-
-    // execute sql
-    public static void execute_sql(File db, String sql) {
-        String[] cmd = { "sqlite3", db.getAbsolutePath(), sql };
-        try {
-            Process p = Runtime.getRuntime().exec(cmd);
-            p.waitFor();
-        } catch (IOException e) {
-            System.out.println(e);
-        } catch (InterruptedException e) {
-            System.out.println(e);
-        }
-    }
-
-    // execute_sql_return_data
-    public static List<String> execute_sql_return_data(File db, String sql) {
-        List<String> data = new ArrayList<String>();
-        String[] cmd = { "sqlite3", db.getAbsolutePath(), sql };
-        try {
-            Process p = Runtime.getRuntime().exec(cmd);
-            p.waitFor();
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                data.add(line);
-            }
-        } catch (IOException e) {
-            System.out.println(e);
-        } catch (InterruptedException e) {
-            System.out.println(e);
-        }
-        return data;
-    }
-
-    // create table
-    public static void create_table(File db) {
-        String sql = "CREATE TABLE IF NOT EXISTS userstable (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT,password TEXT)";
-        execute_sql(db, sql);
-    }
-
-    // add user to database
-    public static void add_user(File db, String username, String password) {
-        String sql = "INSERT INTO userstable(username,password) VALUES ('" +
-                username +
-                "','" +
-                password +
-                "')";
-        execute_sql(db, sql);
-    }
-
-    // login user
-    public static List<String> login_user(
-            File db,
-            String username,
-            String password) {
-        String sql = "SELECT * FROM userstable WHERE username = '" +
-                username +
-                "' AND password = '" +
-                password +
-                "'";
-        List<String> data = new ArrayList<String>();
-        data = execute_sql_return_data(db, sql);
-        return data;
-    }
-
-    // check user
-    public static List<String> check_user(File db, String username) {
-        String sql = "SELECT  EXISTS(SELECT * FROM userstable WHERE username = '" +
-                username +
-                "')AS customer_check;";
-        List<String> data = new ArrayList<String>();
-        data = execute_sql_return_data(db, sql);
-        return data;
-    }
-
-    // sha-256ハッシュ値を返す
-    public static String make_hash(String password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes());
-            return String.format("%064x", new BigInteger(1, md.digest()));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
+
+
+/*
+public class AServer extends func {
+    
+    private File db;
+    private File db2;
+    private final int PORT;
+    private ServerSocket s;
+
+
+    public AServer(String dbPath, int port) throws IOException { // コンストラクタ
+        db = new File(dbPath);
+        PORT = port; // ポート番号をプログラムの引数で与える
+        s = new ServerSocket(PORT); // ソケットを作成する
+    }
+
+    public void start() throws IOException {
+        if (!db.exists()) {
+            try {
+                db.createNewFile();
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        }
+        //usernameとpasswordを保存するテーブルを制作
+        create_table(db);
+
+        try {
+            Socket socket = s.accept(); // コネクション設定要求を待つ
+            handleConnection(socket);
+        } finally {
+            s.close();
+        }
+    }
+    
+
+    private void handleConnection(Socket socket) throws IOException {
+
+        try {
+            
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
+
+            out.println("Serverと接続しました。"); // 1
+
+            
+
+            
+            String username = in.readLine(); // 3
+            String pass = in.readLine(); // 4
+
+            String hash_pass = make_hash(pass);
+
+           
+            if (option == 1) {
+                List<String> list_data = new ArrayList<String>();
+                list_data = login_user(db, username, hash_pass);
+                Boolean LOGIN = false;
+                if (list_data.size() == 1) {
+                    LOGIN = true;
+                    out.println(LOGIN); // 5
+
+                    while(true){
+                        Integer option2 = Integer.parseInt(in.readLine()); // 6
+                        File chat_log;
+
+                       
+                            //チャットルームの名前を受信
+                            String room_name = in.readLine();// 7
+                            //System.out.println(room_name);
+
+                            add_chatname(db2, room_name);
+                            //chat_log = new File(room_name + "_chat_log.txt");
+                            //chat_log.createNewFile();
+
+                            out.println("チャットルームを作成しました");// 8
+                            
+                            /* 
+                            //チャットルームがあるかdbから探す
+                            List<String> list_data2 = new ArrayList<String>();
+                            list_data2 = check_chat_room(db, room_name);
+
+                            if (list_data2.size() == 1) {
+                                if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                    out.println("'" + room_name + "'というチャットルームが存在します。別のチャットルーム名を入力してください。");// 8
+                                } else {
+                                    //チャットルームの名前をテーブルに追加
+                                    add_chatname(db, room_name);
+
+                                    chat_log = new File(room_name + "_chat_log.txt");
+                                    chat_log.createNewFile();
+
+                                    out.println("チャットルームを作成しました");// 8
+                                }
+                            }
+                            
+                        
+                       
+                        } else if (option2 == 2) {// 2.既存に参加
+                            String room_name = in.readLine();// 9
+
+                            //ルームをdbから探してチャットルームに参加する
+                            List<String> list_data2 = new ArrayList<String>();
+                            list_data2 = check_chat_room(db, room_name);
+
+                            if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                out.println(room_name + "に参加できました");// 10
+                            }else {
+                                out.println(room_name + "に参加できませんでした");// 10
+                            }
+
+                        
+                        } else if (option2 == 3) {// 3.始める
+                            //ユーザーが参加しているチャットルームを表示
+                            List<String> list_data2 = new ArrayList<String>();
+                            //list_data2 = show_chat_room(db2, username);
+                            //list_data2 = show_chat_room(db, username);
+                            out.println(list_data2);
+                            String room_name = in.readLine();
+                            chat_log = new File(room_name + "_chat_log.txt");
+
+                            // chat log
+                            BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
+                            String chat_log_line;
+                            while ((chat_log_line = chat_log_reader.readLine()) != null) {
+                                out.println(chat_log_line);
+                            }
+                            chat_log_reader.close();
+
+                            // chat log
+                            PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
+                            String chat_log_data = in.readLine();
+                            chat_log_writer.println(chat_log_data);
+                            chat_log_writer.close();
+                        
+                        
+                        } else if (option2 == 4) {// 4.退出する
+                            break;
+                        
+                        
+                    }
+                } else {
+                    out.println(LOGIN); // 5
+                }
+
+           
+            } else if (option == 2) {
+                List<String> list_data2 = new ArrayList<String>();
+                list_data2 = check_user(db, username);
+                if (list_data2.size() == 1) {
+                    if (Integer.parseInt(list_data2.get(0)) == 1) {
+                        out.println("'" + username + "'というユーザーが存在します"); // 6
+                    } else {
+                        add_user(db, username, hash_pass);
+                        out.println("ユーザーを追加しました"); // 6
+                    }
+                }
+            }
+
+            
+            System.out.println("closing...");
+            socket.close();
+        }
+    }
+
+    
+    public static void main(String[] args) throws IOException {
+        AServer server = new AServer("database.db", 8080); // インスタンスを作成する
+        server.start();
+    }
+    
+}
+ */
