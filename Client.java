@@ -87,16 +87,11 @@ public class Client extends func {
                                 String echo = in.readLine();// 13
                                 System.out.println("echo:"+ echo);
                                 */
-                                
+
                                 if(message.equals("END")){
                                     System.out.println("");
                                     break;
                                 }
-                                /* 
-                                String str = in.readLine();
-                                if (str.equals("END"))break;
-                                System.out.println(str);
-                                */
                             }
                         
                         /*---------------------------------------------------------------------------------------- */
