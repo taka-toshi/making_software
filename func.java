@@ -46,6 +46,12 @@ public class func {
         execute_sql(db, sql);
     }
 
+    // create table　for chatroom's name
+    public static void create_table_chatname(File db) {
+        String sql = "CREATE TABLE IF NOT EXISTS chatnametable (id INTEGER PRIMARY KEY AUTOINCREMENT, chatname TEXT)";
+        execute_sql(db, sql);
+    }
+
     // add user to database
     public static void add_user(File db, String username, String password) {
         String sql = "INSERT INTO userstable(username,password) VALUES ('" +

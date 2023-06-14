@@ -5,6 +5,7 @@ import java.util.List;
 
 public class AServer extends func {
     private File db;
+    //private File db2;
     private final int PORT;
     private ServerSocket s;
 
@@ -13,6 +14,14 @@ public class AServer extends func {
         PORT = port; // ポート番号をプログラムの引数で与える
         s = new ServerSocket(PORT); // ソケットを作成する
     }
+
+    /* 
+    public AServer2 (String dbPath, int port) throws IOException { // コンストラクタ
+        db2 = new File(dbPath);
+        PORT = port; // ポート番号をプログラムの引数で与える
+        s = new ServerSocket(PORT); // ソケットを作成する
+    }
+    */
 
     public void start() throws IOException {
         if (!db.exists()) {
@@ -57,11 +66,13 @@ public class AServer extends func {
                 if (list_data.size() == 1) {
                     LOGIN = true;
                     out.println(LOGIN); // 5
+
                     while(true){
                         Integer option2 = Integer.parseInt(in.readLine()); // 6
                         File chat_log;
 
-                        if (option2 == 1) {
+                        /*---------------------------------------------------------------------------------------- */
+                        if (option2 == 1) {// 1.新規作成
                             //チャットルームの名前を受信
                             String room_name = in.readLine();
 
@@ -69,27 +80,31 @@ public class AServer extends func {
                             List<String> list_data2 = new ArrayList<String>();
                             list_data2 = check_chat_room(db, room_name);
 
-                            //if (list_data2.size() == 1) {
-                            if (Integer.parseInt(list_data2.get(0)) == 1) {
-                                out.println("'" + room_name + "'というチャットルームが存在します");
-                            } else {
-                                //create_chat_room(db2, room_name);
-                                //チャットルームの名前をテーブルに追加
-                                add_chatname(db, room_name);
+                            if (list_data2.size() == 1) {
+                                if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                    out.println("'" + room_name + "'というチャットルームが存在します");
+                                } else {
+                                    //create_chat_room(db2, room_name);
+                                    //チャットルームの名前をテーブルに追加
+                                    add_chatname(db, room_name);
 
-                                chat_log = new File(room_name + "_chat_log.txt");
-                                chat_log.createNewFile();
-                                out.println("チャットルームを作成しました");
+                                    chat_log = new File(room_name + "_chat_log.txt");
+                                    chat_log.createNewFile();
+                                    out.println("チャットルームを作成しました");
+                                }
                             }
-                            //}
-                        } else if (option2 == 2) {
+                        
+                        /*---------------------------------------------------------------------------------------- */
+                        } else if (option2 == 2) {// 2.既存に参加
                             String room_name = in.readLine();
                             //config room and join chat room
                             List<String> list_data2 = new ArrayList<String>();
                             //list_data2 = check_chat_room(db2, room_name);
                             list_data2 = check_chat_room(db, room_name);
                             out.println(room_name + "に参加できました");
-                        } else if (option2 == 3) {       
+                        
+                        /*---------------------------------------------------------------------------------------- */
+                        } else if (option2 == 3) {// 3.始める
                             //ユーザーが参加しているチャットルームを表示
                             List<String> list_data2 = new ArrayList<String>();
                             //list_data2 = show_chat_room(db2, username);
@@ -111,8 +126,12 @@ public class AServer extends func {
                             String chat_log_data = in.readLine();
                             chat_log_writer.println(chat_log_data);
                             chat_log_writer.close();
-                        } else if (option2 == 4) {
+                        
+                        /*---------------------------------------------------------------------------------------- */
+                        } else if (option2 == 4) {// 4.退出する
                             break;
+                        
+                        /*---------------------------------------------------------------------------------------- */
                         }
                     }
                 } else {
@@ -141,6 +160,7 @@ public class AServer extends func {
     }
 
     public static void main(String[] args) throws IOException {
+        AServer server = new AServer("database.db", 8080); // インスタンスを作成する
         AServer server = new AServer("database.db", 8080); // インスタンスを作成する
         server.start();
     }

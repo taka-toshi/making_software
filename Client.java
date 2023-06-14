@@ -50,7 +50,8 @@ public class Client extends func {
 
                         out.println(option2); // 6
 
-                        if (option2 == 1) {
+                        /*---------------------------------------------------------------------------------------- */
+                        if (option2 == 1) {// 1.新規作成
                             System.out.println("チャットルーム名を入力してください");
                             String room_name = sc.nextLine();
                             out.println(room_name);
@@ -58,22 +59,30 @@ public class Client extends func {
                             //System.out.println("チャットルームを作成しました");
                             //System.out.println("チャットルームを作成しませんでした");
                             System.out.println(in.readLine());
-                        } else if (option2 == 2) {
+                        
+                        /*---------------------------------------------------------------------------------------- */
+                        } else if (option2 == 2) {// 2.既存に参加
                             System.out.println("参加するチャットルーム名を入力してください");
                             String room_name = sc.nextLine();
                             out.println(room_name);
                             System.out.println("チャットルームに参加しました");
                             System.out.println("チャットルームに参加しませんでした");
-                        } else if (option2 == 3) {
+                        
+                        /*---------------------------------------------------------------------------------------- */
+                        } else if (option2 == 3) {// 3.始める
                             System.out.println("チャットを開始します");
                             while (true) {
                                 String str = in.readLine();
                                 if (str.equals("END"))break;
                                 System.out.println(str);
                             }
-                        } else if (option2 == 4) {
+                        
+                        /*---------------------------------------------------------------------------------------- */
+                        } else if (option2 == 4) {// 4.退出する
                             System.out.println("終了します");
                             break;
+                        
+                        /*---------------------------------------------------------------------------------------- */
                         }
                     }
                 } else {
