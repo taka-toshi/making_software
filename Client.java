@@ -44,6 +44,7 @@ public class Client extends func {
                 LOGIN = Boolean.parseBoolean(in.readLine()); // 5
                 if (LOGIN == true) {
                     System.out.println("ログインしました!");
+                    
                     while(true){
                         System.out.println("1.新規作成, 2.既存に参加, 3.始める, 4.退出する");
                         Integer option2 = Integer.parseInt(sc.nextLine());// 6

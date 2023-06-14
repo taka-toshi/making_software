@@ -161,7 +161,6 @@ public class AServer extends func {
 
     public static void main(String[] args) throws IOException {
         AServer server = new AServer("database.db", 8080); // インスタンスを作成する
-        AServer server = new AServer("database.db", 8080); // インスタンスを作成する
         server.start();
     }
 }
