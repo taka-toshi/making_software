@@ -75,7 +75,7 @@ public class AServer extends func {
                                     chat_log = new File(room_name + "_chat_log.txt");
                                     chat_log.createNewFile();
 
-                                    out.println("チャットルームを作成しました");// 8
+                                    out.println("チャットルームを作成しました!");// 8
                                 }
                             }
                             
@@ -89,37 +89,37 @@ public class AServer extends func {
                             list_data2 = check_chat_room(db, room_name);
 
                             if (Integer.parseInt(list_data2.get(0)) == 1) {
-                                out.println(room_name + "に参加できました");// 10
+                                out.println(room_name + "に参加できました!");// 10
+                                out.println(room_name);// 11
+                                
+                                chat_log = new File(room_name + "_chat_log.txt");//新規にチャットルームが作成されるとできる
+                                
+                                while(true){
+                                    BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
+                                    PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
+                                    /* 
+                                    String chat_log_line;
+                                    while ((chat_log_line = chat_log_reader.readLine()) != null) {
+                                        out.println(chat_log_line);// 13
+                                    }
+                                    */
+                                    chat_log_reader.close();
+                                    
+                                    String chat_log_data = in.readLine();// 12
+                                    chat_log_writer.println(chat_log_data);
+                                    chat_log_writer.close();
+                                    
+                                    if (chat_log_data.equals("END")){
+                                        break;
+                                    }
+                                }
+                                
                             }else {
-                                out.println(room_name + "に参加できませんでした");// 10
+                                out.println(room_name + "に参加できませんでした。");// 10
                             }
-
-                        /*---------------------------------------------------------------------------------------- */
-                        } else if (option2 == 3) {// 3.始める
-                            //ユーザーが参加しているチャットルームを表示
-                            List<String> list_data2 = new ArrayList<String>();
-                            //list_data2 = show_chat_room(db2, username);
-                            //list_data2 = show_chat_room(db, username);
-                            out.println(list_data2);
-                            String room_name = in.readLine();
-                            chat_log = new File(room_name + "_chat_log.txt");
-
-                            // chat log
-                            BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
-                            String chat_log_line;
-                            while ((chat_log_line = chat_log_reader.readLine()) != null) {
-                                out.println(chat_log_line);
-                            }
-                            chat_log_reader.close();
-
-                            // chat log
-                            PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
-                            String chat_log_data = in.readLine();
-                            chat_log_writer.println(chat_log_data);
-                            chat_log_writer.close();
                         
                         /*---------------------------------------------------------------------------------------- */
-                        } else if (option2 == 4) {// 4.退出する
+                        } else if (option2 == 3) {// 3.退出する
                             break;
                         
                         /*---------------------------------------------------------------------------------------- */
