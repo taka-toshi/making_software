@@ -1,4 +1,3 @@
-# ASerever.javaとClient.javaとfunc.javaをコンパイルする
 all:
 	javac AServer.java
 	javac Client.java
