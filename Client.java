@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.Rectangle;
 import java.awt.event.*;
 
-public class Client extends func{
+public class Client extends func {
     public static void main(String[] args) throws IOException {
 
         Scanner sc = new Scanner(System.in);
@@ -33,184 +33,260 @@ public class Client extends func{
 
             System.out.println(in.readLine()); // 1
 
-            /*---------------------------------------------------------------------------------------- */
-            //パネルp1をframeに追加する
-            JPanel p1 = new JPanel();
-            p1.setLayout(null);
-
-            //final Integer[] option = { null };
-            Integer[] option = { null };
-
-            //ログインボタンの実装
-            JButton login_btn = new JButton("login");
-            login_btn.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    option[0] = 1;
-                    out.println(option[0]); // 2
-                }
-            });
-
-            //サインアップボタンの実装
-            JButton signup_btn = new JButton("signup");
-            signup_btn.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    option[0] = 2;
-                    out.println(option[0]);// 2 
-                }
-            });
-
-            login_btn.setBounds(375,225, 100,50);
-            signup_btn.setBounds(525,225, 100,50);
-            p1.add(login_btn);
-            p1.add(signup_btn);
-            frame.getContentPane().add(p1);
-            frame.setVisible(true);
-            
-            // optionの値が決まるまで以下のコードを実行しない
-            while (true) {
-                if (option[0] == null) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    break;
-                }
-            }
-            //out.println(option[0]); // 2
-
-            /*---------------------------------------------------------------------------------------- */
-            frame.getContentPane().removeAll();//パネルp1を取り除く
-
-            //パネルp2の実装
-            JPanel p2 = new JPanel();
-            p2.setLayout(null);
-
-            JLabel label_user = new JLabel("ユーザー名：");
-            JLabel label_pass = new JLabel("パスワード：");
-            JTextField tf_user = new JTextField();
-            JPasswordField tf_pass = new JPasswordField();
-            //String username = tf_user.getText();
-            char[] pass = tf_pass.getPassword();
-            String pass_str = new String(pass);
-            String hash_pass = make_hash(pass_str);
-
-            //final Boolean[] ok = { null };
-            Boolean[] ok = { null };
-            JButton ok_btn = new JButton("ok");
-            ok_btn.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    ok[0] = true;
-                    String username = tf_user.getText();
-                    out.println(ok[0]);//3
-                    out.println(username);// 4
-                    out.println(hash_pass);// 5
-                }
-            });
-
-            tf_pass.setColumns(10);
-            tf_user.setColumns(10);
-            label_user.setBounds(390, 200, 150, 25);
-            label_pass.setBounds(390, 275, 150, 25);
-            tf_user.setBounds(545, 200, 150, 25);
-            tf_pass.setBounds(545, 275, 150, 25);
-            ok_btn.setBounds(800, 300, 50, 50);
-            p2.add(tf_user);
-            p2.add(tf_pass);
-            p2.add(label_user);
-            p2.add(label_pass);
-            p2.add(ok_btn);
-            frame.add(p2);
-            frame.setVisible(true);
-            frame.validate();
-            frame.repaint();//画面を書き直す
-
-            /* 
-            //?
-            while (true) {
-                if (ok[0] == null) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    break;
-                }
-            }
-
-            // usernameとpass_strが入力されるまで以下のコードを実行しない
-            while (true) {
-                if (username == null || pass_str == null || username == "" || pass_str == "") {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    break;
-                }
-            }
-            */
-            //out.println(username); // 3
-            //out.println(hash_pass); // 4
-
-
-            /*---------------------------------------------------------------------------------------- */
-            if (option[0] == 1) {
-                Boolean LOGIN = false;
-                LOGIN = Boolean.parseBoolean(in.readLine()); // 5
-                if (LOGIN == true) {
-                    System.out.println("ログインしました!");
-                    // create chat room
-                    while (true) {
-                        System.out.println("1.新規作成, 2.既存に参加, 3.始める, 4.退出する");
-                        Integer option2 = Integer.parseInt(sc.nextLine());
-
-                        out.println(option2); // 6
-                        
-                        if (option2 == 1) {
-                            System.out.println("チャットルーム名を入力してください");
-                            String room_name = sc.nextLine();
-                            out.println(room_name);
-
-                            //System.out.println("チャットルームを作成しました");
-                            //System.out.println("チャットルームを作成しませんでした");
-
-                            System.out.println(in.readLine());
-
-                        } else if (option2 == 2) {
-                            System.out.println("参加するチャットルーム名を入力してください");
-                            String room_name = sc.nextLine();
-                            out.println(room_name);
-
-                            //System.out.println("チャットルームに参加しました");
-                            //System.out.println("チャットルームに参加しませんでした");
-
-                        } else if (option2 == 3) {
-                            System.out.println("チャットを開始します");
-                            while (true) {
-                                String str = in.readLine();
-
-                                if (str.equals("END"))break;
-                                System.out.println(str);
-                            }
-                        } else if (option2 == 4) {
-                            System.out.println("終了します");
-                            break;
-                        }
-                    }
-                } else {
-                    System.out.println("ログインできませんでした");
-                }
-            } else if (option[0] == 2) {
-                System.out.println(in.readLine()); // 7
-            }
-        } finally {
+            gui(frame, in, out, sc);
+         
+        }finally{
             System.out.println("closing...");
             socket.close();
             sc.close();
         }
     }
+    
+
+
+    public static void gui(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException{
+        frame.getContentPane().removeAll();//パネルがあれば取り除く
+        
+        //パネルp1をframeに追加する
+        JPanel p1 = new JPanel();
+        p1.setLayout(null);
+
+        //final Integer[] option = { null };
+        Integer[] option = { null };
+
+        //ログインボタンの実装
+        JButton login_btn = new JButton("ログイン");
+        login_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                option[0] = 1;
+                out.println(option[0]); // 2
+            }
+        });
+
+        //サインアップボタンの実装
+        JButton signup_btn = new JButton("サインイン");
+        signup_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                option[0] = 2;
+                out.println(option[0]);// 2 
+            }
+        });
+
+        login_btn.setBounds(375,225, 100,50);
+        signup_btn.setBounds(525,225, 100,50);
+        p1.add(login_btn);
+        p1.add(signup_btn);
+        frame.getContentPane().add(p1);
+        frame.setVisible(true);
+                
+        // optionの値が決まるまで以下のコードを実行しない
+        while (true) {
+            if (option[0] == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                break;
+            }       
+        }
+        /*---------------------------------------------------------------------------------------- */
+        frame.getContentPane().removeAll();//パネルp1を取り除く
+                
+        //パネルp2の実装
+        JPanel p2 = new JPanel();
+        p2.setLayout(null);
+
+        JLabel label_user = new JLabel("ユーザー名：");
+        JLabel label_pass = new JLabel("パスワード：");
+        JTextField tf_user = new JTextField();
+        JPasswordField tf_pass = new JPasswordField();
+
+        //final Boolean[] ok = { null };
+        Boolean[] ok = { null };
+        Boolean[] noerror = { null };
+        JButton ok_btn = new JButton("ok");
+        ok_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ok[0] = true;
+                String username = tf_user.getText();
+                char[] pass = tf_pass.getPassword();
+                String pass_str = new String(pass);
+                String hash_pass = make_hash(pass_str);
+
+                //もしusernameまたはpassのどちらか一方が空白だった場合はエラーを表示させる
+                if (username.equals(null) || username.equals("")){
+                    JOptionPane.showMessageDialog(null, "ユーザー名を入力してください");
+                }else if(pass_str.equals(null) || pass_str .equals("")){
+                    JOptionPane.showMessageDialog(null, "パスワードを入力してください");
+                } else {
+                    out.println(ok[0]);//3
+                    out.println(username);// 4
+                    out.println(hash_pass);// 5
+                    noerror[0] = true;
+                }
+            }
+        });
+
+        tf_pass.setColumns(10);
+        tf_user.setColumns(10);
+        label_user.setBounds(390, 200, 150, 25);
+        label_pass.setBounds(390, 275, 150, 25);
+        tf_user.setBounds(545, 200, 150, 25);
+        tf_pass.setBounds(545, 275, 150, 25);
+        ok_btn.setBounds(800, 300, 50, 50);
+        p2.add(tf_user);
+        p2.add(tf_pass);
+        p2.add(label_user);
+        p2.add(label_pass);
+        p2.add(ok_btn);
+        frame.add(p2);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();//画面を書き直す
+
+        //エラーなし（usernameもpasswordも正常に入力）になるまで以下のコードを実行しない
+        while (true) {
+            if (noerror[0] == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                break;
+            }
+        }
+
+
+        /*---------------------------------------------------------------------------------------- */
+        if (option[0] == 1) {
+            Boolean LOGIN = false;
+            LOGIN = Boolean.parseBoolean(in.readLine()); // 5
+
+            if (LOGIN == true) {// ログイン成功のとき
+                //System.out.println("ログインしました!");
+                //System.out.println("");
+                            
+                while (true) {
+                    System.out.println("1.新規作成, 2.既存に参加, 3.退出する");
+                    Integer option2 = Integer.parseInt(sc.nextLine());
+
+                    out.println(option2); // 6
+                                
+                    /*---------------------------------------------------------------------------------------- */
+                    if (option2 == 1) {// 1.新規作成
+                        System.out.println("チャットルーム名を入力してください");
+                        String room_name = sc.nextLine();
+                        out.println(room_name);// 7
+
+                        //System.out.println(in.readLine());//8
+                        //System.out.println("");
+
+                    /*---------------------------------------------------------------------------------------- */
+                    } else if (option2 == 2) {
+                        System.out.println("参加するチャットルーム名を入力してください");
+                        String room_name = sc.nextLine();
+                        out.println(room_name);// 9
+
+                        System.out.println(in.readLine());// 10
+                        Boolean JOIN = false;
+                        JOIN = Boolean.parseBoolean(in.readLine());// 10.5
+                        if (JOIN == true) {
+                            System.out.println("");
+
+                            System.out.println("チャットを開始します。");
+                            String room_mem = in.readLine();// 11
+                            System.out.println(room_mem);
+                            System.out.println("あなたは '" + room_mem + "' に参加しています。");
+                            System.out.println("終了する際は'END'で終了してください。");
+                            System.out.println("");
+
+                            while (true) {
+                                System.out.println("メッセージ：");
+                                String message = sc.nextLine();
+                                out.println(message);
+
+                                /*
+                                * String echo = in.readLine();// 13
+                                * System.out.println("echo:"+ echo);
+                                */
+
+                                if (message.equals("END")) {
+                                    System.out.println("");
+                                    break;
+                                }
+                            }
+                        } else {
+                            System.out.println("");
+                        }
+                                
+                    /*---------------------------------------------------------------------------------------- */
+                    } else if (option2 == 3) {// 3.退出する
+                        //System.out.println("終了します。");
+                        //System.out.println("");
+                        break;
+
+                    /*---------------------------------------------------------------------------------------- */
+                    }
+                }
+            } else {// ログイン失敗のとき
+                frame.getContentPane().removeAll();//パネルp2を取り除く
+
+                //パネルp3の実装
+                JPanel p3 = new JPanel();
+                p3.setLayout(null);
+
+                JLabel label_login_failure = new JLabel("ログインに失敗しました。");
+
+                Boolean[] ok2 = { null };
+                JButton ok2_btn = new JButton("ok");
+                ok2_btn.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        ok2[0] = true;
+                    }
+                });
+
+                label_login_failure.setBounds(420, 236, 200, 25);
+                ok2_btn.setBounds(570, 286, 50, 50);
+                p3.add(label_login_failure);
+                p3.add(ok2_btn);
+                frame.add(p3);
+                frame.setVisible(true);
+                frame.validate();
+                frame.repaint();//画面を書き直す
+
+                /* 
+                //ログイン・サインイン画面に戻る
+                if (ok2[0] == true){
+                    gui(frame, in, out, sc);
+                    //break;
+                }
+                */
+
+
+                // okボタンが押されるまで以下のコードを実行しない
+                while (true) {
+                    if (ok2[0] == null) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        gui(frame, in, out, sc);
+                        break;
+                    }
+                }
+
+            }
+
+        /*---------------------------------------------------------------------------------------- */
+        } else if (option[0] == 2) {// サインインしたとき
+            System.out.println(in.readLine()); // 6
+        }
+    }
 }
+
+

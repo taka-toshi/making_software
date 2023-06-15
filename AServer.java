@@ -1,9 +1,9 @@
 import java.io.*;
-//import java.math.BigInteger;
 import java.net.*;
-//import java.security.*;
 import java.util.ArrayList;
 import java.util.List;
+//import java.math.BigInteger;
+//import java.security.*;
 
 public class AServer extends func {
     public static void main(String[] args) throws IOException {
@@ -16,6 +16,7 @@ public class AServer extends func {
                 System.out.println(e);
             }
         }
+
         //usernameとpasswordを保存するテーブルを制作
         create_table(db);
         //チャットルームの名前を保存するテーブルを制作
@@ -27,6 +28,7 @@ public class AServer extends func {
 
         try {
             Socket socket = s.accept(); // コネクション設定要求を待つ
+
             try {
                 /*---------------------------------------------------------------------------------------- */
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
@@ -49,85 +51,128 @@ public class AServer extends func {
                         List<String> list_data = new ArrayList<String>();
                         list_data = login_user(db, username, hash_pass);
                         Boolean LOGIN = false;
+
                         if (list_data.size() == 1) {
                             LOGIN = true;
                             out.println(LOGIN); // 5
+
                             while (true) {
                                 Integer option2 = Integer.parseInt(in.readLine()); // 6
                                 File chat_log;
-                                if (option2 == 1) {
+
+                                /*---------------------------------------------------------------------------------------- */
+                                if (option2 == 1) {// 1.新規作成
                                     //チャットルームの名前を受信
-                                    String room_name = in.readLine();
+                                    String room_name = in.readLine();// 7
 
-                                    //チャットルームがあるかdbから探す
-                                    List<String> list_data2 = new ArrayList<String>();
-                                    list_data2 = check_chat_room(db, room_name);
+                                    // room_nameの制限 \ / : * ? " < > |
+                                    if (room_name.contains("\\") || room_name.contains("/") || room_name.contains(":")
+                                        || room_name.contains("*") || room_name.contains("?")
+                                        || room_name.contains("\"") || room_name.contains("<")
+                                        || room_name.contains(">") || room_name.contains("|")) {
+                                        out.println("チャットルーム名に \\ / : * ? \" < > | は使えません。");// 8
+                                    } else {
+                                        //チャットルームがあるかdbから探す
+                                        List<String> list_data2 = new ArrayList<String>();
+                                        list_data2 = check_chat_room(db, room_name);
 
-                                    if (list_data2.size() == 1) {
-                                        if (Integer.parseInt(list_data2.get(0)) == 1) {
-                                            out.println("'" + room_name + "'というチャットルームが存在します");
+                                        if (list_data2.size() == 1) {
+                                            if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                                out.println("'" + room_name + "'というチャットルームが存在します");
+                                            } else {
+                                                //チャットルームの名前をテーブルに追加
+                                                //create_chat_room(db2, room_name);
+                                                add_chatname(db, room_name);
+
+                                                chat_log = new File(room_name + "_chat_log.txt");
+                                                chat_log.createNewFile();
+                                                out.println("チャットルームを作成しました");
+                                            }
                                         } else {
-                                            //チャットルームの名前をテーブルに追加
-                                            //create_chat_room(db2, room_name);
-                                            add_chatname(db, room_name);
-
-                                            chat_log = new File(room_name + "_chat_log.txt");
-                                            chat_log.createNewFile();
-                                            out.println("チャットルームを作成しました");
+                                            out.println("チャットルームを作成できませんでした。");// 8
                                         }
                                     }
-                                } else if (option2 == 2) {
-                                    String room_name = in.readLine();
-                                    //ルームを探して、チャットルームに参加する
+
+                                    /*---------------------------------------------------------------------------------------- */
+                                } else if (option2 == 2) {// 2. 既存に参加
+                                    String room_name = in.readLine();// 9
+
+                                    //ルームをdbから探して、チャットルームに参加する
                                     List<String> list_data2 = new ArrayList<String>();
-                                    //list_data2 = check_chat_room(db2, room_name);
                                     list_data2 = check_chat_room(db, room_name);
-                                    out.println(room_name + "に参加できました");
 
-                                } else if (option2 == 3) {       
-                                    //ユーザーが参加しているチャットルームを表示
-                                    List<String> list_data2 = new ArrayList<String>();
-                                    //list_data2 = show_chat_room(db2, username);
-                                    //list_data2 = show_chat_room(db, username);
-                                    out.println(list_data2);
-                                    String room_name = in.readLine();
-                                    chat_log = new File(room_name + "_chat_log.txt");
+                                    if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                        out.println(room_name + "に参加できました!");// 10
+                                        out.println(true);// 10.5
+                                        out.println(room_name);// 11
 
-                                    // chat log
-                                    BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
-                                    String chat_log_line;
-                                    while ((chat_log_line = chat_log_reader.readLine()) != null) {
-                                        out.println(chat_log_line);
+                                        chat_log = new File(room_name + "_chat_log.txt");
+
+                                        while (true) {
+                                            BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
+                                            PrintWriter chat_log_writer = new PrintWriter(
+                                                    new BufferedWriter(new FileWriter(chat_log, true)));
+                                            /*
+                                            * String chat_log_line;
+                                            * while ((chat_log_line = chat_log_reader.readLine()) != null) {
+                                            * out.println(chat_log_line);// 13
+                                            * }
+                                            */
+                                            chat_log_reader.close();
+
+                                            String chat_log_data = in.readLine();// 12
+                                            chat_log_writer.println(chat_log_data);
+                                            chat_log_writer.close();
+
+                                            if (chat_log_data.equals("END")) {
+                                                break;
+                                            }
+                                        }
+
+                                    } else {
+                                        out.println(room_name + "に参加できませんでした。");// 10
+                                        out.println(false);// 10.5
                                     }
-                                    chat_log_reader.close();
 
-                                    // chat log
-                                    PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
-                                    String chat_log_data = in.readLine();
-                                    chat_log_writer.println(chat_log_data);
-                                    chat_log_writer.close();
-                                } else if (option2 == 4) {
+                                    /*---------------------------------------------------------------------------------------- */
+                                } else if (option2 == 3) {// 3.退出する
                                     break;
+
+                                    /*---------------------------------------------------------------------------------------- */
                                 }
                             }
                         } else {
-                            out.println(LOGIN); // 6
+                            out.println(LOGIN); // 5
                         }
+
+                        /*---------------------------------------------------------------------------------------- */
                     } else if (option == 2) {
-                        List<String> list_data2 = new ArrayList<String>();
-                        list_data2 = check_user(db, username);
-                        if (list_data2.size() == 1) {
-                            if (Integer.parseInt(list_data2.get(0)) == 1) {
-                                out.println("'" + username + "'というユーザーが存在します"); // 7
+                        if (username.contains("\\") || username.contains("/") || username.contains(":")
+                            || username.contains("*") || username.contains("?")
+                            || username.contains("\"") || username.contains("<")
+                            || username.contains(">") || username.contains("|")) {
+                            out.println("ユーザー名に \\ / : * ? \" < > | は使えません。");// 6
+                        } else {
+                            List<String> list_data2 = new ArrayList<String>();
+                            list_data2 = check_user(db, username);
+                            if (list_data2.size() == 1) {
+                                if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                    out.println("'" + username + "'というユーザーが存在します"); // 6
+                                } else {
+                                    add_user(db, username, hash_pass);
+                                    out.println("ユーザーを追加しました"); // 6
+                                }
                             } else {
-                                add_user(db, username, hash_pass);
-                                out.println("ユーザーを追加しました"); // 7
+                                out.println("ユーザーを追加できませんでした"); // 6
                             }
                         }
                     }
                 }else {
-
+                    Boolean LOGIN = false;
+                    out.println(LOGIN); // 5
                 }
+                
+                /*---------------------------------------------------------------------------------------- */
             } finally {
                 System.out.println("closing...");
                 socket.close();
