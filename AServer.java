@@ -64,17 +64,25 @@ public class AServer extends func {
                                 // チャットルームがあるかdbから探す
                                 // List<String> list_data2 = new ArrayList<String>();
                                 // list_data2 = check_chat_room(db, room_name);
-                                // chat_log.txtがあるかどうかで判断する
-                                chat_log = new File(room_name + "_chat_log.txt");
-                                if (chat_log.exists()) {
-                                    out.println("'" + room_name + "'というチャットルームが存在します。別のチャットルーム名を入力してください。");// 8
+
+                                // room_nameの制限 \ / : * ? " < > |
+                                if (room_name.contains("\\") || room_name.contains("/") || room_name.contains(":")
+                                        || room_name.contains("*") || room_name.contains("?")
+                                        || room_name.contains("\"") || room_name.contains("<")
+                                        || room_name.contains(">") || room_name.contains("|")) {
+                                    out.println("チャットルーム名に \\ / : * ? \" < > | は使えません。");// 8
                                 } else {
-                                    // チャットルームの名前をテーブルに追加
-                                    // add_chatname(db, room_name);
+                                    // chat_log.txtがあるかどうかで判断する
+                                    chat_log = new File(room_name + "_chat_log.txt");
+                                    if (chat_log.exists()) {
+                                        out.println("'" + room_name + "'というチャットルームが存在します。別のチャットルーム名を入力してください。");// 8
+                                    } else {
+                                        // チャットルームの名前をテーブルに追加
+                                        // add_chatname(db, room_name);
 
-                                    chat_log.createNewFile();
-
-                                    out.println("チャットルームを作成しました!");// 8
+                                        chat_log.createNewFile();
+                                        out.println("チャットルームを作成しました!");// 8
+                                    }
                                 }
 
                                 /*---------------------------------------------------------------------------------------- */
