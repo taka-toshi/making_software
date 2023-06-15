@@ -46,7 +46,7 @@ public class func {
 
     // create table　for chatroom's name
     public static void create_table_chatname(File db) {
-        String sql = "CREATE TABLE IF NOT EXISTS chatnametable (id INTEGER PRIMARY KEY AUTOINCREMENT, chatname TEXT)";
+        String sql = "CREATE TABLE IF NOT EXISTS chatnametable (id INTEGER PRIMARY KEY AUTOINCREMENT, room_name TEXT)";
         execute_sql(db, sql);
     }
 

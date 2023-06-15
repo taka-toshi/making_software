@@ -44,7 +44,6 @@ public class AServer extends func {
                 String username = in.readLine(); // 4
                 String pass = in.readLine(); // 5
                 String hash_pass = make_hash(pass);
-                System.out.println(hash_pass);
 
                 /*---------------------------------------------------------------------------------------- */
                 if (ok){
@@ -80,14 +79,15 @@ public class AServer extends func {
                                         if (list_data2.size() == 1) {
                                             if (Integer.parseInt(list_data2.get(0)) == 1) {
                                                 out.println("'" + room_name + "'というチャットルームが存在します");
+                                                System.out.println("'" + room_name + "'というチャットルームが存在します");
                                             } else {
                                                 //チャットルームの名前をテーブルに追加
-                                                //create_chat_room(db2, room_name);
                                                 add_chatname(db, room_name);
 
                                                 chat_log = new File(room_name + "_chat_log.txt");
                                                 chat_log.createNewFile();
                                                 out.println("チャットルームを作成しました");
+                                                System.out.println("チャットルームを作成しました");
                                             }
                                         } else {
                                             out.println("チャットルームを作成できませんでした。");// 8
