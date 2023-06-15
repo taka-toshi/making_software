@@ -12,13 +12,14 @@ public class Client extends func {
 
         final int PORT = 8080;
         InetAddress addr = InetAddress.getByName("localhost"); // IP アドレスへの変換
-        
+
         Socket socket = new Socket(addr, PORT); // ソケットの生成
         try {
             /*---------------------------------------------------------------------------------------- */
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
-            
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),
+                    true); // 送信バッファ設定
+
             System.out.println(in.readLine()); // 1
 
             /*---------------------------------------------------------------------------------------- */
@@ -46,7 +47,7 @@ public class Client extends func {
                     System.out.println("ログインしました!");
                     System.out.println("");
 
-                    while(true){
+                    while (true) {
                         System.out.println("1.新規作成, 2.既存に参加, 3.退出する");
                         Integer option2 = Integer.parseInt(sc.nextLine());// 6
 
@@ -60,54 +61,59 @@ public class Client extends func {
 
                             System.out.println(in.readLine());// 8
                             System.out.println("");
-                        
-                        /*---------------------------------------------------------------------------------------- */
+
+                            /*---------------------------------------------------------------------------------------- */
                         } else if (option2 == 2) {// 2.既存に参加
                             System.out.println("参加するチャットルーム名を入力してください");
                             String room_name = sc.nextLine();
                             out.println(room_name);// 9
-                            
+
                             System.out.println(in.readLine());// 10
-                            System.out.println("");
+                            Boolean JOIN = false;
+                            JOIN = Boolean.parseBoolean(in.readLine());// 10.5
+                            if (JOIN == true) {
+                                System.out.println("");
 
-                            System.out.println("チャットを開始します。");
-                            String room_mem = in.readLine();// 11
-                            System.out.println(room_mem);
-                            System.out.println("あなたは '"+ room_mem +"' に参加しています。");
-                            System.out.println("終了する際は'END'で終了してください。");
-                            System.out.println("");
+                                System.out.println("チャットを開始します。");
+                                String room_mem = in.readLine();// 11
+                                System.out.println(room_mem);
+                                System.out.println("あなたは '" + room_mem + "' に参加しています。");
+                                System.out.println("終了する際は'END'で終了してください。");
+                                System.out.println("");
 
+                                while (true) {
+                                    System.out.println("メッセージ：");
+                                    String message = sc.nextLine();
+                                    out.println(message);
 
-                            while (true) {
-                                System.out.println("メッセージ：");
-                                String message = sc.nextLine();
-                                out.println(message);
+                                    /*
+                                     * String echo = in.readLine();// 13
+                                     * System.out.println("echo:"+ echo);
+                                     */
 
-                                /* 
-                                String echo = in.readLine();// 13
-                                System.out.println("echo:"+ echo);
-                                */
-
-                                if(message.equals("END")){
-                                    System.out.println("");
-                                    break;
+                                    if (message.equals("END")) {
+                                        System.out.println("");
+                                        break;
+                                    }
                                 }
+                            } else {
+                                System.out.println("");
                             }
-                        
-                        /*---------------------------------------------------------------------------------------- */
+
+                            /*---------------------------------------------------------------------------------------- */
                         } else if (option2 == 3) {// 3.退出する
                             System.out.println("終了します。");
                             System.out.println("");
                             break;
-                        
-                        /*---------------------------------------------------------------------------------------- */
+
+                            /*---------------------------------------------------------------------------------------- */
                         }
                     }
                 } else {
                     System.out.println("ログインできませんでした");
                 }
-            
-            /*---------------------------------------------------------------------------------------- */
+
+                /*---------------------------------------------------------------------------------------- */
             } else if (option == 2) {
                 System.out.println(in.readLine()); // 6
             }
