@@ -429,6 +429,7 @@ public class Client extends func {
                             */
 
 
+                            
                         } else {
                             frame.getContentPane().removeAll();//パネルp7を取り除く
 
