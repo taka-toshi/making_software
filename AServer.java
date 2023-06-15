@@ -44,6 +44,7 @@ public class AServer extends func {
                 String username = in.readLine(); // 4
                 String pass = in.readLine(); // 5
                 String hash_pass = make_hash(pass);
+                System.out.println(hash_pass);
 
                 /*---------------------------------------------------------------------------------------- */
                 if (ok){
@@ -171,7 +172,7 @@ public class AServer extends func {
                     Boolean LOGIN = false;
                     out.println(LOGIN); // 5
                 }
-                
+
                 /*---------------------------------------------------------------------------------------- */
             } finally {
                 System.out.println("closing...");

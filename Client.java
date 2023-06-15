@@ -91,6 +91,7 @@ public class Client extends func {
                 break;
             }       
         }
+
         /*---------------------------------------------------------------------------------------- */
         frame.getContentPane().removeAll();//パネルp1を取り除く
                 
@@ -166,17 +167,77 @@ public class Client extends func {
             LOGIN = Boolean.parseBoolean(in.readLine()); // 5
 
             if (LOGIN == true) {// ログイン成功のとき
-                //System.out.println("ログインしました!");
+                System.out.println("ログインしました!");
                 //System.out.println("");
                             
                 while (true) {
-                    System.out.println("1.新規作成, 2.既存に参加, 3.退出する");
-                    Integer option2 = Integer.parseInt(sc.nextLine());
+                    //System.out.println("1.新規作成, 2.既存に参加, 3.退出する");
+                    //Integer option2 = Integer.parseInt(sc.nextLine());
 
-                    out.println(option2); // 6
+                    //out.println(option2); // 6
+
+
+
+
+                    frame.getContentPane().removeAll();//パネルp2を取り除く
+
+                    //パネルp4の実装
+                    JPanel p4 = new JPanel();
+                    p4.setLayout(null);
+
+                    JLabel label_choice = new JLabel("ログインに成功しました！");
+
+                    Integer[] option2 = { null };
+
+                    JButton create_chat = new JButton("新規作成");
+                    create_chat.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            option2[0] = 1;
+                        }
+                    });
+
+                    JButton join_chat = new JButton("既存に参加");
+                    join_chat.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            option2[0] = 2;
+                        }
+                    });
+
+                    JButton logout = new JButton("退出する");
+                    logout.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            option2[0] = 3;
+                        }
+                    });
+
+                    label_choice.setBounds(425, 136, 200, 25);
+                    create_chat.setBounds(300, 236, 100, 25);
+                    join_chat.setBounds(450, 236, 100, 25);
+                    logout.setBounds(600, 236, 100, 25);
+                    p4.add(label_choice);
+                    p4.add(create_chat);
+                    p4.add(join_chat);
+                    p4.add(logout);
+                    frame.add(p4);
+                    frame.setVisible(true);
+                    frame.validate();
+                    frame.repaint();//画面を書き直す
+
+                    // ３つのボタンのうちどれかが押されるまで以下のコードを実行しない
+                    while (true) {
+                        if (option[0] == null) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            break;
+                        }
+                    }
                                 
                     /*---------------------------------------------------------------------------------------- */
-                    if (option2 == 1) {// 1.新規作成
+                    if (option2[0] == 1) {// 1.新規作成
                         System.out.println("チャットルーム名を入力してください");
                         String room_name = sc.nextLine();
                         out.println(room_name);// 7
@@ -185,7 +246,7 @@ public class Client extends func {
                         //System.out.println("");
 
                     /*---------------------------------------------------------------------------------------- */
-                    } else if (option2 == 2) {
+                    } else if (option2[0] == 2) {
                         System.out.println("参加するチャットルーム名を入力してください");
                         String room_name = sc.nextLine();
                         out.println(room_name);// 9
@@ -223,7 +284,7 @@ public class Client extends func {
                         }
                                 
                     /*---------------------------------------------------------------------------------------- */
-                    } else if (option2 == 3) {// 3.退出する
+                    } else if (option2[0] == 3) {// 3.退出する
                         //System.out.println("終了します。");
                         //System.out.println("");
                         break;
@@ -256,15 +317,6 @@ public class Client extends func {
                 frame.setVisible(true);
                 frame.validate();
                 frame.repaint();//画面を書き直す
-
-                /* 
-                //ログイン・サインイン画面に戻る
-                if (ok2[0] == true){
-                    gui(frame, in, out, sc);
-                    //break;
-                }
-                */
-
 
                 // okボタンが押されるまで以下のコードを実行しない
                 while (true) {
