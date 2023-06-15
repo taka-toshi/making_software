@@ -147,7 +147,7 @@ public class AServer extends func {
                             || username.contains("*") || username.contains("?")
                             || username.contains("\"") || username.contains("<")
                             || username.contains(">") || username.contains("|")) {
-                        out.println("チャットルーム名に \\ / : * ? \" < > | は使えません。");// 6
+                        out.println("ユーザー名に \\ / : * ? \" < > | は使えません。");// 6
                     } else {
                         List<String> list_data2 = new ArrayList<String>();
                         list_data2 = check_user(db, username);
