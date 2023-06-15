@@ -136,14 +136,23 @@ public class AServer extends func {
 
                     /*---------------------------------------------------------------------------------------- */
                 } else if (option == 2) {
-                    List<String> list_data2 = new ArrayList<String>();
-                    list_data2 = check_user(db, username);
-                    if (list_data2.size() == 1) {
-                        if (Integer.parseInt(list_data2.get(0)) == 1) {
-                            out.println("'" + username + "'というユーザーが存在します"); // 6
+                    if (username.contains("\\") || username.contains("/") || username.contains(":")
+                            || username.contains("*") || username.contains("?")
+                            || username.contains("\"") || username.contains("<")
+                            || username.contains(">") || username.contains("|")) {
+                        out.println("チャットルーム名に \\ / : * ? \" < > | は使えません。");// 6
+                    } else {
+                        List<String> list_data2 = new ArrayList<String>();
+                        list_data2 = check_user(db, username);
+                        if (list_data2.size() == 1) {
+                            if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                out.println("'" + username + "'というユーザーが存在します"); // 6
+                            } else {
+                                add_user(db, username, hash_pass);
+                                out.println("ユーザーを追加しました"); // 6
+                            }
                         } else {
-                            add_user(db, username, hash_pass);
-                            out.println("ユーザーを追加しました"); // 6
+                            out.println("ユーザーを追加できませんでした"); // 6
                         }
                     }
                 } else {
