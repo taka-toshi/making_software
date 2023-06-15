@@ -393,43 +393,55 @@ public class Client extends func {
 
 
 
-
-                            /* 
-                            frame.getContentPane().removeAll();//パネルp7を取り除く
-
-                            //パネルp8の実装
-                            JPanel p8 = new JPanel();
-                            p8.setLayout(null);
-
-                            JLabel label_chat_success = new JLabel(join_message);
-                            //chat_log.txtを表示
-                            JLabel label_messagelabel = new JLabel("メッセージ：");
-                            JTextField tf_message = new JTextField();
-                            JButton send_btn = new JButton("SEND");
-                            JButton quit_btn = new JButton("QUIT");
-
-                            send_btn.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent e) {
-                                    String message = tf_message.getText();
-                                    out.println(message);
-                                }
-                            });
-
-                            quit_btn.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent e) {
-                                }
-                            });
-
-                            tf_message.setColumns(10);
-                            label_chat_success.setBounds();
-                            tf_message.setBounds();
-                            send_btn.setBounds();
-                            quit_btn.setBounds();
-                            p8.add();
-                            */
-
-
                             
+                            //public static void chatting(JFrame frame){
+                            while(true){
+                                frame.getContentPane().removeAll();//パネルp7を取り除く
+
+                                //パネルp8の実装
+                                JPanel p8 = new JPanel();
+                                p8.setLayout(null);
+
+                                JLabel label_chat_success = new JLabel(join_message);
+                                //chat_log.txtを表示
+                                JLabel label_messagelabel = new JLabel("メッセージ：");
+                                JTextField tf_message = new JTextField();
+                                JButton send_btn = new JButton("SEND");
+                                JButton quit_btn = new JButton("QUIT");
+
+                                send_btn.addActionListener(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e) {
+                                        String message = tf_message.getText();
+                                        out.println(message);
+                                    }
+                                });
+
+                                quit_btn.addActionListener(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e) {
+                                    }
+                                });
+
+                                tf_message.setColumns(50);
+                                label_chat_success.setBounds(100, 50, 800, 25);
+                                label_messagelabel.setBounds(100, 350, 200,25);
+                                tf_message.setBounds(300, 350, 200,25);
+                                send_btn.setBounds(870, 350, 30,25);
+                                quit_btn.setBounds(390, 425, 35,25);
+                                p8.add(label_chat_success);
+                                p8.add(tf_message);
+                                p8.add(send_btn);
+                                p8.add(quit_btn);
+                                frame.add(p8);
+                                frame.setVisible(true);
+                                frame.validate();
+                                frame.repaint();//画面を書き直す
+                            }
+                            //}
+                            
+
+
+
+
                         } else {
                             frame.getContentPane().removeAll();//パネルp7を取り除く
 
@@ -595,6 +607,53 @@ public class Client extends func {
             }
         }
     }
+    
+    /* 
+    public static void chatting(JFrame frame, String join_message, BufferedReader in, PrintWriter out, Scanner sc)  throws IOException {
+        frame.getContentPane().removeAll();//パネルp7を取り除く
+
+        //パネルp8の実装
+        JPanel p8 = new JPanel();
+        p8.setLayout(null);
+
+        JLabel label_chat_success = new JLabel(join_message);
+        //chat_log.txtを表示
+        JLabel label_messagelabel = new JLabel("メッセージ：");
+        JTextField tf_message = new JTextField();
+        JButton send_btn = new JButton("SEND");
+        JButton quit_btn = new JButton("QUIT");
+
+        send_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String message = tf_message.getText();
+                out.println(message);
+
+                gui(frame, in, out, sc);
+            }
+        });
+
+        quit_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        tf_message.setColumns(50);
+        label_chat_success.setBounds(100, 50, 800, 25);
+        label_messagelabel.setBounds(100, 350, 200,25);
+        tf_message.setBounds(300, 350, 200,25);
+        send_btn.setBounds(870, 350, 30,25);
+        quit_btn.setBounds(390, 425, 35,25);
+        p8.add(label_chat_success);
+        p8.add(tf_message);
+        p8.add(send_btn);
+        p8.add(quit_btn);
+        frame.add(p8);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();//画面を書き直す
+    }
+    */
 }
 
 
