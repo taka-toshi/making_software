@@ -231,12 +231,6 @@ public class Client extends func {
                                 
                     /*---------------------------------------------------------------------------------------- */
                     if (option2[0] == 1) {// 1.新規作成
-                        //System.out.println("チャットルーム名を入力してください");
-                        //String room_name = sc.nextLine();
-                        //out.println(room_name);// 7
-
-
-
                         frame.getContentPane().removeAll();//パネルp4を取り除く
 
                         //パネルp5の実装
@@ -280,18 +274,97 @@ public class Client extends func {
                             }
                         }
 
-                        System.out.println(in.readLine());//8
+                        String chat_f = in.readLine();// 8
+                        
+                        frame.getContentPane().removeAll();//パネルp5を取り除く
 
-                        //System.out.println("");
+                        //パネルp6の実装
+                        JPanel p6 = new JPanel();
+                        p6.setLayout(null);
+
+                        JLabel label_chatresult = new JLabel(chat_f);
+
+                        Boolean[] ok4 = { null };
+                        JButton ok4_btn = new JButton("OK");
+                        ok4_btn.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                ok4[0] = true;
+                            }
+                        });
+
+                        label_chatresult.setBounds(420, 236, 500, 25);
+                        ok4_btn.setBounds(570, 286, 50, 50);
+                        p6.add(label_chatresult);
+                        p6.add(ok4_btn);
+                        frame.add(p6);
+                        frame.setVisible(true);
+                        frame.validate();
+                        frame.repaint();//画面を書き直す
+
+                        // okボタンが押されるまで以下のコードを実行しない
+                        while (true) {
+                            if (ok4[0] == null) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+
                     /*---------------------------------------------------------------------------------------- */
-                    } else if (option2[0] == 2) {
-                        System.out.println("参加するチャットルーム名を入力してください");
-                        String room_name = sc.nextLine();
-                        out.println(room_name);// 9
+                    } else if (option2[0] == 2) {// 2. 既存に参加
+                        frame.getContentPane().removeAll();//パネルp6を取り除く
 
-                        System.out.println(in.readLine());// 10
+                        //パネルp7の実装
+                        JPanel p7 = new JPanel();
+                        p7.setLayout(null);
+
+                        JLabel label_chatname = new JLabel("既存のチャットルーム名：");
+                        JTextField tf_chatname = new JTextField();
+
+                        Boolean[] ok5 = { null };
+                        JButton ok5_btn = new JButton("OK");
+                        ok5_btn.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                ok5[0] = true;
+                                String room_name = tf_chatname.getText();
+                                out.println(room_name);// 9
+                            }
+                        });
+
+                        label_chatname.setBounds(300, 236, 200, 25);
+                        tf_chatname.setBounds(525, 236, 200, 25);
+                        ok5_btn.setBounds(675, 261, 50, 50);
+                        p7.add(label_chatname);
+                        p7.add(tf_chatname);
+                        p7.add(ok5_btn);
+                        frame.add(p7);
+                        frame.setVisible(true);
+                        frame.validate();
+                        frame.repaint();//画面を書き直す
+
+                        // okボタンが押されるまで以下のコードを実行しない
+                        while (true) {
+                            if (ok5[0] == null) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+
+
+                        //System.out.println(in.readLine());// 10
+                        String join_message = in.readLine();// 10
                         Boolean JOIN = false;
                         JOIN = Boolean.parseBoolean(in.readLine());// 10.5
+
                         if (JOIN == true) {
                             System.out.println("");
 
@@ -317,15 +390,98 @@ public class Client extends func {
                                     break;
                                 }
                             }
+
+
+
+
+
+                            frame.getContentPane().removeAll();//パネルp7を取り除く
+
+                            //パネルp8の実装
+                            JPanel p8 = new JPanel();
+                            p8.setLayout(null);
+
+                            JLabel label_chat_success = new JLabel(join_message);
+
+
                         } else {
-                            System.out.println("");
+                            frame.getContentPane().removeAll();//パネルp7を取り除く
+
+                            //パネルp9の実装
+                            JPanel p9 = new JPanel();
+                            p9.setLayout(null);
+
+                            JLabel label_chat_failure = new JLabel(join_message);
+                            Boolean[] ok6 = { null };
+                            JButton ok6_btn = new JButton("OK");
+                            ok6_btn.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                    ok6[0] = true;
+                                }
+                            });
+
+                            label_chat_failure.setBounds(420, 236, 500, 25);
+                            ok6_btn.setBounds(570, 286, 50, 50);
+                            p9.add(label_chat_failure);
+                            p9.add(ok6_btn);
+                            frame.add(p9);
+                            frame.setVisible(true);
+                            frame.validate();
+                            frame.repaint();//画面を書き直す
+
+                            // okボタンが押されるまで以下のコードを実行しない
+                            while (true) {
+                                if (ok6[0] == null) {
+                                    try {
+                                        Thread.sleep(100);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    break;
+                                }
+                            }
                         }
                                 
                     /*---------------------------------------------------------------------------------------- */
                     } else if (option2[0] == 3) {// 3.退出する
-                        //System.out.println("終了します。");
-                        //System.out.println("");
-                        break;
+                        frame.getContentPane().removeAll();//パネルを取り除く
+
+                        //パネルp10の実装
+                        JPanel p10 = new JPanel();
+                        p10.setLayout(null);
+
+                        JLabel label_logout = new JLabel("退出できました！");
+                        Boolean[] ok7 = { null };
+                        JButton ok7_btn = new JButton("OK");
+                        ok7_btn.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                ok7[0] = true;
+                            }
+                        });
+
+                        label_logout.setBounds(420, 236, 500, 25);
+                        ok7_btn.setBounds(570, 286, 50, 50);
+                        p10.add(label_logout);
+                        p10.add(ok7_btn);
+                        frame.add(p10);
+                        frame.setVisible(true);
+                        frame.validate();
+                        frame.repaint();//画面を書き直す
+
+                        // okボタンが押されるまで以下のコードを実行しない
+                        while (true) {
+                            if (ok7[0] == null) {
+                                try {
+                                    Thread.sleep(100);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();  
+                                }
+                            } else {
+                                gui(frame, in, out, sc);
+                                break;
+                            }
+                        }
 
                     /*---------------------------------------------------------------------------------------- */
                     }
@@ -374,12 +530,44 @@ public class Client extends func {
 
         /*---------------------------------------------------------------------------------------- */
         } else if (option[0] == 2) {// サインインしたとき
-            System.out.println(in.readLine()); // 6
-        }
-    }
+            frame.getContentPane().removeAll();//パネルを取り除く
 
-    public static void success(){
-        
+            //パネルp11の実装
+            JPanel p11 = new JPanel();
+            p11.setLayout(null);
+
+            JLabel label_signup = new JLabel("サインインが完了しました！");
+            Boolean[] ok8 = { null };
+            JButton ok8_btn = new JButton("OK");
+            ok8_btn.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ok8[0] = true;
+                }
+            });
+
+            label_signup.setBounds(420, 236, 500, 25);
+            ok8_btn.setBounds(570, 286, 50, 50);
+            p11.add(label_signup);
+            p11.add(ok8_btn);
+            frame.add(p11);
+            frame.setVisible(true);
+            frame.validate();
+            frame.repaint();//画面を書き直す
+
+            // okボタンが押されるまで以下のコードを実行しない
+            while (true) {
+                if (ok8[0] == null) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();  
+                    }
+                } else {
+                    gui(frame, in, out, sc);
+                    break;
+                }
+            }
+        }
     }
 }
 
