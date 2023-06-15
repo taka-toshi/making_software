@@ -394,7 +394,7 @@ public class Client extends func {
 
 
 
-
+                            /* 
                             frame.getContentPane().removeAll();//パネルp7を取り除く
 
                             //パネルp8の実装
@@ -402,6 +402,31 @@ public class Client extends func {
                             p8.setLayout(null);
 
                             JLabel label_chat_success = new JLabel(join_message);
+                            //chat_log.txtを表示
+                            JLabel label_messagelabel = new JLabel("メッセージ：");
+                            JTextField tf_message = new JTextField();
+                            JButton send_btn = new JButton("SEND");
+                            JButton quit_btn = new JButton("QUIT");
+
+                            send_btn.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                    String message = tf_message.getText();
+                                    out.println(message);
+                                }
+                            });
+
+                            quit_btn.addActionListener(new ActionListener() {
+                                public void actionPerformed(ActionEvent e) {
+                                }
+                            });
+
+                            tf_message.setColumns(10);
+                            label_chat_success.setBounds();
+                            tf_message.setBounds();
+                            send_btn.setBounds();
+                            quit_btn.setBounds();
+                            p8.add();
+                            */
 
 
                         } else {
