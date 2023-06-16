@@ -21,8 +21,7 @@ public class Client extends func {
         try {
             /*---------------------------------------------------------------------------------------- */
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),
-                    true); // 送信バッファ設定
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
 
             // frameを実装する
             JFrame frame = new JFrame("MyApplication");
@@ -363,38 +362,44 @@ public class Client extends func {
                         JOIN = Boolean.parseBoolean(in.readLine());// 10.5
 
                         if (JOIN == true) {
-                            System.out.println("");
+                            //chatting(frame, join_message, in, out);
 
+                            /*
+                            System.out.println("");
                             System.out.println("チャットを開始します。");
                             String room_mem = in.readLine();// 11
                             System.out.println(room_mem);
                             System.out.println("あなたは '" + room_mem + "' に参加しています。");
                             System.out.println("終了する際は'END'で終了してください。");
                             System.out.println("");
+                            */
 
+                            /*
                             while (true) {
                                 System.out.println("メッセージ：");
                                 String message = sc.nextLine();
                                 out.println(message);
 
-                                /*
-                                 * String echo = in.readLine();// 13
-                                 * System.out.println("echo:"+ echo);
-                                 */
+                                //String echo = in.readLine();// 13
+                                //System.out.println("echo:"+ echo);
 
                                 if (message.equals("END")) {
                                     System.out.println("");
                                     break;
                                 }
                             }
+                            */
 
-                            // public static void chatting(JFrame frame){
                             while (true) {
                                 frame.getContentPane().removeAll();// パネルp7を取り除く
-
+                                //System.out.println(in.readLine());// 13
+                                
                                 // パネルp8の実装
                                 JPanel p8 = new JPanel();
                                 p8.setLayout(null);
+
+                                Boolean chat_option []= { null };
+                                Boolean quit_option []= { null };
 
                                 JLabel label_chat_success = new JLabel(join_message);
                                 // chat_log.txtを表示
@@ -406,22 +411,30 @@ public class Client extends func {
                                 send_btn.addActionListener(new ActionListener() {
                                     public void actionPerformed(ActionEvent e) {
                                         String message = tf_message.getText();
-                                        out.println(message);
+                                        out.println(message);// 12
+                                        System.out.println(message);
+
+                                        chat_option[0] = true;
                                     }
                                 });
 
                                 quit_btn.addActionListener(new ActionListener() {
                                     public void actionPerformed(ActionEvent e) {
+                                        out.println("END");// 12
+
+                                        quit_option[0] = true;
                                     }
                                 });
 
-                                tf_message.setColumns(50);
-                                label_chat_success.setBounds(100, 50, 800, 25);
-                                label_messagelabel.setBounds(100, 350, 200, 25);
-                                tf_message.setBounds(300, 350, 200, 25);
-                                send_btn.setBounds(870, 350, 30, 25);
-                                quit_btn.setBounds(390, 425, 35, 25);
+                                tf_message.setColumns(10);
+                                label_chat_success.setBounds(400, 10, 800, 25);
+                                label_messagelabel.setBounds(300, 350, 200,25);
+                                label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
+                                tf_message.setBounds(500, 350, 200,25);
+                                send_btn.setBounds(700, 350, 60,25);
+                                quit_btn.setBounds(480, 400, 35,25);
                                 p8.add(label_chat_success);
+                                p8.add(label_messagelabel);
                                 p8.add(tf_message);
                                 p8.add(send_btn);
                                 p8.add(quit_btn);
@@ -429,8 +442,25 @@ public class Client extends func {
                                 frame.setVisible(true);
                                 frame.validate();
                                 frame.repaint();// 画面を書き直す
+
+                                if(quit_option[0] == true){
+                                    break;
+                                }
+
+                                // optionの値が決まるまで以下のコードを実行しない
+                                while (true) {
+                                    if (chat_option[0] == true){
+                                       //chatting(frame, join_message, in, out);
+                                       break;
+                                    }else{
+                                        try {
+                                            Thread.sleep(100);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }      
+                                }
                             }
-                            // }
 
                         } else {
                             frame.getContentPane().removeAll();// パネルp7を取り除く
@@ -560,99 +590,12 @@ public class Client extends func {
         } else if (option[0] == 2) {// サインインしたとき
             Boolean SIGNUP = false;
             SIGNUP = Boolean.parseBoolean(in.readLine()); // 6.0
+            frame.getContentPane().removeAll();//パネルを取り除く
 
             if (SIGNUP == true) {// サインイン成功のとき
-                frame.getContentPane().removeAll();// パネルを取り除く
                 signup(frame, in, out, sc); // signup成功のときのパネルを表示
             } else {// サインアップできなかった場合
-                frame.getContentPane().removeAll();// パネルを取り除く
                 not_signup(frame, in, out, sc); // signup失敗のときのパネルを表示
-            }
-        }
-    }
-
-    /*
-     * public static void chatting(JFrame frame, String join_message, BufferedReader
-     * in, PrintWriter out, Scanner sc) throws IOException {
-     * frame.getContentPane().removeAll();//パネルp7を取り除く
-     * 
-     * //パネルp8の実装
-     * JPanel p8 = new JPanel();
-     * p8.setLayout(null);
-     * 
-     * JLabel label_chat_success = new JLabel(join_message);
-     * //chat_log.txtを表示
-     * JLabel label_messagelabel = new JLabel("メッセージ：");
-     * JTextField tf_message = new JTextField();
-     * JButton send_btn = new JButton("SEND");
-     * JButton quit_btn = new JButton("QUIT");
-     * 
-     * send_btn.addActionListener(new ActionListener() {
-     * public void actionPerformed(ActionEvent e) {
-     * String message = tf_message.getText();
-     * out.println(message);
-     * 
-     * gui(frame, in, out, sc);
-     * }
-     * });
-     * 
-     * quit_btn.addActionListener(new ActionListener() {
-     * public void actionPerformed(ActionEvent e) {
-     * 
-     * }
-     * });
-     * 
-     * tf_message.setColumns(50);
-     * label_chat_success.setBounds(100, 50, 800, 25);
-     * label_messagelabel.setBounds(100, 350, 200,25);
-     * tf_message.setBounds(300, 350, 200,25);
-     * send_btn.setBounds(870, 350, 30,25);
-     * quit_btn.setBounds(390, 425, 35,25);
-     * p8.add(label_chat_success);
-     * p8.add(tf_message);
-     * p8.add(send_btn);
-     * p8.add(quit_btn);
-     * frame.add(p8);
-     * frame.setVisible(true);
-     * frame.validate();
-     * frame.repaint();//画面を書き直す
-     * }
-     */
-    private static void not_signup(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
-        // パネル12の実装
-        JPanel p12 = new JPanel();
-        p12.setLayout(null);
-
-        JLabel label_login_failure = new JLabel(in.readLine()); // 6.1
-
-        Boolean[] ok9 = { null };
-        JButton ok9_btn = new JButton("OK");
-        ok9_btn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ok9[0] = true;
-            }
-        });
-
-        label_login_failure.setBounds(420, 236, 200, 25);
-        ok9_btn.setBounds(570, 286, 50, 50);
-        p12.add(label_login_failure);
-        p12.add(ok9_btn);
-        frame.add(p12);
-        frame.setVisible(true);
-        frame.validate();
-        frame.repaint();// 画面を書き直す
-
-        // okボタンが押されるまで以下のコードを実行しない
-        while (true) {
-            if (ok9[0] == null) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                gui(frame, in, out, sc);
-                break;
             }
         }
     }
@@ -694,4 +637,74 @@ public class Client extends func {
             }
         }
     }
+
+    /* 
+    public static void chatting(JFrame frame, String join_message, BufferedReader in, PrintWriter out) {
+        frame.getContentPane().removeAll();//パネルp7を取り除く
+
+        //パネルp8の実装
+        JPanel p8 = new JPanel();
+        p8.setLayout(null);
+
+        Boolean chat_option []= { null };
+        Boolean quit_option []= { null };
+
+        JLabel label_chat_success = new JLabel(join_message);
+        //chat_log.txtを表示
+        JLabel label_messagelabel = new JLabel("メッセージ：");
+        JTextField tf_message = new JTextField();
+        JButton send_btn = new JButton("SEND");
+        JButton quit_btn = new JButton("QUIT");
+
+        send_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String message = tf_message.getText();
+                out.println(message);// 12
+                System.out.println(message);
+
+                chat_option[0] = true;
+            }
+        });
+
+        quit_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                out.println("END");// 12
+
+                quit_option[0] = true;
+            }
+        });
+
+        tf_message.setColumns(10);
+        label_chat_success.setBounds(400, 10, 800, 25);
+        label_messagelabel.setBounds(300, 350, 200,25);
+        label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
+        tf_message.setBounds(500, 350, 200,25);
+        send_btn.setBounds(700, 350, 60,25);
+        quit_btn.setBounds(480, 400, 35,25);
+        p8.add(label_chat_success);
+        p8.add(label_messagelabel);
+        p8.add(tf_message);
+        p8.add(send_btn);
+        p8.add(quit_btn);
+        frame.add(p8);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();//画面を書き直す
+
+        // optionの値が決まるまで以下のコードを実行しない
+        while (true) {
+            if (chat_option[0] == true){
+                chatting(frame, join_message, in, out);
+            }else if(quit_option[0] == true){
+                break;
+            }else{
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }      
+        }
+    }
+    */
 }
