@@ -562,84 +562,11 @@ public class Client extends func {
             SIGNUP = Boolean.parseBoolean(in.readLine()); // 6.0
 
             if (SIGNUP == true) {// サインイン成功のとき
-
                 frame.getContentPane().removeAll();// パネルを取り除く
-
-                // パネルp11の実装
-                JPanel p11 = new JPanel();
-                p11.setLayout(null);
-
-                JLabel label_signup = new JLabel("サインインが完了しました！");
-                Boolean[] ok8 = { null };
-                JButton ok8_btn = new JButton("OK");
-                ok8_btn.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        ok8[0] = true;
-                    }
-                });
-
-                label_signup.setBounds(420, 236, 500, 25);
-                ok8_btn.setBounds(570, 286, 50, 50);
-                p11.add(label_signup);
-                p11.add(ok8_btn);
-                frame.add(p11);
-                frame.setVisible(true);
-                frame.validate();
-                frame.repaint();// 画面を書き直す
-
-                // okボタンが押されるまで以下のコードを実行しない
-                while (true) {
-                    if (ok8[0] == null) {
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        gui(frame, in, out, sc);
-                        break;
-                    }
-                }
+                signup(frame, in, out, sc); // signup成功のときのパネルを表示
             } else {// サインアップできなかった場合
                 frame.getContentPane().removeAll();// パネルを取り除く
-
-                // パネル12の実装
-                JPanel p12 = new JPanel();
-                p12.setLayout(null);
-
-                JLabel label_login_failure = new JLabel(in.readLine()); // 6.1
-
-                Boolean[] ok9 = { null };
-                JButton ok9_btn = new JButton("OK");
-                ok9_btn.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        ok9[0] = true;
-                    }
-                });
-
-                label_login_failure.setBounds(420, 236, 200, 25);
-                ok9_btn.setBounds(570, 286, 50, 50);
-                p12.add(label_login_failure);
-                p12.add(ok9_btn);
-                frame.add(p12);
-                frame.setVisible(true);
-                frame.validate();
-                frame.repaint();// 画面を書き直す
-
-                // okボタンが押されるまで以下のコードを実行しない
-                while (true) {
-                    if (ok9[0] == null) {
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        gui(frame, in, out, sc);
-                        break;
-                    }
-                }
-
+                not_signup(frame, in, out, sc); // signup失敗のときのパネルを表示
             }
         }
     }
@@ -691,4 +618,80 @@ public class Client extends func {
      * frame.repaint();//画面を書き直す
      * }
      */
+    private static void not_signup(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+        // パネル12の実装
+        JPanel p12 = new JPanel();
+        p12.setLayout(null);
+
+        JLabel label_login_failure = new JLabel(in.readLine()); // 6.1
+
+        Boolean[] ok9 = { null };
+        JButton ok9_btn = new JButton("OK");
+        ok9_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ok9[0] = true;
+            }
+        });
+
+        label_login_failure.setBounds(420, 236, 200, 25);
+        ok9_btn.setBounds(570, 286, 50, 50);
+        p12.add(label_login_failure);
+        p12.add(ok9_btn);
+        frame.add(p12);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();// 画面を書き直す
+
+        // okボタンが押されるまで以下のコードを実行しない
+        while (true) {
+            if (ok9[0] == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                gui(frame, in, out, sc);
+                break;
+            }
+        }
+    }
+
+    private static void signup(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+        // パネルp11の実装
+        JPanel p11 = new JPanel();
+        p11.setLayout(null);
+
+        JLabel label_signup = new JLabel("サインインが完了しました！");
+        Boolean[] ok8 = { null };
+        JButton ok8_btn = new JButton("OK");
+        ok8_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ok8[0] = true;
+            }
+        });
+
+        label_signup.setBounds(420, 236, 500, 25);
+        ok8_btn.setBounds(570, 286, 50, 50);
+        p11.add(label_signup);
+        p11.add(ok8_btn);
+        frame.add(p11);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();// 画面を書き直す
+
+        // okボタンが押されるまで以下のコードを実行しない
+        while (true) {
+            if (ok8[0] == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                gui(frame, in, out, sc);
+                break;
+            }
+        }
+    }
 }
