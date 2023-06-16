@@ -100,10 +100,11 @@ public class AServer extends func {
                                     // ルームをdbから探して、チャットルームに参加する
                                     List<String> list_data2 = new ArrayList<String>();
                                     list_data2 = check_chat_room(db, room_name);
-
+                                    Boolean JOIN_CHAT = false;
                                     if (Integer.parseInt(list_data2.get(0)) == 1) {
+                                        JOIN_CHAT = true;
                                         out.println(room_name + "に参加できました!");// 10
-                                        out.println(true);// 10.5
+                                        out.println(JOIN_CHAT);// 10.5
                                         out.println(room_name);// 11
 
                                         chat_log = new File(room_name + "_chat_log.txt");
@@ -131,8 +132,9 @@ public class AServer extends func {
                                         }
 
                                     } else {
+                                        JOIN_CHAT = false;
                                         out.println(room_name + "に参加できませんでした。");// 10
-                                        out.println(false);// 10.5
+                                        out.println(JOIN_CHAT);// 10.5
                                     }
 
                                     /*---------------------------------------------------------------------------------------- */
