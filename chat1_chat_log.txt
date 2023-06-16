@@ -1,4 +1,4 @@
 hi!
 hello!
-good morning!
+Good morning!
 END
