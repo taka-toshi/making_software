@@ -638,6 +638,45 @@ public class Client extends func {
         }
     }
 
+    private static void not_signup(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+        // パネル12の実装
+        JPanel p12 = new JPanel();
+        p12.setLayout(null);
+
+        JLabel label_login_failure = new JLabel(in.readLine()); // 6.1
+
+        Boolean[] ok9 = { null };
+        JButton ok9_btn = new JButton("OK");
+        ok9_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ok9[0] = true;
+            }
+        });
+
+        label_login_failure.setBounds(420, 236, 200, 25);
+        ok9_btn.setBounds(570, 286, 50, 50);
+        p12.add(label_login_failure);
+        p12.add(ok9_btn);
+        frame.add(p12);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();// 画面を書き直す
+
+        // okボタンが押されるまで以下のコードを実行しない
+        while (true) {
+            if (ok9[0] == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                gui(frame, in, out, sc);
+                break;
+            }
+        }
+    }
+
     /* 
     public static void chatting(JFrame frame, String join_message, BufferedReader in, PrintWriter out) {
         frame.getContentPane().removeAll();//パネルp7を取り除く
