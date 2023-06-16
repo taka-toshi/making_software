@@ -21,40 +21,39 @@ public class Client extends func {
         try {
             /*---------------------------------------------------------------------------------------- */
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
-            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),
+                    true); // 送信バッファ設定
 
             // frameを実装する
             JFrame frame = new JFrame("MyApplication");
             // frame.setTitle("MyApplication!");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             Rectangle table = new Rectangle(1000, 500);
-            frame.setBounds(table);//frameのサイズを指定→table
-            frame.setLocationRelativeTo(null);//画面の真ん中にframeを表示
+            frame.setBounds(table);// frameのサイズを指定→table
+            frame.setLocationRelativeTo(null);// 画面の真ん中にframeを表示
 
             System.out.println(in.readLine()); // 1
 
             gui(frame, in, out, sc);
-         
-        }finally{
+
+        } finally {
             System.out.println("closing...");
             socket.close();
             sc.close();
         }
     }
-    
 
+    public static void gui(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+        frame.getContentPane().removeAll();// パネルがあれば取り除く
 
-    public static void gui(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException{
-        frame.getContentPane().removeAll();//パネルがあれば取り除く
-        
-        //パネルp1をframeに追加する
+        // パネルp1をframeに追加する
         JPanel p1 = new JPanel();
         p1.setLayout(null);
 
-        //final Integer[] option = { null };
+        // final Integer[] option = { null };
         Integer[] option = { null };
 
-        //ログインボタンの実装
+        // ログインボタンの実装
         JButton login_btn = new JButton("ログイン");
         login_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -63,22 +62,22 @@ public class Client extends func {
             }
         });
 
-        //サインアップボタンの実装
+        // サインアップボタンの実装
         JButton signup_btn = new JButton("サインイン");
         signup_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 option[0] = 2;
-                out.println(option[0]);// 2 
+                out.println(option[0]);// 2
             }
         });
 
-        login_btn.setBounds(375,225, 100,50);
-        signup_btn.setBounds(525,225, 100,50);
+        login_btn.setBounds(375, 225, 100, 50);
+        signup_btn.setBounds(525, 225, 100, 50);
         p1.add(login_btn);
         p1.add(signup_btn);
         frame.getContentPane().add(p1);
         frame.setVisible(true);
-                
+
         // optionの値が決まるまで以下のコードを実行しない
         while (true) {
             if (option[0] == null) {
@@ -89,13 +88,13 @@ public class Client extends func {
                 }
             } else {
                 break;
-            }       
+            }
         }
 
         /*---------------------------------------------------------------------------------------- */
-        frame.getContentPane().removeAll();//パネルp1を取り除く
-                
-        //パネルp2の実装
+        frame.getContentPane().removeAll();// パネルp1を取り除く
+
+        // パネルp2の実装
         JPanel p2 = new JPanel();
         p2.setLayout(null);
 
@@ -104,7 +103,7 @@ public class Client extends func {
         JTextField tf_user = new JTextField();
         JPasswordField tf_pass = new JPasswordField();
 
-        //final Boolean[] ok = { null };
+        // final Boolean[] ok = { null };
         Boolean[] ok = { null };
         Boolean[] noerror = { null };
         JButton ok_btn = new JButton("OK");
@@ -116,13 +115,13 @@ public class Client extends func {
                 String pass_str = new String(pass);
                 String hash_pass = make_hash(pass_str);
 
-                //もしusernameまたはpassのどちらか一方が空白だった場合はエラーを表示させる
-                if (username.equals(null) || username.equals("")){
+                // もしusernameまたはpassのどちらか一方が空白だった場合はエラーを表示させる
+                if (username.equals(null) || username.equals("")) {
                     JOptionPane.showMessageDialog(null, "ユーザー名を入力してください");
-                }else if(pass_str.equals(null) || pass_str .equals("")){
+                } else if (pass_str.equals(null) || pass_str.equals("")) {
                     JOptionPane.showMessageDialog(null, "パスワードを入力してください");
                 } else {
-                    out.println(ok[0]);//3
+                    out.println(ok[0]);// 3
                     out.println(username);// 4
                     out.println(hash_pass);// 5
                     noerror[0] = true;
@@ -145,9 +144,9 @@ public class Client extends func {
         frame.add(p2);
         frame.setVisible(true);
         frame.validate();
-        frame.repaint();//画面を書き直す
+        frame.repaint();// 画面を書き直す
 
-        //エラーなし（usernameもpasswordも正常に入力）になるまで以下のコードを実行しない
+        // エラーなし（usernameもpasswordも正常に入力）になるまで以下のコードを実行しない
         while (true) {
             if (noerror[0] == null) {
                 try {
@@ -160,18 +159,17 @@ public class Client extends func {
             }
         }
 
-
         /*---------------------------------------------------------------------------------------- */
         if (option[0] == 1) {
             Boolean LOGIN = false;
             LOGIN = Boolean.parseBoolean(in.readLine()); // 5
 
             if (LOGIN == true) {// ログイン成功のとき
-                            
-                while (true) {
-                    frame.getContentPane().removeAll();//パネルp2を取り除く
 
-                    //パネルp4の実装
+                while (true) {
+                    frame.getContentPane().removeAll();// パネルp2を取り除く
+
+                    // パネルp4の実装
                     JPanel p4 = new JPanel();
                     p4.setLayout(null);
 
@@ -214,7 +212,7 @@ public class Client extends func {
                     frame.add(p4);
                     frame.setVisible(true);
                     frame.validate();
-                    frame.repaint();//画面を書き直す
+                    frame.repaint();// 画面を書き直す
 
                     // ３つのボタンのうちどれかが押されるまで以下のコードを実行しない
                     while (true) {
@@ -228,12 +226,12 @@ public class Client extends func {
                             break;
                         }
                     }
-                                
+
                     /*---------------------------------------------------------------------------------------- */
                     if (option2[0] == 1) {// 1.新規作成
-                        frame.getContentPane().removeAll();//パネルp4を取り除く
+                        frame.getContentPane().removeAll();// パネルp4を取り除く
 
-                        //パネルp5の実装
+                        // パネルp5の実装
                         JPanel p5 = new JPanel();
                         p5.setLayout(null);
 
@@ -259,7 +257,7 @@ public class Client extends func {
                         frame.add(p5);
                         frame.setVisible(true);
                         frame.validate();
-                        frame.repaint();//画面を書き直す
+                        frame.repaint();// 画面を書き直す
 
                         // okボタンが押されるまで以下のコードを実行しない
                         while (true) {
@@ -275,10 +273,10 @@ public class Client extends func {
                         }
 
                         String chat_f = in.readLine();// 8
-                        
-                        frame.getContentPane().removeAll();//パネルp5を取り除く
 
-                        //パネルp6の実装
+                        frame.getContentPane().removeAll();// パネルp5を取り除く
+
+                        // パネルp6の実装
                         JPanel p6 = new JPanel();
                         p6.setLayout(null);
 
@@ -299,7 +297,7 @@ public class Client extends func {
                         frame.add(p6);
                         frame.setVisible(true);
                         frame.validate();
-                        frame.repaint();//画面を書き直す
+                        frame.repaint();// 画面を書き直す
 
                         // okボタンが押されるまで以下のコードを実行しない
                         while (true) {
@@ -314,11 +312,11 @@ public class Client extends func {
                             }
                         }
 
-                    /*---------------------------------------------------------------------------------------- */
+                        /*---------------------------------------------------------------------------------------- */
                     } else if (option2[0] == 2) {// 2. 既存に参加
-                        frame.getContentPane().removeAll();//パネルp6を取り除く
+                        frame.getContentPane().removeAll();// パネルp6を取り除く
 
-                        //パネルp7の実装
+                        // パネルp7の実装
                         JPanel p7 = new JPanel();
                         p7.setLayout(null);
 
@@ -344,7 +342,7 @@ public class Client extends func {
                         frame.add(p7);
                         frame.setVisible(true);
                         frame.validate();
-                        frame.repaint();//画面を書き直す
+                        frame.repaint();// 画面を書き直す
 
                         // okボタンが押されるまで以下のコードを実行しない
                         while (true) {
@@ -359,8 +357,7 @@ public class Client extends func {
                             }
                         }
 
-
-                        //System.out.println(in.readLine());// 10
+                        // System.out.println(in.readLine());// 10
                         String join_message = in.readLine();// 10
                         Boolean JOIN = false;
                         JOIN = Boolean.parseBoolean(in.readLine());// 10.5
@@ -381,9 +378,9 @@ public class Client extends func {
                                 out.println(message);
 
                                 /*
-                                * String echo = in.readLine();// 13
-                                * System.out.println("echo:"+ echo);
-                                */
+                                 * String echo = in.readLine();// 13
+                                 * System.out.println("echo:"+ echo);
+                                 */
 
                                 if (message.equals("END")) {
                                     System.out.println("");
@@ -391,19 +388,16 @@ public class Client extends func {
                                 }
                             }
 
+                            // public static void chatting(JFrame frame){
+                            while (true) {
+                                frame.getContentPane().removeAll();// パネルp7を取り除く
 
-
-                            
-                            //public static void chatting(JFrame frame){
-                            while(true){
-                                frame.getContentPane().removeAll();//パネルp7を取り除く
-
-                                //パネルp8の実装
+                                // パネルp8の実装
                                 JPanel p8 = new JPanel();
                                 p8.setLayout(null);
 
                                 JLabel label_chat_success = new JLabel(join_message);
-                                //chat_log.txtを表示
+                                // chat_log.txtを表示
                                 JLabel label_messagelabel = new JLabel("メッセージ：");
                                 JTextField tf_message = new JTextField();
                                 JButton send_btn = new JButton("SEND");
@@ -423,10 +417,10 @@ public class Client extends func {
 
                                 tf_message.setColumns(50);
                                 label_chat_success.setBounds(100, 50, 800, 25);
-                                label_messagelabel.setBounds(100, 350, 200,25);
-                                tf_message.setBounds(300, 350, 200,25);
-                                send_btn.setBounds(870, 350, 30,25);
-                                quit_btn.setBounds(390, 425, 35,25);
+                                label_messagelabel.setBounds(100, 350, 200, 25);
+                                tf_message.setBounds(300, 350, 200, 25);
+                                send_btn.setBounds(870, 350, 30, 25);
+                                quit_btn.setBounds(390, 425, 35, 25);
                                 p8.add(label_chat_success);
                                 p8.add(tf_message);
                                 p8.add(send_btn);
@@ -434,18 +428,14 @@ public class Client extends func {
                                 frame.add(p8);
                                 frame.setVisible(true);
                                 frame.validate();
-                                frame.repaint();//画面を書き直す
+                                frame.repaint();// 画面を書き直す
                             }
-                            //}
-                            
-
-
-
+                            // }
 
                         } else {
-                            frame.getContentPane().removeAll();//パネルp7を取り除く
+                            frame.getContentPane().removeAll();// パネルp7を取り除く
 
-                            //パネルp9の実装
+                            // パネルp9の実装
                             JPanel p9 = new JPanel();
                             p9.setLayout(null);
 
@@ -465,7 +455,7 @@ public class Client extends func {
                             frame.add(p9);
                             frame.setVisible(true);
                             frame.validate();
-                            frame.repaint();//画面を書き直す
+                            frame.repaint();// 画面を書き直す
 
                             // okボタンが押されるまで以下のコードを実行しない
                             while (true) {
@@ -480,12 +470,12 @@ public class Client extends func {
                                 }
                             }
                         }
-                                
-                    /*---------------------------------------------------------------------------------------- */
-                    } else if (option2[0] == 3) {// 3.退出する
-                        frame.getContentPane().removeAll();//パネルを取り除く
 
-                        //パネルp10の実装
+                        /*---------------------------------------------------------------------------------------- */
+                    } else if (option2[0] == 3) {// 3.退出する
+                        frame.getContentPane().removeAll();// パネルを取り除く
+
+                        // パネルp10の実装
                         JPanel p10 = new JPanel();
                         p10.setLayout(null);
 
@@ -505,7 +495,7 @@ public class Client extends func {
                         frame.add(p10);
                         frame.setVisible(true);
                         frame.validate();
-                        frame.repaint();//画面を書き直す
+                        frame.repaint();// 画面を書き直す
 
                         // okボタンが押されるまで以下のコードを実行しない
                         while (true) {
@@ -513,7 +503,7 @@ public class Client extends func {
                                 try {
                                     Thread.sleep(100);
                                 } catch (InterruptedException e) {
-                                    e.printStackTrace();  
+                                    e.printStackTrace();
                                 }
                             } else {
                                 gui(frame, in, out, sc);
@@ -521,13 +511,13 @@ public class Client extends func {
                             }
                         }
 
-                    /*---------------------------------------------------------------------------------------- */
+                        /*---------------------------------------------------------------------------------------- */
                     }
                 }
             } else {// ログイン失敗のとき
-                frame.getContentPane().removeAll();//パネルp2を取り除く
+                frame.getContentPane().removeAll();// パネルp2を取り除く
 
-                //パネルp3の実装
+                // パネルp3の実装
                 JPanel p3 = new JPanel();
                 p3.setLayout(null);
 
@@ -548,7 +538,7 @@ public class Client extends func {
                 frame.add(p3);
                 frame.setVisible(true);
                 frame.validate();
-                frame.repaint();//画面を書き直す
+                frame.repaint();// 画面を書き直す
 
                 // okボタンが押されるまで以下のコードを実行しない
                 while (true) {
@@ -566,94 +556,139 @@ public class Client extends func {
 
             }
 
-        /*---------------------------------------------------------------------------------------- */
+            /*---------------------------------------------------------------------------------------- */
         } else if (option[0] == 2) {// サインインしたとき
-            frame.getContentPane().removeAll();//パネルを取り除く
+            Boolean SIGNUP = false;
+            SIGNUP = Boolean.parseBoolean(in.readLine()); // 6.0
 
-            //パネルp11の実装
-            JPanel p11 = new JPanel();
-            p11.setLayout(null);
+            if (SIGNUP == true) {// サインイン成功のとき
 
-            JLabel label_signup = new JLabel("サインインが完了しました！");
-            Boolean[] ok8 = { null };
-            JButton ok8_btn = new JButton("OK");
-            ok8_btn.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    ok8[0] = true;
-                }
-            });
+                frame.getContentPane().removeAll();// パネルを取り除く
 
-            label_signup.setBounds(420, 236, 500, 25);
-            ok8_btn.setBounds(570, 286, 50, 50);
-            p11.add(label_signup);
-            p11.add(ok8_btn);
-            frame.add(p11);
-            frame.setVisible(true);
-            frame.validate();
-            frame.repaint();//画面を書き直す
+                // パネルp11の実装
+                JPanel p11 = new JPanel();
+                p11.setLayout(null);
 
-            // okボタンが押されるまで以下のコードを実行しない
-            while (true) {
-                if (ok8[0] == null) {
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();  
+                JLabel label_signup = new JLabel("サインインが完了しました！");
+                Boolean[] ok8 = { null };
+                JButton ok8_btn = new JButton("OK");
+                ok8_btn.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        ok8[0] = true;
                     }
-                } else {
-                    gui(frame, in, out, sc);
-                    break;
+                });
+
+                label_signup.setBounds(420, 236, 500, 25);
+                ok8_btn.setBounds(570, 286, 50, 50);
+                p11.add(label_signup);
+                p11.add(ok8_btn);
+                frame.add(p11);
+                frame.setVisible(true);
+                frame.validate();
+                frame.repaint();// 画面を書き直す
+
+                // okボタンが押されるまで以下のコードを実行しない
+                while (true) {
+                    if (ok8[0] == null) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        gui(frame, in, out, sc);
+                        break;
+                    }
                 }
+            } else {// サインアップできなかった場合
+                frame.getContentPane().removeAll();// パネルを取り除く
+
+                // パネル12の実装
+                JPanel p12 = new JPanel();
+                p12.setLayout(null);
+
+                JLabel label_login_failure = new JLabel(in.readLine()); // 6.1
+
+                Boolean[] ok9 = { null };
+                JButton ok9_btn = new JButton("OK");
+                ok9_btn.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        ok9[0] = true;
+                    }
+                });
+
+                label_login_failure.setBounds(420, 236, 200, 25);
+                ok9_btn.setBounds(570, 286, 50, 50);
+                p12.add(label_login_failure);
+                p12.add(ok9_btn);
+                frame.add(p12);
+                frame.setVisible(true);
+                frame.validate();
+                frame.repaint();// 画面を書き直す
+
+                // okボタンが押されるまで以下のコードを実行しない
+                while (true) {
+                    if (ok9[0] == null) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        gui(frame, in, out, sc);
+                        break;
+                    }
+                }
+
             }
         }
     }
-    
-    /* 
-    public static void chatting(JFrame frame, String join_message, BufferedReader in, PrintWriter out, Scanner sc)  throws IOException {
-        frame.getContentPane().removeAll();//パネルp7を取り除く
 
-        //パネルp8の実装
-        JPanel p8 = new JPanel();
-        p8.setLayout(null);
-
-        JLabel label_chat_success = new JLabel(join_message);
-        //chat_log.txtを表示
-        JLabel label_messagelabel = new JLabel("メッセージ：");
-        JTextField tf_message = new JTextField();
-        JButton send_btn = new JButton("SEND");
-        JButton quit_btn = new JButton("QUIT");
-
-        send_btn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String message = tf_message.getText();
-                out.println(message);
-
-                gui(frame, in, out, sc);
-            }
-        });
-
-        quit_btn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
-        tf_message.setColumns(50);
-        label_chat_success.setBounds(100, 50, 800, 25);
-        label_messagelabel.setBounds(100, 350, 200,25);
-        tf_message.setBounds(300, 350, 200,25);
-        send_btn.setBounds(870, 350, 30,25);
-        quit_btn.setBounds(390, 425, 35,25);
-        p8.add(label_chat_success);
-        p8.add(tf_message);
-        p8.add(send_btn);
-        p8.add(quit_btn);
-        frame.add(p8);
-        frame.setVisible(true);
-        frame.validate();
-        frame.repaint();//画面を書き直す
-    }
-    */
+    /*
+     * public static void chatting(JFrame frame, String join_message, BufferedReader
+     * in, PrintWriter out, Scanner sc) throws IOException {
+     * frame.getContentPane().removeAll();//パネルp7を取り除く
+     * 
+     * //パネルp8の実装
+     * JPanel p8 = new JPanel();
+     * p8.setLayout(null);
+     * 
+     * JLabel label_chat_success = new JLabel(join_message);
+     * //chat_log.txtを表示
+     * JLabel label_messagelabel = new JLabel("メッセージ：");
+     * JTextField tf_message = new JTextField();
+     * JButton send_btn = new JButton("SEND");
+     * JButton quit_btn = new JButton("QUIT");
+     * 
+     * send_btn.addActionListener(new ActionListener() {
+     * public void actionPerformed(ActionEvent e) {
+     * String message = tf_message.getText();
+     * out.println(message);
+     * 
+     * gui(frame, in, out, sc);
+     * }
+     * });
+     * 
+     * quit_btn.addActionListener(new ActionListener() {
+     * public void actionPerformed(ActionEvent e) {
+     * 
+     * }
+     * });
+     * 
+     * tf_message.setColumns(50);
+     * label_chat_success.setBounds(100, 50, 800, 25);
+     * label_messagelabel.setBounds(100, 350, 200,25);
+     * tf_message.setBounds(300, 350, 200,25);
+     * send_btn.setBounds(870, 350, 30,25);
+     * quit_btn.setBounds(390, 425, 35,25);
+     * p8.add(label_chat_success);
+     * p8.add(tf_message);
+     * p8.add(send_btn);
+     * p8.add(quit_btn);
+     * frame.add(p8);
+     * frame.setVisible(true);
+     * frame.validate();
+     * frame.repaint();//画面を書き直す
+     * }
+     */
 }
-
-

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AServer extends func {
     public static void main(String[] args) throws IOException {
-        //データベースの設定
+        // データベースの設定
         File db = new File("database.db");
         if (!db.exists()) {
             try {
@@ -17,9 +17,9 @@ public class AServer extends func {
             }
         }
 
-        //usernameとpasswordを保存するテーブルを制作
+        // usernameとpasswordを保存するテーブルを制作
         create_table(db);
-        //チャットルームの名前を保存するテーブルを制作
+        // チャットルームの名前を保存するテーブルを制作
         create_table_chatname(db);
 
         final int PORT = 8080; // ポート番号をプログラムの引数で与える
@@ -32,7 +32,8 @@ public class AServer extends func {
             try {
                 /*---------------------------------------------------------------------------------------- */
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
-                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
+                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),
+                        true); // 送信バッファ設定
 
                 out.println("Serverと接続しました。"); // 1
 
@@ -40,13 +41,13 @@ public class AServer extends func {
                 Integer option = Integer.parseInt(in.readLine()); // 2
 
                 /*---------------------------------------------------------------------------------------- */
-                Boolean ok = Boolean.parseBoolean(in.readLine());//3
+                Boolean ok = Boolean.parseBoolean(in.readLine());// 3
                 String username = in.readLine(); // 4
                 String pass = in.readLine(); // 5
                 String hash_pass = make_hash(pass);
 
                 /*---------------------------------------------------------------------------------------- */
-                if (ok){
+                if (ok) {
                     if (option == 1) {
                         List<String> list_data = new ArrayList<String>();
                         list_data = login_user(db, username, hash_pass);
@@ -62,17 +63,17 @@ public class AServer extends func {
 
                                 /*---------------------------------------------------------------------------------------- */
                                 if (option2 == 1) {// 1.新規作成
-                                    //チャットルームの名前を受信
+                                    // チャットルームの名前を受信
                                     String room_name = in.readLine();// 7
 
                                     // room_nameの制限 \ / : * ? " < > |
                                     if (room_name.contains("\\") || room_name.contains("/") || room_name.contains(":")
-                                        || room_name.contains("*") || room_name.contains("?")
-                                        || room_name.contains("\"") || room_name.contains("<")
-                                        || room_name.contains(">") || room_name.contains("|")) {
+                                            || room_name.contains("*") || room_name.contains("?")
+                                            || room_name.contains("\"") || room_name.contains("<")
+                                            || room_name.contains(">") || room_name.contains("|")) {
                                         out.println("チャットルーム名に \\ / : * ? \" < > | は使えません。");// 8
                                     } else {
-                                        //チャットルームがあるかdbから探す
+                                        // チャットルームがあるかdbから探す
                                         List<String> list_data2 = new ArrayList<String>();
                                         list_data2 = check_chat_room(db, room_name);
 
@@ -80,7 +81,7 @@ public class AServer extends func {
                                             if (Integer.parseInt(list_data2.get(0)) == 1) {
                                                 out.println("'" + room_name + "'というチャットルームが存在します");
                                             } else {
-                                                //チャットルームの名前をテーブルに追加
+                                                // チャットルームの名前をテーブルに追加
                                                 add_chatname(db, room_name);
 
                                                 chat_log = new File(room_name + "_chat_log.txt");
@@ -96,7 +97,7 @@ public class AServer extends func {
                                 } else if (option2 == 2) {// 2. 既存に参加
                                     String room_name = in.readLine();// 9
 
-                                    //ルームをdbから探して、チャットルームに参加する
+                                    // ルームをdbから探して、チャットルームに参加する
                                     List<String> list_data2 = new ArrayList<String>();
                                     list_data2 = check_chat_room(db, room_name);
 
@@ -108,15 +109,16 @@ public class AServer extends func {
                                         chat_log = new File(room_name + "_chat_log.txt");
 
                                         while (true) {
-                                            BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
+                                            BufferedReader chat_log_reader = new BufferedReader(
+                                                    new FileReader(chat_log));
                                             PrintWriter chat_log_writer = new PrintWriter(
                                                     new BufferedWriter(new FileWriter(chat_log, true)));
                                             /*
-                                            * String chat_log_line;
-                                            * while ((chat_log_line = chat_log_reader.readLine()) != null) {
-                                            * out.println(chat_log_line);// 13
-                                            * }
-                                            */
+                                             * String chat_log_line;
+                                             * while ((chat_log_line = chat_log_reader.readLine()) != null) {
+                                             * out.println(chat_log_line);// 13
+                                             * }
+                                             */
                                             chat_log_reader.close();
 
                                             String chat_log_data = in.readLine();// 12
@@ -146,27 +148,36 @@ public class AServer extends func {
 
                         /*---------------------------------------------------------------------------------------- */
                     } else if (option == 2) {
+                        Boolean SignUp = false;
                         if (username.contains("\\") || username.contains("/") || username.contains(":")
-                            || username.contains("*") || username.contains("?")
-                            || username.contains("\"") || username.contains("<")
-                            || username.contains(">") || username.contains("|")) {
-                            out.println("ユーザー名に \\ / : * ? \" < > | は使えません。");// 6
+                                || username.contains("*") || username.contains("?")
+                                || username.contains("\"") || username.contains("<")
+                                || username.contains(">") || username.contains("|")) {
+                            SignUp = false;
+                            out.println(SignUp); // 6.0
+                            out.println("ユーザー名に \\ / : * ? \" < > | は使えません。");// 6.1
                         } else {
                             List<String> list_data2 = new ArrayList<String>();
                             list_data2 = check_user(db, username);
                             if (list_data2.size() == 1) {
                                 if (Integer.parseInt(list_data2.get(0)) == 1) {
-                                    out.println("'" + username + "'というユーザーが存在します"); // 6
+                                    SignUp = false;
+                                    out.println(SignUp); // 6.0
+                                    out.println("'" + username + "'というユーザーが存在します"); // 6.1
                                 } else {
                                     add_user(db, username, hash_pass);
-                                    out.println("ユーザーを追加しました"); // 6
+                                    SignUp = true;
+                                    out.println(SignUp); // 6.0
+                                    // out.println("ユーザーを追加しました"); // 6.1
                                 }
                             } else {
-                                out.println("ユーザーを追加できませんでした"); // 6
+                                SignUp = false;
+                                out.println(SignUp); // 6.0
+                                out.println("ユーザーを追加できませんでした"); // 6.1
                             }
                         }
                     }
-                }else {
+                } else {
                     Boolean LOGIN = false;
                     out.println(LOGIN); // 5
                 }
