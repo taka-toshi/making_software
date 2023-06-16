@@ -374,6 +374,7 @@ public class Client extends func {
 
                                 System.out.println(in.readLine());// 13
 
+                                
                                 //パネルp8の実装
                                 JPanel p8 = new JPanel();
                                 p8.setLayout(null);
