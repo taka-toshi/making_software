@@ -373,7 +373,7 @@ public class Client extends func {
                             while(true){
                                 frame.getContentPane().removeAll();//パネルp7を取り除く
 
-                                System.out.println(in.readLine());// 13
+                                //System.out.println(in.readLine());// 13
 
 
                                 //パネルp8の実装
