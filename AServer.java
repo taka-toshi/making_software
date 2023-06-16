@@ -110,13 +110,13 @@ public class AServer extends func {
                                         while (true) {
                                             BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
                                             PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
-                                            
+                                            /* 
                                             String chat_log_line;
                                             
                                             while ((chat_log_line = chat_log_reader.readLine()) != null) {
                                                 out.println(chat_log_line);// 13
                                             }
-                                            
+                                            */
                                             chat_log_reader.close();
 
                                             String chat_log_data = in.readLine();// 12
