@@ -103,23 +103,24 @@ public class AServer extends func {
                                     if (Integer.parseInt(list_data2.get(0)) == 1) {
                                         out.println(room_name + "に参加できました!");// 10
                                         out.println(true);// 10.5
-                                        out.println(room_name);// 11
+                                        //out.println(room_name);// 11
 
                                         chat_log = new File(room_name + "_chat_log.txt");
 
                                         while (true) {
                                             BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
-                                            PrintWriter chat_log_writer = new PrintWriter(
-                                                    new BufferedWriter(new FileWriter(chat_log, true)));
-                                            /*
-                                            * String chat_log_line;
-                                            * while ((chat_log_line = chat_log_reader.readLine()) != null) {
-                                            * out.println(chat_log_line);// 13
-                                            * }
-                                            */
+                                            PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
+                                            
+                                            String chat_log_line;
+                                            
+                                            while ((chat_log_line = chat_log_reader.readLine()) != null) {
+                                                out.println(chat_log_line);// 13
+                                            }
+                                            
                                             chat_log_reader.close();
 
                                             String chat_log_data = in.readLine();// 12
+                                            System.out.println(chat_log_data);
                                             chat_log_writer.println(chat_log_data);
                                             chat_log_writer.close();
 
