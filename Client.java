@@ -2,8 +2,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import javax.swing.*;
-//import java.math.BigInteger;
-//import java.security.*;
 
 import java.awt.Rectangle;
 import java.awt.event.*;
@@ -25,7 +23,6 @@ public class Client extends func {
 
             // frameを実装する
             JFrame frame = new JFrame("MyApplication");
-            // frame.setTitle("MyApplication!");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             Rectangle table = new Rectangle(1000, 500);
             frame.setBounds(table);// frameのサイズを指定→table
@@ -43,13 +40,12 @@ public class Client extends func {
     }
 
     public static void gui(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
-        frame.getContentPane().removeAll();// パネルがあれば取り除く
-        // final Integer[] option = { null };
+        frame.getContentPane().removeAll();// パネル取り除く
         Integer[] option = { null };
-        option = init_panel(frame, in, out, option); // ログインとサインインのボタンを表示
+        option = init_panel(frame, out, option); // ログインとサインインのボタンを表示 p1
         /*---------------------------------------------------------------------------------------- */
-        frame.getContentPane().removeAll();// パネルp1を取り除く
-        input_panel(frame, in, out); // ユーザー名とパスワードの入力欄を表示
+        frame.getContentPane().removeAll();// パネル取り除く
+        input_panel(frame, out); // ユーザー名とパスワードの入力欄を表示 p2
         /*---------------------------------------------------------------------------------------- */
         if (option[0] == 1) {
             Boolean LOGIN = false;
@@ -58,140 +54,25 @@ public class Client extends func {
             if (LOGIN == true) {// ログイン成功のとき
 
                 while (true) {
-                    frame.getContentPane().removeAll();// パネルp2を取り除く
+                    frame.getContentPane().removeAll();// パネルを取り除く
                     Integer[] option2 = { null };
-                    option2 = chat_action(frame, in, out, option2); // チャットルームの新規作成、既存に参加、退出のボタンを表示
+                    option2 = chat_action_panel(frame, out, option2); // チャットルームの新規作成、既存に参加、退出のボタンを表示 p4
                     /*---------------------------------------------------------------------------------------- */
                     if (option2[0] == 1) {// 1.新規作成
-                        frame.getContentPane().removeAll();// パネルp4を取り除く
-
-                        // パネルp5の実装
-                        JPanel p5 = new JPanel();
-                        p5.setLayout(null);
-
-                        JLabel label_newchatname = new JLabel("新規のチャットルーム名：");
-                        JTextField tf_newchatname = new JTextField();
-
-                        Boolean[] ok3 = { null };
-                        JButton ok3_btn = new JButton("OK");
-                        ok3_btn.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                ok3[0] = true;
-                                String room_name = tf_newchatname.getText();
-                                out.println(room_name);// 7
-                            }
-                        });
-
-                        label_newchatname.setBounds(300, 236, 200, 25);
-                        tf_newchatname.setBounds(525, 236, 200, 25);
-                        ok3_btn.setBounds(675, 261, 50, 50);
-                        p5.add(label_newchatname);
-                        p5.add(tf_newchatname);
-                        p5.add(ok3_btn);
-                        frame.add(p5);
-                        frame.setVisible(true);
-                        frame.validate();
-                        frame.repaint();// 画面を書き直す
-
-                        // okボタンが押されるまで以下のコードを実行しない
-                        while (true) {
-                            if (ok3[0] == null) {
-                                try {
-                                    Thread.sleep(100);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                break;
-                            }
-                        }
+                        frame.getContentPane().removeAll();// パネルを取り除く
+                        create_chat_panel(frame, out); // チャットルームの新規作成のパネルを表示 p5
 
                         String chat_f = in.readLine();// 8
 
-                        frame.getContentPane().removeAll();// パネルp5を取り除く
-
-                        // パネルp6の実装
-                        JPanel p6 = new JPanel();
-                        p6.setLayout(null);
-
-                        JLabel label_chatresult = new JLabel(chat_f);
-
-                        Boolean[] ok4 = { null };
-                        JButton ok4_btn = new JButton("OK");
-                        ok4_btn.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                ok4[0] = true;
-                            }
-                        });
-
-                        label_chatresult.setBounds(420, 236, 500, 25);
-                        ok4_btn.setBounds(570, 286, 50, 50);
-                        p6.add(label_chatresult);
-                        p6.add(ok4_btn);
-                        frame.add(p6);
-                        frame.setVisible(true);
-                        frame.validate();
-                        frame.repaint();// 画面を書き直す
-
-                        // okボタンが押されるまで以下のコードを実行しない
-                        while (true) {
-                            if (ok4[0] == null) {
-                                try {
-                                    Thread.sleep(100);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                break;
-                            }
-                        }
+                        frame.getContentPane().removeAll();// パネルを取り除く
+                        result_chat_panel(frame, chat_f); // チャットルームの新規作成の結果を表示 p6
 
                         /*---------------------------------------------------------------------------------------- */
                     } else if (option2[0] == 2) {// 2. 既存に参加
-                        frame.getContentPane().removeAll();// パネルp6を取り除く
+                        frame.getContentPane().removeAll();// パネルを取り除く
 
-                        // パネルp7の実装
-                        JPanel p7 = new JPanel();
-                        p7.setLayout(null);
+                        join_chat_panel(frame, out); // チャットルームの参加のパネルを表示 p7
 
-                        JLabel label_chatname = new JLabel("既存のチャットルーム名：");
-                        JTextField tf_chatname = new JTextField();
-
-                        Boolean[] ok5 = { null };
-                        JButton ok5_btn = new JButton("OK");
-                        ok5_btn.addActionListener(new ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                ok5[0] = true;
-                                String room_name = tf_chatname.getText();
-                                out.println(room_name);// 9
-                            }
-                        });
-
-                        label_chatname.setBounds(300, 236, 200, 25);
-                        tf_chatname.setBounds(525, 236, 200, 25);
-                        ok5_btn.setBounds(675, 261, 50, 50);
-                        p7.add(label_chatname);
-                        p7.add(tf_chatname);
-                        p7.add(ok5_btn);
-                        frame.add(p7);
-                        frame.setVisible(true);
-                        frame.validate();
-                        frame.repaint();// 画面を書き直す
-
-                        // okボタンが押されるまで以下のコードを実行しない
-                        while (true) {
-                            if (ok5[0] == null) {
-                                try {
-                                    Thread.sleep(100);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                break;
-                            }
-                        }
-
-                        // System.out.println(in.readLine());// 10
                         String join_message = in.readLine();// 10
                         Boolean JOIN = false;
                         JOIN = Boolean.parseBoolean(in.readLine());// 10.5
@@ -226,59 +107,16 @@ public class Client extends func {
                             */
 
                             while (true) {
-                                frame.getContentPane().removeAll();// パネルp7を取り除く
+                                frame.getContentPane().removeAll();// パネルを取り除く
                                 //System.out.println(in.readLine());// 13
-                                
-                                // パネルp8の実装
-                                JPanel p8 = new JPanel();
-                                p8.setLayout(null);
 
                                 Boolean chat_option []= { null };
                                 Boolean quit_option []= { null };
-
-                                JLabel label_chat_success = new JLabel(join_message);
-                                // chat_log.txtを表示
-                                JLabel label_messagelabel = new JLabel("メッセージ：");
-                                JTextField tf_message = new JTextField();
-                                JButton send_btn = new JButton("SEND");
-                                JButton quit_btn = new JButton("QUIT");
-
-                                send_btn.addActionListener(new ActionListener() {
-                                    public void actionPerformed(ActionEvent e) {
-                                        String message = tf_message.getText();
-                                        out.println(message);// 12
-                                        System.out.println(message);
-
-                                        chat_option[0] = true;
-                                    }
-                                });
-
-                                quit_btn.addActionListener(new ActionListener() {
-                                    public void actionPerformed(ActionEvent e) {
-                                        out.println("END");// 12
-
-                                        quit_option[0] = true;
-                                    }
-                                });
-
-                                tf_message.setColumns(10);
-                                label_chat_success.setBounds(400, 10, 800, 25);
-                                label_messagelabel.setBounds(300, 350, 200,25);
-                                label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
-                                tf_message.setBounds(500, 350, 200,25);
-                                send_btn.setBounds(700, 350, 60,25);
-                                quit_btn.setBounds(480, 400, 35,25);
-                                p8.add(label_chat_success);
-                                p8.add(label_messagelabel);
-                                p8.add(tf_message);
-                                p8.add(send_btn);
-                                p8.add(quit_btn);
-                                frame.add(p8);
-                                frame.setVisible(true);
-                                frame.validate();
-                                frame.repaint();// 画面を書き直す
-                                System.out.println("success!");
-
+                                List<Boolean[]> option3 = new ArrayList<Boolean[]>();
+                                option3 = List.of(chat_option, quit_option);
+                                option3 = main_chat_panel(frame, out, join_message, option3); // チャットルームの参加のパネルを表示 p8
+                                chat_option = option3.get(0);
+                                quit_option = option3.get(1);
                                 if(quit_option != null && quit_option[0] == true){
                                     break;
                                 }
@@ -299,19 +137,19 @@ public class Client extends func {
                             }
 
                         } else {
-                            frame.getContentPane().removeAll();// パネルp7を取り除く
-                            fail_join(frame, in, out, join_message); // チャットルームに参加できなかったパネルを表示
+                            frame.getContentPane().removeAll();// パネルを取り除く
+                            fail_join_panel(frame, join_message); // チャットルームに参加できなかったパネルを表示 p9
                         }
                         /*---------------------------------------------------------------------------------------- */
                     } else if (option2[0] == 3) {// 3.退出する
                         frame.getContentPane().removeAll();// パネルを取り除く
-                        room_exit(frame, in, out, sc); // ルームを退出したパネルを表示
+                        room_exit_panel(frame, in, out, sc); // ルームを退出したパネルを表示 p10 (gui再帰)
                         /*---------------------------------------------------------------------------------------- */
                     }
                 }
             } else {// ログイン失敗のとき
-                frame.getContentPane().removeAll();// パネルp2を取り除く
-                fail_login(frame, in, out, sc); // ログイン失敗のパネルを表示
+                frame.getContentPane().removeAll();// パネルを取り除く
+                fail_login_panel(frame, in, out, sc); // ログイン失敗のパネルを表示 p3 (gui再帰)
             }
             /*---------------------------------------------------------------------------------------- */
         } else if (option[0] == 2) {// サインインしたとき
@@ -319,14 +157,14 @@ public class Client extends func {
             Boolean SIGNUP = false;
             SIGNUP = Boolean.parseBoolean(in.readLine()); // 6.0
             if (SIGNUP == true) {// サインイン成功のとき
-                signup(frame, in, out, sc); // signup成功のパネルを表示
+                succuss_signup_panel(frame, in, out, sc); // signup成功のパネルを表示 p11 (gui再帰)
             } else {// サインアップできなかった場合
-                fail_signup(frame, in, out, sc); // signup失敗のパネルを表示
+                fail_signup_panel(frame, in, out, sc); // signup失敗のパネルを表示 p12 (gui再帰)
             }
         }
     }
 
-    private static Integer[] init_panel(JFrame frame, BufferedReader in, PrintWriter out, Integer[] option) throws IOException {
+    private static Integer[] init_panel(JFrame frame, PrintWriter out, Integer[] option) throws IOException {
         // パネルp1をframeに追加する
         JPanel p1 = new JPanel();
         p1.setLayout(null);
@@ -371,7 +209,7 @@ public class Client extends func {
         return option;
     }
 
-    private static void input_panel(JFrame frame, BufferedReader in, PrintWriter out) throws IOException {
+    private static void input_panel(JFrame frame, PrintWriter out) throws IOException {
         // パネルp2の実装
         JPanel p2 = new JPanel();
         p2.setLayout(null);
@@ -436,7 +274,7 @@ public class Client extends func {
         }
     }
 
-    private static Integer[] chat_action(JFrame frame, BufferedReader in, PrintWriter out, Integer[] option2) throws IOException {
+    private static Integer[] chat_action_panel(JFrame frame, PrintWriter out, Integer[] option2) throws IOException {
         // パネルp4の実装
         JPanel p4 = new JPanel();
         p4.setLayout(null);
@@ -496,7 +334,182 @@ public class Client extends func {
         return option2;
     }
 
-    private static void fail_join(JFrame frame, BufferedReader in, PrintWriter out, String join_message) throws IOException {
+    private static void create_chat_panel(JFrame frame, PrintWriter out) throws IOException {
+        // パネルp5の実装
+        JPanel p5 = new JPanel();
+        p5.setLayout(null);
+
+        JLabel label_newchatname = new JLabel("新規のチャットルーム名：");
+        JTextField tf_newchatname = new JTextField();
+
+        Boolean[] ok3 = { null };
+        JButton ok3_btn = new JButton("OK");
+        ok3_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ok3[0] = true;
+                String room_name = tf_newchatname.getText();
+                out.println(room_name);// 7
+            }
+        });
+
+        label_newchatname.setBounds(300, 236, 200, 25);
+        tf_newchatname.setBounds(525, 236, 200, 25);
+        ok3_btn.setBounds(675, 261, 50, 50);
+        p5.add(label_newchatname);
+        p5.add(tf_newchatname);
+        p5.add(ok3_btn);
+        frame.add(p5);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();// 画面を書き直す
+
+        // okボタンが押されるまで以下のコードを実行しない
+        while (true) {
+            if (ok3[0] == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                break;
+            }
+        }
+    }
+
+    private static void result_chat_panel(JFrame frame, String chat_f) throws IOException {
+        // パネルp6の実装
+        JPanel p6 = new JPanel();
+        p6.setLayout(null);
+
+        JLabel label_chatresult = new JLabel(chat_f);
+
+        Boolean[] ok4 = { null };
+        JButton ok4_btn = new JButton("OK");
+        ok4_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ok4[0] = true;
+            }
+        });
+
+        label_chatresult.setBounds(420, 236, 500, 25);
+        ok4_btn.setBounds(570, 286, 50, 50);
+        p6.add(label_chatresult);
+        p6.add(ok4_btn);
+        frame.add(p6);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();// 画面を書き直す
+
+        // okボタンが押されるまで以下のコードを実行しない
+        while (true) {
+            if (ok4[0] == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                break;
+            }
+        }
+    }
+
+    private static void join_chat_panel(JFrame frame, PrintWriter out) throws IOException{
+        // パネルp7の実装
+        JPanel p7 = new JPanel();
+        p7.setLayout(null);
+
+        JLabel label_chatname = new JLabel("既存のチャットルーム名：");
+        JTextField tf_chatname = new JTextField();
+
+        Boolean[] ok5 = { null };
+        JButton ok5_btn = new JButton("OK");
+        ok5_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ok5[0] = true;
+                String room_name = tf_chatname.getText();
+                out.println(room_name);// 9
+            }
+        });
+
+        label_chatname.setBounds(300, 236, 200, 25);
+        tf_chatname.setBounds(525, 236, 200, 25);
+        ok5_btn.setBounds(675, 261, 50, 50);
+        p7.add(label_chatname);
+        p7.add(tf_chatname);
+        p7.add(ok5_btn);
+        frame.add(p7);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();// 画面を書き直す
+
+        // okボタンが押されるまで以下のコードを実行しない
+        while (true) {
+            if (ok5[0] == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                break;
+            }
+        }
+    }
+    // chat_optionとquit_optionを返す
+    private static List<Boolean[]> main_chat_panel(JFrame frame, PrintWriter out, String join_message, List<Boolean[]> option3) throws IOException {
+        Boolean[] chat_option = option3.get(0);
+        Boolean[] quit_option = option3.get(1);
+        // パネルp8の実装
+        JPanel p8 = new JPanel();
+        p8.setLayout(null);
+
+        JLabel label_chat_success = new JLabel(join_message);
+        // chat_log.txtを表示
+        JLabel label_messagelabel = new JLabel("メッセージ：");
+        JTextField tf_message = new JTextField();
+        JButton send_btn = new JButton("SEND");
+        JButton quit_btn = new JButton("QUIT");
+
+        send_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String message = tf_message.getText();
+                out.println(message);// 12
+                System.out.println(message);
+
+                chat_option[0] = true;
+            }
+        });
+
+        quit_btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                out.println("END");// 12
+
+                quit_option[0] = true;
+            }
+        });
+
+        tf_message.setColumns(10);
+        label_chat_success.setBounds(400, 10, 800, 25);
+        label_messagelabel.setBounds(300, 350, 200,25);
+        label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
+        tf_message.setBounds(500, 350, 200,25);
+        send_btn.setBounds(700, 350, 60,25);
+        quit_btn.setBounds(480, 400, 35,25);
+        p8.add(label_chat_success);
+        p8.add(label_messagelabel);
+        p8.add(tf_message);
+        p8.add(send_btn);
+        p8.add(quit_btn);
+        frame.add(p8);
+        frame.setVisible(true);
+        frame.validate();
+        frame.repaint();// 画面を書き直す
+        return Arrays.asList(chat_option, quit_option);
+    }
+
+    private static void fail_join_panel(JFrame frame, String join_message) throws IOException {
         // パネルp9の実装
         JPanel p9 = new JPanel();
         p9.setLayout(null);
@@ -533,7 +546,7 @@ public class Client extends func {
         }
     }
 
-    private static void room_exit(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    private static void room_exit_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
         // パネルp10の実装
         JPanel p10 = new JPanel();
         p10.setLayout(null);
@@ -571,7 +584,7 @@ public class Client extends func {
         }
     }
 
-    private static void fail_login(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    private static void fail_login_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
         // パネルp3の実装
         JPanel p3 = new JPanel();
         p3.setLayout(null);
@@ -610,7 +623,7 @@ public class Client extends func {
         }
     }
 
-    private static void signup(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    private static void succuss_signup_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
         // パネルp11の実装
         JPanel p11 = new JPanel();
         p11.setLayout(null);
@@ -648,7 +661,7 @@ public class Client extends func {
         }
     }
 
-    private static void fail_signup(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    private static void fail_signup_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
         // パネル12の実装
         JPanel p12 = new JPanel();
         p12.setLayout(null);
