@@ -105,7 +105,7 @@ public class AServer extends func {
                                         JOIN_CHAT = true;
                                         out.println(room_name + "に参加できました!");// 10
                                         out.println(JOIN_CHAT);// 10.5
-                                        out.println(room_name);// 11
+                                        // out.println(room_name);// 11
 
                                         chat_log = new File(room_name + "_chat_log.txt");
 
@@ -123,6 +123,7 @@ public class AServer extends func {
                                             chat_log_reader.close();
 
                                             String chat_log_data = in.readLine();// 12
+                                            // System.out.println(chat_log_data);
                                             chat_log_writer.println(chat_log_data);
                                             chat_log_writer.close();
 
