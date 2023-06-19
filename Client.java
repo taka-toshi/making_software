@@ -21,6 +21,7 @@ public class Client extends func {
                     true); // 送信バッファ設定
 
             System.out.println(in.readLine()); // 1
+            System.out.println("");
 
             /*---------------------------------------------------------------------------------------- */
             // login and signup
