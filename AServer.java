@@ -6,7 +6,7 @@ import java.util.List;
 
 //１つのクライアントと通信を行うスレッド
 class AServerThread extends func{
-    static int PORT = 8080; // ポート番号をプログラムの引数で与える
+    //static int PORT = 8080; // ポート番号をプログラムの引数で与える
     Socket socket; //このクライアントに対応するソケット
 
     //コンストラクタ（使用するソケットを指定）
@@ -33,7 +33,6 @@ class AServerThread extends func{
             // チャットルームの名前を保存するテーブルを制作
             create_table_chatname(db);
 
-            
             /*---------------------------------------------------------------------------------------- */
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
@@ -162,7 +161,7 @@ class AServerThread extends func{
                                 if (list_data2.size() == 1) {
                                     if (Integer.parseInt(list_data2.get(0)) == 1) {
                                         out.println("'" + username + "'というユーザーが存在します"); // 6
-                                    } else {                                
+                                    } else {
                                         add_user(db, username, hash_pass);
                                         out.println("ユーザーを追加しました"); // 6
                                     }
@@ -177,15 +176,28 @@ class AServerThread extends func{
                 }
             /*---------------------------------------------------------------------------------------- */
             } catch (IOException e) {//突然接続が切れた場合
+                System.err.println(e);
                 System.out.println("closing...");
-                socket.close();
-                return;//スレッド消滅            
+                try {
+                    socket.close();
+                } catch (IOException e2) {
+                    System.err.println(e2);
+                }
+                return;//スレッド消滅
             }
-            
-             
+
+        } catch ( NumberFormatException e ) { // clientが接続を切った場合
+            System.err.println(Thread.currentThread().getName() + "が切断されました");
+            System.out.println("closing...");
         } catch (IOException e) {
-	        System.err.println(e);
-	    }
+            System.err.println(e);
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                System.err.println(e);
+            }
+        }
     }
 
 }
@@ -198,16 +210,13 @@ public class AServer {
 
         ServerSocket s = new ServerSocket(PORT); // ソケットを作成する
 
-        //Scanner sc = new Scanner(System.in);
+        // Scanner sc = new Scanner(System.in);
 
         try {
             while(true){
                 Socket socket = s.accept();// コネクション設定要求を待つ
-                    
                 AServerThread t = new AServerThread(socket);//スレッド生成
-                    
                 t.start();//スレッド実行
-
             }
         } finally {
             s.close();
