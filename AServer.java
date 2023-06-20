@@ -41,10 +41,11 @@ class AServerThread extends func{
             try{
                 while(true){
                     /*---------------------------------------------------------------------------------------- */
-                    // login and signup
+                    // ログインとサインインの画面
                     Integer option = Integer.parseInt(in.readLine()); // 2
 
                     /*---------------------------------------------------------------------------------------- */
+                    //ユーザー名とパスワードの画面
                     Boolean ok = Boolean.parseBoolean(in.readLine());// 3
                     String username = in.readLine(); // 4
                     String pass = in.readLine(); // 5
@@ -52,11 +53,11 @@ class AServerThread extends func{
 
                     /*---------------------------------------------------------------------------------------- */
                     if (ok) {
-                        if (option == 1) {
+                        if (option == 1) {//ログインしたとき
                             List<String> list_data = new ArrayList<String>();
                             list_data = login_user(db, username, hash_pass);
                             Boolean LOGIN = false;
-                            if (list_data.size() == 1) {
+                            if (list_data.size() == 1) {//ログイン成功のとき
                                 LOGIN = true;
                                 out.println(LOGIN); // 5
 
@@ -122,12 +123,13 @@ class AServerThread extends func{
                                                  */
                                                 chat_log_reader.close();
 
-                                                String chat_log_data = in.readLine();// 12
-                                                // System.out.println(chat_log_data);
+                                                String message = in.readLine();
+
+                                                String chat_log_data = username + " : " +message;// 12
                                                 chat_log_writer.println(chat_log_data);
                                                 chat_log_writer.close();
 
-                                                if (chat_log_data.equals("END")) {
+                                                if (message.equals("END")) {
                                                     break;
                                                 }
                                             }
@@ -145,7 +147,7 @@ class AServerThread extends func{
                                     /*---------------------------------------------------------------------------------------- */
                                     }
                                 }
-                            } else {
+                            } else {//ログイン失敗の時
                                 out.println(LOGIN); // 5
                             }
                         /*---------------------------------------------------------------------------------------- */

@@ -2,7 +2,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import javax.swing.*;
-
 import java.awt.Rectangle;
 import java.awt.event.*;
 
@@ -17,9 +16,10 @@ public class Client extends func {
         Socket socket = new Socket(addr, PORT); // ソケットの生成
 
         try {
-            /*---------------------------------------------------------------------------------------- */
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
+
+            System.out.println(in.readLine());//1                        
 
             // frameを実装する
             JFrame frame = new JFrame("MyApplication");
@@ -27,10 +27,9 @@ public class Client extends func {
             Rectangle table = new Rectangle(1000, 500);
             frame.setBounds(table);// frameのサイズを指定→table
             frame.setLocationRelativeTo(null);// 画面の真ん中にframeを表示
-
-            System.out.println(in.readLine()); // 1
             
             gui(frame, in, out, sc);
+
         } finally {
             System.out.println("closing...");
             socket.close();
@@ -47,7 +46,7 @@ public class Client extends func {
             frame.getContentPane().removeAll();// パネル取り除く
             input_panel(frame, out); // ユーザー名とパスワードの入力欄を表示 p2
             /*---------------------------------------------------------------------------------------- */
-            if (option[0] == 1) {
+            if (option[0] == 1) {//ログインしたとき
                 Boolean LOGIN = false;
                 LOGIN = Boolean.parseBoolean(in.readLine()); // 5
 
@@ -66,7 +65,7 @@ public class Client extends func {
                             frame.getContentPane().removeAll();// パネルを取り除く
                             result_chat_panel(frame, chat_f); // チャットルームの新規作成の結果を表示 p6
 
-                            /*---------------------------------------------------------------------------------------- */
+                        /*---------------------------------------------------------------------------------------- */
                         } else if (option2[0] == 2) {// 2. 既存に参加
                             frame.getContentPane().removeAll();// パネルを取り除く
 
@@ -139,18 +138,18 @@ public class Client extends func {
                                 frame.getContentPane().removeAll();// パネルを取り除く
                                 fail_join_panel(frame, join_message); // チャットルームに参加できなかったパネルを表示 p9
                             }
-                            /*---------------------------------------------------------------------------------------- */
+                        /*---------------------------------------------------------------------------------------- */
                         } else if (option2[0] == 3) {// 3.退出する
                             frame.getContentPane().removeAll();// パネルを取り除く
                             room_exit_panel(frame, in, out, sc); // ルームを退出したパネルを表示 p10 (gui再帰)
-                            /*---------------------------------------------------------------------------------------- */
+                        /*---------------------------------------------------------------------------------------- */
                         }
                     }
                 } else {// ログイン失敗のとき
                     frame.getContentPane().removeAll();// パネルを取り除く
                     fail_login_panel(frame, in, out, sc); // ログイン失敗のパネルを表示 p3 (gui再帰)
                 }
-                /*---------------------------------------------------------------------------------------- */
+            /*---------------------------------------------------------------------------------------- */
             } else if (option[0] == 2) {// サインインしたとき
                 frame.getContentPane().removeAll();//パネルを取り除く
                 Boolean SIGNUP = false;
