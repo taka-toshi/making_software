@@ -29,9 +29,8 @@ public class Client extends func {
             frame.setLocationRelativeTo(null);// 画面の真ん中にframeを表示
 
             System.out.println(in.readLine()); // 1
-
+            // System.out.println("");
             gui(frame, in, out, sc);
-
         } finally {
             System.out.println("closing...");
             socket.close();
@@ -40,126 +39,127 @@ public class Client extends func {
     }
 
     public static void gui(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
-        frame.getContentPane().removeAll();// パネル取り除く
-        Integer[] option = { null };
-        option = init_panel(frame, out, option); // ログインとサインインのボタンを表示 p1
-        /*---------------------------------------------------------------------------------------- */
-        frame.getContentPane().removeAll();// パネル取り除く
-        input_panel(frame, out); // ユーザー名とパスワードの入力欄を表示 p2
-        /*---------------------------------------------------------------------------------------- */
-        if (option[0] == 1) {
-            Boolean LOGIN = false;
-            LOGIN = Boolean.parseBoolean(in.readLine()); // 5
+        while(true){
+            frame.getContentPane().removeAll();// パネル取り除く
+            Integer[] option = { null };
+            option = init_panel(frame, out, option); // ログインとサインインのボタンを表示 p1
+            /*---------------------------------------------------------------------------------------- */
+            frame.getContentPane().removeAll();// パネル取り除く
+            input_panel(frame, out); // ユーザー名とパスワードの入力欄を表示 p2
+            /*---------------------------------------------------------------------------------------- */
+            if (option[0] == 1) {
+                Boolean LOGIN = false;
+                LOGIN = Boolean.parseBoolean(in.readLine()); // 5
 
-            if (LOGIN == true) {// ログイン成功のとき
-
-                while (true) {
-                    frame.getContentPane().removeAll();// パネルを取り除く
-                    Integer[] option2 = { null };
-                    option2 = chat_action_panel(frame, out, option2); // チャットルームの新規作成、既存に参加、退出のボタンを表示 p4
-                    /*---------------------------------------------------------------------------------------- */
-                    if (option2[0] == 1) {// 1.新規作成
+                if (LOGIN == true) {// ログイン成功のとき
+                    while (true) {
                         frame.getContentPane().removeAll();// パネルを取り除く
-                        create_chat_panel(frame, out); // チャットルームの新規作成のパネルを表示 p5
-
-                        String chat_f = in.readLine();// 8
-
-                        frame.getContentPane().removeAll();// パネルを取り除く
-                        result_chat_panel(frame, chat_f); // チャットルームの新規作成の結果を表示 p6
-
+                        Integer[] option2 = { null };
+                        option2 = chat_action_panel(frame, out, option2); // チャットルームの新規作成、既存に参加、退出のボタンを表示 p4
                         /*---------------------------------------------------------------------------------------- */
-                    } else if (option2[0] == 2) {// 2. 既存に参加
-                        frame.getContentPane().removeAll();// パネルを取り除く
+                        if (option2[0] == 1) {// 1.新規作成
+                            frame.getContentPane().removeAll();// パネルを取り除く
+                            create_chat_panel(frame, out); // チャットルームの新規作成のパネルを表示 p5
 
-                        join_chat_panel(frame, out); // チャットルームの参加のパネルを表示 p7
+                            String chat_f = in.readLine();// 8
 
-                        String join_message = in.readLine();// 10
-                        Boolean JOIN = false;
-                        JOIN = Boolean.parseBoolean(in.readLine());// 10.5
+                            frame.getContentPane().removeAll();// パネルを取り除く
+                            result_chat_panel(frame, chat_f); // チャットルームの新規作成の結果を表示 p6
 
-                        if (JOIN == true) {
-                            //chatting(frame, join_message, in, out);
+                            /*---------------------------------------------------------------------------------------- */
+                        } else if (option2[0] == 2) {// 2. 既存に参加
+                            frame.getContentPane().removeAll();// パネルを取り除く
 
-                            /*
-                            System.out.println("");
-                            System.out.println("チャットを開始します。");
-                            String room_mem = in.readLine();// 11
-                            System.out.println(room_mem);
-                            System.out.println("あなたは '" + room_mem + "' に参加しています。");
-                            System.out.println("終了する際は'END'で終了してください。");
-                            System.out.println("");
-                            */
+                            join_chat_panel(frame, out); // チャットルームの参加のパネルを表示 p7
 
-                            /*
-                            while (true) {
-                                System.out.println("メッセージ：");
-                                String message = sc.nextLine();
-                                out.println(message);
+                            String join_message = in.readLine();// 10
+                            Boolean JOIN = false;
+                            JOIN = Boolean.parseBoolean(in.readLine());// 10.5
 
-                                //String echo = in.readLine();// 13
-                                //System.out.println("echo:"+ echo);
+                            if (JOIN == true) {
+                                //chatting(frame, join_message, in, out);
 
-                                if (message.equals("END")) {
-                                    System.out.println("");
-                                    break;
-                                }
-                            }
-                            */
+                                /*
+                                System.out.println("");
+                                System.out.println("チャットを開始します。");
+                                String room_mem = in.readLine();// 11
+                                System.out.println(room_mem);
+                                System.out.println("あなたは '" + room_mem + "' に参加しています。");
+                                System.out.println("終了する際は'END'で終了してください。");
+                                System.out.println("");
+                                */
 
-                            while (true) {
-                                frame.getContentPane().removeAll();// パネルを取り除く
-                                //System.out.println(in.readLine());// 13
-
-                                Boolean chat_option []= { null };
-                                Boolean quit_option []= { null };
-                                List<Boolean[]> option3 = new ArrayList<Boolean[]>();
-                                option3 = List.of(chat_option, quit_option);
-                                option3 = main_chat_panel(frame, out, join_message, option3); // チャットルームの参加のパネルを表示 p8
-                                chat_option = option3.get(0);
-                                quit_option = option3.get(1);
-                                if(quit_option != null && quit_option[0] == true){
-                                    break;
-                                }
-
-                                // optionの値が決まるまで以下のコードを実行しない
+                                /*
                                 while (true) {
-                                    if (chat_option != null && chat_option[0] == true) {
-                                       //chatting(frame, join_message, in, out); // this is important!!
-                                       break;
-                                    }else{
-                                        try {
-                                            Thread.sleep(100);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
+                                    System.out.println("メッセージ：");
+                                    String message = sc.nextLine();
+                                    out.println(message);
+
+                                    //String echo = in.readLine();// 13
+                                    //System.out.println("echo:"+ echo);
+
+                                    if (message.equals("END")) {
+                                        System.out.println("");
+                                        break;
+                                    }
+                                }
+                                */
+
+                                while (true) {
+                                    frame.getContentPane().removeAll();// パネルを取り除く
+                                    //System.out.println(in.readLine());// 13
+
+                                    Boolean chat_option []= { null };
+                                    Boolean quit_option []= { null };
+                                    List<Boolean[]> option3 = new ArrayList<Boolean[]>();
+                                    option3 = List.of(chat_option, quit_option);
+                                    option3 = main_chat_panel(frame, out, join_message, option3); // チャットルームの参加のパネルを表示 p8
+                                    chat_option = option3.get(0);
+                                    quit_option = option3.get(1);
+                                    if(quit_option != null && quit_option[0] == true){
+                                        break;
+                                    }
+
+                                    // optionの値が決まるまで以下のコードを実行しない
+                                    while (true) {
+                                        if (chat_option != null && chat_option[0] == true) {
+                                        //chatting(frame, join_message, in, out); // this is important!!
+                                        break;
+                                        }else{
+                                            try {
+                                                Thread.sleep(100);
+                                            } catch (InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                        } else {
+                            } else {
+                                frame.getContentPane().removeAll();// パネルを取り除く
+                                fail_join_panel(frame, join_message); // チャットルームに参加できなかったパネルを表示 p9
+                            }
+                            /*---------------------------------------------------------------------------------------- */
+                        } else if (option2[0] == 3) {// 3.退出する
                             frame.getContentPane().removeAll();// パネルを取り除く
-                            fail_join_panel(frame, join_message); // チャットルームに参加できなかったパネルを表示 p9
+                            room_exit_panel(frame, in, out, sc); // ルームを退出したパネルを表示 p10 (gui再帰)
+                            /*---------------------------------------------------------------------------------------- */
                         }
-                        /*---------------------------------------------------------------------------------------- */
-                    } else if (option2[0] == 3) {// 3.退出する
-                        frame.getContentPane().removeAll();// パネルを取り除く
-                        room_exit_panel(frame, in, out, sc); // ルームを退出したパネルを表示 p10 (gui再帰)
-                        /*---------------------------------------------------------------------------------------- */
                     }
+                } else {// ログイン失敗のとき
+                    frame.getContentPane().removeAll();// パネルを取り除く
+                    fail_login_panel(frame, in, out, sc); // ログイン失敗のパネルを表示 p3 (gui再帰)
                 }
-            } else {// ログイン失敗のとき
-                frame.getContentPane().removeAll();// パネルを取り除く
-                fail_login_panel(frame, in, out, sc); // ログイン失敗のパネルを表示 p3 (gui再帰)
-            }
-            /*---------------------------------------------------------------------------------------- */
-        } else if (option[0] == 2) {// サインインしたとき
-            frame.getContentPane().removeAll();//パネルを取り除く
-            Boolean SIGNUP = false;
-            SIGNUP = Boolean.parseBoolean(in.readLine()); // 6.0
-            if (SIGNUP == true) {// サインイン成功のとき
-                succuss_signup_panel(frame, in, out, sc); // signup成功のパネルを表示 p11 (gui再帰)
-            } else {// サインアップできなかった場合
-                fail_signup_panel(frame, in, out, sc); // signup失敗のパネルを表示 p12 (gui再帰)
+                /*---------------------------------------------------------------------------------------- */
+            } else if (option[0] == 2) {// サインインしたとき
+                frame.getContentPane().removeAll();//パネルを取り除く
+                Boolean SIGNUP = false;
+                SIGNUP = Boolean.parseBoolean(in.readLine()); // 6.0
+                if (SIGNUP == true) {// サインイン成功のとき
+                    succuss_signup_panel(frame, in, out, sc); // signup成功のパネルを表示 p11 (gui再帰)
+                } else {// サインアップできなかった場合
+                    fail_signup_panel(frame, in, out, sc); // signup失敗のパネルを表示 p12 (gui再帰)
+                }
             }
         }
     }
