@@ -29,7 +29,7 @@ public class Client extends func {
             frame.setLocationRelativeTo(null);// 画面の真ん中にframeを表示
 
             System.out.println(in.readLine()); // 1
-            // System.out.println("");
+            
             gui(frame, in, out, sc);
         } finally {
             System.out.println("closing...");
@@ -40,7 +40,7 @@ public class Client extends func {
 
     public static void gui(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
         while(true){
-            frame.getContentPane().removeAll();// パネル取り除く
+            frame.getContentPane().removeAll();// パネルを取り除く
             Integer[] option = { null };
             option = init_panel(frame, out, option); // ログインとサインインのボタンを表示 p1
             /*---------------------------------------------------------------------------------------- */
