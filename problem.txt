@@ -1,5 +1,0 @@
-・usernameがちゃんと送られておらず、username=""となっている
-    →関数add_userの問題？？、database.dbのsplite_sequenceにテーブルが追加されていないのも気になるところ（6/10時点、千代丸）
-
-・pass_strも同様に、passwordがちゃんと送られておらず、password=""となっている
-    →上記と同様（6/10時点、千代丸）
