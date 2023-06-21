@@ -211,7 +211,8 @@ public class Client extends func {
         p1.setLayout(null);
 
         // ログインボタンの実装
-        JButton login_btn = new JButton("ログイン");
+        JButton login_btn = new JButton("Login");
+        login_btn.setMnemonic(KeyEvent.VK_L);
         login_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 option[0] = 1;
@@ -220,7 +221,8 @@ public class Client extends func {
         });
 
         // サインアップボタンの実装
-        JButton signup_btn = new JButton("サインイン");
+        JButton signup_btn = new JButton("Signup");
+        signup_btn.setMnemonic(KeyEvent.VK_S);
         signup_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 option[0] = 2;
@@ -262,6 +264,7 @@ public class Client extends func {
         Boolean[] ok = { null };
         Boolean[] noerror = { null };
         JButton ok_btn = new JButton("OK");
+        ok_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok[0] = true;
@@ -298,6 +301,7 @@ public class Client extends func {
         p2.add(ok_btn);
         frame.add(p2);
         frame.setVisible(true);
+        tf_user.requestFocus(); // ユーザー名の入力欄にフォーカスを当てる
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -322,7 +326,8 @@ public class Client extends func {
 
         JLabel label_choice = new JLabel("ログインに成功しました！");
 
-        JButton create_chat = new JButton("新規作成");
+        JButton create_chat = new JButton("Create");
+        create_chat.setMnemonic(KeyEvent.VK_C);
         create_chat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 option2[0] = 1;// 6
@@ -330,7 +335,8 @@ public class Client extends func {
             }
         });
 
-        JButton join_chat = new JButton("既存に参加");
+        JButton join_chat = new JButton("Join");
+        join_chat.setMnemonic(KeyEvent.VK_J);
         join_chat.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 option2[0] = 2;// 6
@@ -338,7 +344,8 @@ public class Client extends func {
             }
         });
 
-        JButton logout = new JButton("退出する");
+        JButton logout = new JButton("Exit");
+        logout.setMnemonic(KeyEvent.VK_E);
         logout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 option2[0] = 3;// 6
@@ -385,25 +392,12 @@ public class Client extends func {
 
         Boolean[] ok3 = { null };
         JButton ok3_btn = new JButton("OK");
+        ok3_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok3_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok3[0] = true;
                 String room_name = tf_newchatname.getText();
                 out.println(room_name);// 7
-            }
-        });
-
-        // 今付いているframeにキーリスナーをはずす
-        try {
-            frame.removeKeyListener(frame.getKeyListeners()[0]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            // 何もしない
-        }
-        frame.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    ok3[0] = true;
-                }
             }
         });
 
@@ -415,7 +409,7 @@ public class Client extends func {
         p5.add(ok3_btn);
         frame.add(p5);
         frame.setVisible(true);
-        frame.requestFocus();
+        tf_newchatname.requestFocus(); // チャットルーム名の入力欄にフォーカスを当てる
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -442,6 +436,7 @@ public class Client extends func {
 
         Boolean[] ok4 = { null };
         JButton ok4_btn = new JButton("OK");
+        ok4_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok4_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok4[0] = true;
@@ -496,26 +491,13 @@ public class Client extends func {
 
         Boolean[] ok5 = { null };
         JButton ok5_btn = new JButton("OK");
+        ok5_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok5_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok5[0] = true;
                 String room_name = tf_chatname.getText();
                 //get_room_name[0] = room_name;
                 out.println(room_name);// 9
-            }
-        });
-
-        // 今付いているframeにキーリスナーをはずす
-        try {
-            frame.removeKeyListener(frame.getKeyListeners()[0]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            // 何もしない
-        }
-        frame.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    ok5[0] = true;
-                }
             }
         });
 
@@ -527,7 +509,7 @@ public class Client extends func {
         p7.add(ok5_btn);
         frame.add(p7);
         frame.setVisible(true);
-        frame.requestFocus();
+        tf_chatname.requestFocus(); // チャットルーム名の入力欄にフォーカスを当てる
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -611,6 +593,7 @@ public class Client extends func {
         JLabel label_chat_failure = new JLabel(join_message);
         Boolean[] ok6 = { null };
         JButton ok6_btn = new JButton("OK");
+        ok6_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok6_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok6[0] = true;
@@ -663,6 +646,7 @@ public class Client extends func {
         JLabel label_logout = new JLabel("退出できました！");
         Boolean[] ok7 = { null };
         JButton ok7_btn = new JButton("OK");
+        ok7_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok7_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok7[0] = true;
@@ -717,6 +701,7 @@ public class Client extends func {
 
         Boolean[] ok2 = { null };
         JButton ok2_btn = new JButton("OK");
+        ok2_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok2_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok2[0] = true;
@@ -770,6 +755,7 @@ public class Client extends func {
         JLabel label_signup = new JLabel("サインインが完了しました！");
         Boolean[] ok8 = { null };
         JButton ok8_btn = new JButton("OK");
+        ok8_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok8_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok8[0] = true;
@@ -824,6 +810,7 @@ public class Client extends func {
 
         Boolean[] ok9 = { null };
         JButton ok9_btn = new JButton("OK");
+        ok9_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok9_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok9[0] = true;
