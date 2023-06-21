@@ -69,7 +69,9 @@ public class Client extends func {
                         } else if (option2[0] == 2) {// 2. 既存に参加
                             frame.getContentPane().removeAll();// パネルを取り除く
 
-                            join_chat_panel(frame, out); // チャットルームの参加のパネルを表示 p7
+                            //String get_room_name [] = { null};
+
+                            join_chat_panel(frame, out/* , get_room_name*/); // チャットルームの参加のパネルを表示 p7
 
                             String join_message = in.readLine();// 10
                             Boolean JOIN = false;
@@ -83,16 +85,29 @@ public class Client extends func {
 
                                     Boolean chat_option []= { null };
                                     Boolean quit_option []= { null };
+                                    //Boolean load_option []= { null };
+                                    
 
                                     JPanel p8 = new JPanel();
                                     p8.setLayout(null);
 
                                     JLabel label_chat_success = new JLabel(join_message);
-                                    // chat_log.txtを表示
+                                    
+                                    // chat_log.txtを表示 
+                                    JTextArea text = new JTextArea();// テキスト表示領域を作成
+                                    text.setEditable(false);//textの編集不可設定
+                                    String room_name = in.readLine();// 11.5
+                                    ReadFromTextFile(text,room_name);
+                                    JScrollPane scroll = new JScrollPane();//スクロールバーを追加
+                                    scroll.getViewport().setView(text);
+                                    
+                            
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");
                                     JButton quit_btn = new JButton("QUIT");
+                                    //JButton load_btn = new JButton("LOAD");
+
 
                                     send_btn.addActionListener(new ActionListener() {
                                         public void actionPerformed(ActionEvent e) {
@@ -112,18 +127,30 @@ public class Client extends func {
                                         }
                                     });
 
+                                    //load_btn.addActionListener(new ActionListener() {
+                                    //    public void actionPerformed(ActionEvent e) {
+                                    //        out.println("LOAD");//12
+                                    //        
+                                    //        load_option[0] = true;
+                                    //    }
+                                    //});
+
                                     tf_message.setColumns(10);
+                                    scroll.setBounds(100, 35, 800, 310);
                                     label_chat_success.setBounds(400, 10, 800, 25);
                                     label_messagelabel.setBounds(300, 350, 200,25);
                                     label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
                                     tf_message.setBounds(500, 350, 200,25);
                                     send_btn.setBounds(700, 350, 60,25);
-                                    quit_btn.setBounds(480, 400, 35,25);
+                                    quit_btn.setBounds(500, 400, 35,25);
+                                    //load_btn.setBounds(440, 400, 40, 25);
                                     p8.add(label_chat_success);
+                                    p8.add(scroll);
                                     p8.add(label_messagelabel);
                                     p8.add(tf_message);
                                     p8.add(send_btn);
                                     p8.add(quit_btn);
+                                    //p8.add(load_btn);
                                     frame.add(p8);
                                     frame.setVisible(true);
                                     frame.validate();
@@ -131,10 +158,12 @@ public class Client extends func {
                                     
                                     // optionの値が決まるまで以下のコードを実行しない
                                     while (true) {
-                                        if (chat_option [0] != null) {
+                                        if (chat_option [0] != null ) {
                                             break;
                                         }else if (quit_option [0] != null){
                                             break;
+                                        //}else if (load_option [0] != null){
+                                        //    break;
                                         }else{
                                             try {
                                                 Thread.sleep(100);
@@ -428,7 +457,7 @@ public class Client extends func {
         }
     }
 
-    private static void join_chat_panel(JFrame frame, PrintWriter out) throws IOException{
+    private static void join_chat_panel(JFrame frame, PrintWriter out/* , String get_room_name[]*/) throws IOException{
         // パネルp7の実装
         JPanel p7 = new JPanel();
         p7.setLayout(null);
@@ -442,6 +471,7 @@ public class Client extends func {
             public void actionPerformed(ActionEvent e) {
                 ok5[0] = true;
                 String room_name = tf_chatname.getText();
+                //get_room_name[0] = room_name;
                 out.println(room_name);// 9
             }
         });
@@ -470,6 +500,7 @@ public class Client extends func {
             }
         }
     }
+    
     /* 
     // chat_optionとquit_optionを返す
     private static List<Boolean[]> main_chat_panel(JFrame frame, PrintWriter out, String join_message, List<Boolean[]> option3) throws IOException {
@@ -527,6 +558,7 @@ public class Client extends func {
         //return Arrays.asList(chat_option, quit_option);
     }
     */
+    
     private static void fail_join_panel(JFrame frame, String join_message) throws IOException {
         // パネルp9の実装
         JPanel p9 = new JPanel();
@@ -718,4 +750,20 @@ public class Client extends func {
         }
     }
 
+    private static void ReadFromTextFile(JTextArea t, String filename) {
+    try {
+        File file = new File(filename);
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        // ファイル末端まで、各行をstrに読み込んでからJTextAreaコンテナに追加していく
+        String str = br.readLine();
+        t.setText("");
+        while (str != null) {
+            t.append(str + "\n");
+            str = br.readLine();
+        }
+        br.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 }
