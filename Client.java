@@ -750,19 +750,19 @@ public class Client extends func {
     }
 
     private static void ReadFromTextFile(JTextArea t, String filename) {
-    try {
-        File file = new File(filename);
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        // ファイル末端まで、各行をstrに読み込んでからJTextAreaコンテナに追加していく
-        String str = br.readLine();
-        t.setText("");
-        while (str != null) {
-            t.append(str + "\n");
-            str = br.readLine();
+        try {
+            File file = new File(filename);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            // ファイル末端まで、各行をstrに読み込んでからJTextAreaコンテナに追加していく
+            String str = br.readLine();
+            t.setText("");
+            while (str != null) {
+                t.append(str + "\n");
+                str = br.readLine();
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        br.close();
-    } catch (IOException e) {
-        e.printStackTrace();
     }
-}
 }
