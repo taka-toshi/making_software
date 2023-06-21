@@ -123,11 +123,13 @@ class AServerThread extends func{
                                                 */
                                                 chat_log_reader.close();
 
-                                                String chat_log_data = in.readLine();// 12
+                                                String message = in.readLine();
+
+                                                String chat_log_data = username + " : " +message;// 12
                                                 chat_log_writer.println(chat_log_data);
                                                 chat_log_writer.close();
 
-                                                if (chat_log_data.equals("END")) {
+                                                if (message.equals("END")) {
                                                     break;
                                                 }
                                             }
@@ -218,6 +220,7 @@ public class AServer {
                 AServerThread t = new AServerThread(socket);//スレッド生成
                 t.start();//スレッド実行
             }
+            
         } finally {
             s.close();
         }
