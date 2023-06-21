@@ -113,4 +113,12 @@ public class func extends Thread {
             throw new RuntimeException(e);
         }
     }
+
+    public static Boolean checkname(String name){
+        if (name.contains("\\") || name.contains("/") || name.contains(":")|| name.contains("*") || name.contains("?")|| name.contains("\"") || name.contains("<")|| name.contains(">") || name.contains("|")){
+            return false;
+        }else{
+            return true;
+            }
+    }
 }
