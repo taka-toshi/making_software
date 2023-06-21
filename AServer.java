@@ -113,6 +113,8 @@ class AServerThread extends func{
                                             chat_log = new File(room_name + "_chat_log.txt");
 
                                             while (true) {
+                                                out.println(chat_log);// 11.5
+
                                                 BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
                                                 PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
                                                 /*
@@ -123,14 +125,17 @@ class AServerThread extends func{
                                                  */
                                                 chat_log_reader.close();
 
-                                                String message = in.readLine();
+                                                String message = in.readLine();// 12
 
-                                                String chat_log_data = username + " : " +message;// 12
+                                                String chat_log_data = username + " : " +message;
+
                                                 chat_log_writer.println(chat_log_data);
                                                 chat_log_writer.close();
 
                                                 if (message.equals("END")) {
                                                     break;
+                                                //}else if (message.equals("LOAD")){
+                                                    //break;
                                                 }
                                             }
 
