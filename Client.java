@@ -19,7 +19,7 @@ public class Client extends func {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true); // 送信バッファ設定
 
-            System.out.println(in.readLine());//1                        
+            System.out.println(in.readLine());//1
 
             // frameを実装する
             JFrame frame = new JFrame("MyApplication");
@@ -27,7 +27,7 @@ public class Client extends func {
             Rectangle table = new Rectangle(1000, 500);
             frame.setBounds(table);// frameのサイズを指定→table
             frame.setLocationRelativeTo(null);// 画面の真ん中にframeを表示
-            
+
             gui(frame, in, out, sc);
 
         } finally {
@@ -80,28 +80,27 @@ public class Client extends func {
                             if (JOIN == true) {// チャットルームに参加できたとき
 
                                 while (true) {
-                                     
+
                                     frame.getContentPane().removeAll();// パネルを取り除く
 
                                     Boolean chat_option []= { null };
                                     Boolean quit_option []= { null };
                                     //Boolean load_option []= { null };
-                                    
 
                                     JPanel p8 = new JPanel();
                                     p8.setLayout(null);
 
                                     JLabel label_chat_success = new JLabel(join_message);
-                                    
-                                    // chat_log.txtを表示 
+
+                                    // chat_log.txtを表示
                                     JTextArea text = new JTextArea();// テキスト表示領域を作成
                                     text.setEditable(false);//textの編集不可設定
                                     String room_name = in.readLine();// 11.5
                                     ReadFromTextFile(text,room_name);
                                     JScrollPane scroll = new JScrollPane();//スクロールバーを追加
                                     scroll.getViewport().setView(text);
-                                    
-                            
+
+
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");
@@ -130,7 +129,7 @@ public class Client extends func {
                                     //load_btn.addActionListener(new ActionListener() {
                                     //    public void actionPerformed(ActionEvent e) {
                                     //        out.println("LOAD");//12
-                                    //        
+                                    //
                                     //        load_option[0] = true;
                                     //    }
                                     //});
@@ -155,7 +154,7 @@ public class Client extends func {
                                     frame.setVisible(true);
                                     frame.validate();
                                     frame.repaint();// 画面を書き直す
-                                    
+
                                     // optionの値が決まるまで以下のコードを実行しない
                                     while (true) {
                                         if (chat_option [0] != null ) {
@@ -500,8 +499,8 @@ public class Client extends func {
             }
         }
     }
-    
-    /* 
+
+    /*
     // chat_optionとquit_optionを返す
     private static List<Boolean[]> main_chat_panel(JFrame frame, PrintWriter out, String join_message, List<Boolean[]> option3) throws IOException {
         //Boolean[] chat_option = option3.get(0);
@@ -558,7 +557,7 @@ public class Client extends func {
         //return Arrays.asList(chat_option, quit_option);
     }
     */
-    
+
     private static void fail_join_panel(JFrame frame, String join_message) throws IOException {
         // パネルp9の実装
         JPanel p9 = new JPanel();
@@ -672,7 +671,7 @@ public class Client extends func {
             }
         }
     }
-    
+
     private static void succuss_signup_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
         // パネルp11の実装
         JPanel p11 = new JPanel();

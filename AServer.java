@@ -187,24 +187,27 @@ class AServerThread extends func{
                             }
                         }
                     } else {
-                        Boolean LOGIN = false; // This code may be run
+                        Boolean LOGIN = false; // This code probably never runs
                         out.println(LOGIN); // 5
                     }
                 }
             /*---------------------------------------------------------------------------------------- */
+            } catch (NumberFormatException e) { // clientが接続を切った場合
+                System.out.println(Thread.currentThread().getName() + "が切断されました");
+                System.out.println("closing...");
             } catch (IOException e) {//突然接続が切れた場合
                 System.err.println(e);
-                System.out.println("closing...");
+            } finally {
                 try {
                     socket.close();
                 } catch (IOException e2) {
                     System.err.println(e2);
                 }
-                return;//スレッド消滅
+                return; //スレッド消滅
             }
 
         } catch ( NumberFormatException e ) { // clientが接続を切った場合
-            System.err.println(Thread.currentThread().getName() + "が切断されました");
+            System.out.println(Thread.currentThread().getName() + "が切断されました");
             System.out.println("closing...");
         } catch (IOException e) {
             System.err.println(e);
@@ -225,7 +228,6 @@ public class AServer {
     public static void main(String[] args) throws IOException {
 
         ServerSocket s = new ServerSocket(PORT); // ソケットを作成する
-
         // Scanner sc = new Scanner(System.in);
 
         try {
