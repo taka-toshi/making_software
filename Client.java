@@ -393,6 +393,20 @@ public class Client extends func {
             }
         });
 
+        // 今付いているframeにキーリスナーをはずす
+        try {
+            frame.removeKeyListener(frame.getKeyListeners()[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // 何もしない
+        }
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ok3[0] = true;
+                }
+            }
+        });
+
         label_newchatname.setBounds(300, 236, 200, 25);
         tf_newchatname.setBounds(525, 236, 200, 25);
         ok3_btn.setBounds(675, 261, 50, 50);
@@ -401,6 +415,7 @@ public class Client extends func {
         p5.add(ok3_btn);
         frame.add(p5);
         frame.setVisible(true);
+        frame.requestFocus();
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -433,12 +448,27 @@ public class Client extends func {
             }
         });
 
+        // 今付いているframeにキーリスナーをはずす
+        try {
+            frame.removeKeyListener(frame.getKeyListeners()[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // 何もしない
+        }
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ok4[0] = true;
+                }
+            }
+        });
+
         label_chatresult.setBounds(420, 236, 500, 25);
         ok4_btn.setBounds(570, 286, 50, 50);
         p6.add(label_chatresult);
         p6.add(ok4_btn);
         frame.add(p6);
         frame.setVisible(true);
+        frame.requestFocus();
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -475,6 +505,20 @@ public class Client extends func {
             }
         });
 
+        // 今付いているframeにキーリスナーをはずす
+        try {
+            frame.removeKeyListener(frame.getKeyListeners()[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // 何もしない
+        }
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ok5[0] = true;
+                }
+            }
+        });
+
         label_chatname.setBounds(300, 236, 200, 25);
         tf_chatname.setBounds(525, 236, 200, 25);
         ok5_btn.setBounds(675, 261, 50, 50);
@@ -483,6 +527,7 @@ public class Client extends func {
         p7.add(ok5_btn);
         frame.add(p7);
         frame.setVisible(true);
+        frame.requestFocus();
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -572,12 +617,27 @@ public class Client extends func {
             }
         });
 
+        // 今付いているframeにキーリスナーをはずす
+        try {
+            frame.removeKeyListener(frame.getKeyListeners()[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // 何もしない
+        }
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ok6[0] = true;
+                }
+            }
+        });
+
         label_chat_failure.setBounds(420, 236, 500, 25);
         ok6_btn.setBounds(570, 286, 50, 50);
         p9.add(label_chat_failure);
         p9.add(ok6_btn);
         frame.add(p9);
         frame.setVisible(true);
+        frame.requestFocus();
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -609,12 +669,27 @@ public class Client extends func {
             }
         });
 
+        // 今付いているframeにキーリスナーをはずす
+        try {
+            frame.removeKeyListener(frame.getKeyListeners()[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // 何もしない
+        }
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ok7[0] = true;
+                }
+            }
+        });
+
         label_logout.setBounds(420, 236, 500, 25);
         ok7_btn.setBounds(570, 286, 50, 50);
         p10.add(label_logout);
         p10.add(ok7_btn);
         frame.add(p10);
         frame.setVisible(true);
+        frame.requestFocus();
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -648,12 +723,27 @@ public class Client extends func {
             }
         });
 
+        // 今付いているframeにキーリスナーをはずす
+        try {
+            frame.removeKeyListener(frame.getKeyListeners()[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // 何もしない
+        }
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ok2[0] = true;
+                }
+            }
+        });
+
         label_login_failure.setBounds(420, 236, 200, 25);
         ok2_btn.setBounds(570, 286, 50, 50);
         p3.add(label_login_failure);
         p3.add(ok2_btn);
         frame.add(p3);
         frame.setVisible(true);
+        frame.requestFocus();
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -686,12 +776,27 @@ public class Client extends func {
             }
         });
 
+        // 今付いているframeにキーリスナーをはずす
+        try {
+            frame.removeKeyListener(frame.getKeyListeners()[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // 何もしない
+        }
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ok8[0] = true;
+                }
+            }
+        });
+
         label_signup.setBounds(420, 236, 500, 25);
         ok8_btn.setBounds(570, 286, 50, 50);
         p11.add(label_signup);
         p11.add(ok8_btn);
         frame.add(p11);
         frame.setVisible(true);
+        frame.requestFocus();
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -725,12 +830,27 @@ public class Client extends func {
             }
         });
 
+        // 今付いているframeにキーリスナーをはずす
+        try {
+            frame.removeKeyListener(frame.getKeyListeners()[0]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // 何もしない
+        }
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ok9[0] = true;
+                }
+            }
+        });
+
         label_signup_failure.setBounds(420, 236, 200, 25);
         ok9_btn.setBounds(570, 286, 50, 50);
         p12.add(label_signup_failure);
         p12.add(ok9_btn);
         frame.add(p12);
         frame.setVisible(true);
+        frame.requestFocus();
         frame.validate();
         frame.repaint();// 画面を書き直す
 
@@ -765,4 +885,5 @@ public class Client extends func {
             e.printStackTrace();
         }
     }
+
 }
