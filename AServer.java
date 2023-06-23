@@ -126,10 +126,12 @@ class AServerThread extends func{
                                                 chat_log_reader.close();
 
                                                 String message = in.readLine();// 12
+                                                
+                                                if (!(message.equals(""))){
+                                                    String chat_log_data = username + " : " +message;
+                                                    chat_log_writer.println(chat_log_data);
+                                                } 
 
-                                                String chat_log_data = username + " : " +message;
-
-                                                chat_log_writer.println(chat_log_data);
                                                 chat_log_writer.close();
 
                                                 if (message.equals("END")) {
@@ -203,7 +205,8 @@ class AServerThread extends func{
                 } catch (IOException e2) {
                     System.err.println(e2);
                 }
-                return; //スレッド消滅
+                /*　以下の"return;"をコメントアウトすると警告は消えるが、 */
+                //return; //スレッド消滅
             }
 
         } catch ( NumberFormatException e ) { // clientが接続を切った場合

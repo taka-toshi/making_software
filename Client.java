@@ -85,7 +85,7 @@ public class Client extends func {
 
                                     Boolean chat_option []= { null };
                                     Boolean quit_option []= { null };
-                                    //Boolean load_option []= { null };
+                                    Boolean load_option []= { null };
 
                                     JPanel p8 = new JPanel();
                                     p8.setLayout(null);
@@ -105,7 +105,7 @@ public class Client extends func {
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");
                                     JButton quit_btn = new JButton("QUIT");
-                                    //JButton load_btn = new JButton("LOAD");
+                                    JButton load_btn = new JButton("LOAD");
 
 
                                     send_btn.addActionListener(new ActionListener() {
@@ -126,13 +126,13 @@ public class Client extends func {
                                         }
                                     });
 
-                                    //load_btn.addActionListener(new ActionListener() {
-                                    //    public void actionPerformed(ActionEvent e) {
-                                    //        out.println("LOAD");//12
-                                    //
-                                    //        load_option[0] = true;
-                                    //    }
-                                    //});
+                                    load_btn.addActionListener(new ActionListener() {
+                                        public void actionPerformed(ActionEvent e) {
+                                            out.println("");//12
+                                    
+                                            load_option[0] = true;
+                                        }
+                                    });
 
                                     tf_message.setColumns(10);
                                     scroll.setBounds(100, 35, 800, 310);
@@ -141,15 +141,15 @@ public class Client extends func {
                                     label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
                                     tf_message.setBounds(500, 350, 200,25);
                                     send_btn.setBounds(700, 350, 60,25);
-                                    quit_btn.setBounds(500, 400, 35,25);
-                                    //load_btn.setBounds(440, 400, 40, 25);
+                                    quit_btn.setBounds(500, 400, 60,25);
+                                    load_btn.setBounds(420, 400, 60, 25);
                                     p8.add(label_chat_success);
                                     p8.add(scroll);
                                     p8.add(label_messagelabel);
                                     p8.add(tf_message);
                                     p8.add(send_btn);
                                     p8.add(quit_btn);
-                                    //p8.add(load_btn);
+                                    p8.add(load_btn);
                                     frame.add(p8);
                                     frame.setVisible(true);
                                     frame.validate();
@@ -161,8 +161,8 @@ public class Client extends func {
                                             break;
                                         }else if (quit_option [0] != null){
                                             break;
-                                        //}else if (load_option [0] != null){
-                                        //    break;
+                                        }else if (load_option [0] != null){
+                                            break;
                                         }else{
                                             try {
                                                 Thread.sleep(100);
