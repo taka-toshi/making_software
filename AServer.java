@@ -136,8 +136,6 @@ class AServerThread extends func{
 
                                                 if (message.equals("END")) {
                                                     break;
-                                                //}else if (message.equals("LOAD")){
-                                                    //break;
                                                 }
                                             }
 
