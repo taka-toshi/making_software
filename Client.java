@@ -92,6 +92,7 @@ public class Client extends func {
 
                                     JLabel label_chat_success = new JLabel(join_message);
 
+                                    /* 
                                     // chat_log.txtを表示
                                     JTextArea text = new JTextArea();// テキスト表示領域を作成
                                     text.setEditable(false);//textの編集不可設定
@@ -99,7 +100,9 @@ public class Client extends func {
                                     ReadFromTextFile(text,room_name);
                                     JScrollPane scroll = new JScrollPane();//スクロールバーを追加
                                     scroll.getViewport().setView(text);
+                                    */
 
+                                    chat_log_panel(frame, p8, in);// chat_log.txtを表示
 
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
@@ -136,7 +139,7 @@ public class Client extends func {
                                     */
 
                                     tf_message.setColumns(10);
-                                    scroll.setBounds(100, 35, 800, 310);
+                                    //scroll.setBounds(100, 35, 800, 310);
                                     label_chat_success.setBounds(400, 10, 800, 25);
                                     label_messagelabel.setBounds(300, 350, 200,25);
                                     label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -145,7 +148,7 @@ public class Client extends func {
                                     quit_btn.setBounds(500, 400, 60,25);
                                     //load_btn.setBounds(420, 400, 60, 25);
                                     p8.add(label_chat_success);
-                                    p8.add(scroll);
+                                    //p8.add(scroll);
                                     p8.add(label_messagelabel);
                                     p8.add(tf_message);
                                     p8.add(send_btn);
@@ -166,9 +169,12 @@ public class Client extends func {
                                         //    break;
                                         }else{
                                             try {
-                                                Thread.sleep(3000);//3秒おきに更新
                                                 out.println("");//12
-                                                break;
+                                                Thread.sleep(4000);//4秒おきに更新
+                                                //break;
+                                                
+                                                chat_log_panel(frame, p8, in);// chat_log.txtを表示
+
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
@@ -875,6 +881,23 @@ public class Client extends func {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void chat_log_panel(JFrame frame, JPanel p8, BufferedReader in)throws IOException{
+        // chat_log.txtを表示
+        JTextArea text = new JTextArea();// テキスト表示領域を作成
+        text.setEditable(false);//textの編集不可設定
+        String room_name = in.readLine();// 11.5
+        ReadFromTextFile(text,room_name);
+        JScrollPane scroll = new JScrollPane();//スクロールバーを追加
+        scroll.getViewport().setView(text);
+
+        scroll.setBounds(100, 35, 800, 310);
+        p8.add(scroll);
+        frame.add(p8);
+        frame.setVisible(true);
+        //frame.validate();
+        //frame.repaint();// 画面を書き直す
     }
 
 }
