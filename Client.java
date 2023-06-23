@@ -166,7 +166,7 @@ public class Client extends func {
                                         //    break;
                                         }else{
                                             try {
-                                                Thread.sleep(3000);//秒おきに更新
+                                                Thread.sleep(3000);//3秒おきに更新
                                                 out.println("");//12
                                                 break;
                                             } catch (InterruptedException e) {
