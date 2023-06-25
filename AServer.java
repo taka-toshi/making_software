@@ -244,8 +244,6 @@ public class AServer {
                 AServerThread t = new AServerThread(socket);//スレッド生成
                 t.start();//スレッド実行
                 socket = s.accept();// コネクション設定要求を待つ
-                FileServer file_server = new FileServer(socket);
-                file_server.sync();
             }
         } finally {
             s.close();

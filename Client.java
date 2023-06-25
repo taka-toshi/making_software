@@ -8,7 +8,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 
 public class Client extends func {
-    private static FileClient file_client;
 
     public static void main(String[] args) throws IOException {
 
@@ -18,8 +17,6 @@ public class Client extends func {
         InetAddress addr = InetAddress.getByName("localhost"); // IP アドレスへの変換
 
         Socket socket = new Socket(addr, PORT); // ソケットの生成
-        Socket socket2 = new Socket(addr, PORT); // ソケットの生成
-        file_client = new FileClient(socket2);
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
@@ -883,9 +880,8 @@ public class Client extends func {
 
     private static void ReadFromTextFile(JTextArea t,String username, String filename) {
         try {
-            System.out.println("check point 2");
+            FileClient file_client = new FileClient();
             file_client.request(filename, username);
-            System.out.println("check point 9");
             filename = username + "_" + filename;
             File file = new File(filename);
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -909,11 +905,7 @@ public class Client extends func {
         // chat_log.txtを表示
         JTextArea text = new JTextArea();// テキスト表示領域を作成
         text.setEditable(false);//textの編集不可設定
-        System.out.println("username: " + username);
-        System.out.println("room_name: " + room_name);
-        System.out.println("check point 1");
         ReadFromTextFile(text,username,room_name);
-        System.out.println("check point 10");
         JScrollPane scroll = new JScrollPane();//スクロールバーを追加
         scroll.getViewport().setView(text);
 
