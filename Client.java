@@ -126,8 +126,6 @@ public class Client extends func {
                                     });
 
                                     tf_message.setColumns(10);
-                                    //scroll.setBounds(100, 35, 800, 310);
-                                    //label_chat_success.setBounds(400, 10, 800, 25);
                                     p8.setLayout(new BorderLayout());
                                     p8.add(label_messagelabel, BorderLayout.WEST);
                                     p8.add(tf_message, BorderLayout.CENTER);
@@ -138,11 +136,15 @@ public class Client extends func {
                                     //tf_message.setBounds(500, 350, 200,25);
                                     //send_btn.setBounds(700, 350, 60,25);
                                     //quit_btn.setBounds(500, 400, 60,25);
+                                    ////label_chat_success.setBounds(400, 10, 800, 25);
+                                    //p8.add(label_messagelabel);
+                                    //p8.add(tf_message);
+                                    //p8.add(send_btn);
+                                    //p8.add(quit_btn);
+                                    ////p8.add(label_chat_success);
 
-                                    //p8.add(label_chat_success);
-
-                                    //frame.add(p8);
                                     frame.getContentPane().add(p8, BorderLayout.SOUTH);
+                                    //frame.add(p8);
                                     frame.setVisible(true);
                                     tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
                                     frame.validate();
@@ -910,6 +912,8 @@ public class Client extends func {
 
         p8_1.setLayout(new BorderLayout());
         p8_1.add(scroll, BorderLayout.CENTER);
+        //scroll.setBounds(300, 10, 500, 300); // 上2行の代わりにこれでもOK
+        //p8_1.add(scroll);
         frame.getContentPane().add(p8_1, BorderLayout.CENTER);
     }
 
