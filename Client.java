@@ -4,8 +4,11 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.Rectangle;
 import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
 
 public class Client extends func {
+
     public static void main(String[] args) throws IOException {
 
         Scanner sc = new Scanner(System.in);
@@ -44,7 +47,7 @@ public class Client extends func {
             option = init_panel(frame, out, option); // ログインとサインインのボタンを表示 p1
             /*---------------------------------------------------------------------------------------- */
             frame.getContentPane().removeAll();// パネル取り除く
-            input_panel(frame, out); // ユーザー名とパスワードの入力欄を表示 p2
+            String username = input_panel(frame, out); // ユーザー名とパスワードの入力欄を表示 p2
             /*---------------------------------------------------------------------------------------- */
             if (option[0] == 1) {//ログインしたとき
                 Boolean LOGIN = false;
@@ -78,37 +81,31 @@ public class Client extends func {
                             JOIN = Boolean.parseBoolean(in.readLine());// 10.5
 
                             if (JOIN == true) {// チャットルームに参加できたとき
-
+                                Integer scroll_height = 0;
+                                Integer max = 0;
+                                Integer min = 0;
                                 while (true) {
-
+                                    // frameのlayoutを初期化
+                                    frame.setLayout(null);
                                     frame.getContentPane().removeAll();// パネルを取り除く
+                                    // frameにBorderLayoutを設定
+                                    frame.setLayout(new BorderLayout());
 
                                     Boolean chat_option []= { null };
                                     Boolean quit_option []= { null };
-                                    //Boolean load_option []= { null };
 
                                     JPanel p8 = new JPanel();
                                     p8.setLayout(null);
-
-                                    JLabel label_chat_success = new JLabel(join_message);
-
-                                    /* 
-                                    // chat_log.txtを表示
-                                    JTextArea text = new JTextArea();// テキスト表示領域を作成
-                                    text.setEditable(false);//textの編集不可設定
-                                    String room_name = in.readLine();// 11.5
-                                    ReadFromTextFile(text,room_name);
-                                    JScrollPane scroll = new JScrollPane();//スクロールバーを追加
-                                    scroll.getViewport().setView(text);
-                                    */
-
-                                    chat_log_panel(frame, p8, in);// chat_log.txtを表示
-
+                                    String room_name = in.readLine();// 11
+                                    // スクロールバーを設定
+                                    log_panel(frame, username, room_name, scroll_height, max, min); // ログを表示 p8_1
+                                    //JLabel label_chat_success = new JLabel(join_message);
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");
+                                    send_btn.setMnemonic(KeyEvent.VK_S);
                                     JButton quit_btn = new JButton("QUIT");
-                                    //JButton load_btn = new JButton("LOAD");
+                                    quit_btn.setMnemonic(KeyEvent.VK_Q);
 
 
                                     send_btn.addActionListener(new ActionListener() {
@@ -128,53 +125,66 @@ public class Client extends func {
                                             quit_option[0] = true;
                                         }
                                     });
-                                    /* 
-                                    load_btn.addActionListener(new ActionListener() {
-                                        public void actionPerformed(ActionEvent e) {
-                                            out.println("");//12
-                                    
-                                            load_option[0] = true;
-                                        }
-                                    });
-                                    */
 
                                     tf_message.setColumns(10);
-                                    //scroll.setBounds(100, 35, 800, 310);
-                                    label_chat_success.setBounds(400, 10, 800, 25);
-                                    label_messagelabel.setBounds(300, 350, 200,25);
-                                    label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
-                                    tf_message.setBounds(500, 350, 200,25);
-                                    send_btn.setBounds(700, 350, 60,25);
-                                    quit_btn.setBounds(500, 400, 60,25);
-                                    //load_btn.setBounds(420, 400, 60, 25);
-                                    p8.add(label_chat_success);
-                                    //p8.add(scroll);
-                                    p8.add(label_messagelabel);
-                                    p8.add(tf_message);
-                                    p8.add(send_btn);
-                                    p8.add(quit_btn);
-                                    //p8.add(load_btn);
-                                    frame.add(p8);
+                                    p8.setLayout(new BorderLayout());
+                                    p8.add(label_messagelabel, BorderLayout.WEST);
+                                    p8.add(tf_message, BorderLayout.CENTER);
+                                    p8.add(send_btn, BorderLayout.EAST);
+                                    p8.add(quit_btn, BorderLayout.SOUTH);
+                                    //label_messagelabel.setBounds(300, 350, 200,25);
+                                    //label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
+                                    //tf_message.setBounds(500, 350, 200,25);
+                                    //send_btn.setBounds(700, 350, 60,25);
+                                    //quit_btn.setBounds(500, 400, 60,25);
+                                    ////label_chat_success.setBounds(400, 10, 800, 25);
+                                    //p8.add(label_messagelabel);
+                                    //p8.add(tf_message);
+                                    //p8.add(send_btn);
+                                    //p8.add(quit_btn);
+                                    ////p8.add(label_chat_success);
+
+                                    frame.getContentPane().add(p8, BorderLayout.SOUTH);
+                                    //frame.add(p8);
                                     frame.setVisible(true);
+                                    tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
                                     frame.validate();
                                     frame.repaint();// 画面を書き直す
-
                                     // optionの値が決まるまで以下のコードを実行しない
                                     while (true) {
                                         if (chat_option [0] != null ) {
                                             break;
                                         }else if (quit_option [0] != null){
                                             break;
-                                        //}else if (load_option [0] != null){
-                                        //    break;
                                         }else{
                                             try {
-                                                out.println("");//12
-                                                Thread.sleep(4000);//4秒おきに更新
-                                                //break;
-                                                
-                                                chat_log_panel(frame, p8, in);// chat_log.txtを表示
+                                                // out.println("");// 12 // 必要ない
+                                                Thread.sleep(1000);
+                                                // ======================================
+                                                // 現在のスクロールの状態を取得
+                                                JScrollPane scroll = null;
+                                                // frameのcenterのp8_1パネルのセンターのJScrollPane scrollを取得する
+                                                JPanel p8_1 = (JPanel) frame.getContentPane().getComponent(0);
+                                                Component[] components = p8_1.getComponents();
+                                                for (Component component : components) {
+                                                    if (component instanceof JScrollPane) {
+                                                        scroll = (JScrollPane) component;
+                                                    }
+                                                }
+                                                JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
+                                                max = verticalScrollBar.getMaximum();
+                                                min = verticalScrollBar.getMinimum();
+                                                scroll_height = verticalScrollBar.getValue();
+                                                // ======================================
 
+                                                frame.getContentPane().removeAll();// パネルを取り除く
+                                                log_panel(frame,username, room_name,scroll_height, max, min); // ログを表示 p8_1
+
+                                                frame.getContentPane().add(p8, BorderLayout.SOUTH);
+                                                frame.setVisible(true);
+                                                tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
+                                                frame.validate();
+                                                frame.repaint();// 画面を書き直す
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
@@ -262,7 +272,7 @@ public class Client extends func {
         return option;
     }
 
-    private static void input_panel(JFrame frame, PrintWriter out) throws IOException {
+    private static String input_panel(JFrame frame, PrintWriter out) throws IOException {
         // パネルp2の実装
         JPanel p2 = new JPanel();
         p2.setLayout(null);
@@ -274,11 +284,13 @@ public class Client extends func {
         Boolean[] ok = { null };
         Boolean[] noerror = { null };
         JButton ok_btn = new JButton("OK");
+        String[] obj_user = { null };
         ok_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok[0] = true;
                 String username = tf_user.getText();
+                obj_user[0] = username;
                 char[] pass = tf_pass.getPassword();
                 String pass_str = new String(pass);
                 String hash_pass = make_hash(pass_str);
@@ -327,6 +339,7 @@ public class Client extends func {
                 break;
             }
         }
+        return obj_user[0];
     }
 
     private static Integer[] chat_action_panel(JFrame frame, PrintWriter out, Integer[] option2) throws IOException {
@@ -866,8 +879,12 @@ public class Client extends func {
         }
     }
 
-    private static void ReadFromTextFile(JTextArea t, String filename) {
+    private static void ReadFromTextFile(JTextArea t,String username, String filename) {
         try {
+            //FileClient file_client = new FileClient();
+            //file_client.request(filename, username);
+            FileClient.request(filename, username);
+            filename = "client/" + username + "/" + filename;
             File file = new File(filename);
             BufferedReader br = new BufferedReader(new FileReader(file));
             // ファイル末端まで、各行をstrに読み込んでからJTextAreaコンテナに追加していく
@@ -881,23 +898,32 @@ public class Client extends func {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return;
     }
 
-    private static void chat_log_panel(JFrame frame, JPanel p8, BufferedReader in)throws IOException{
+    private static void log_panel(JFrame frame,String username, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
+        JPanel p8_1 = new JPanel();
+        p8_1.setLayout(null);
         // chat_log.txtを表示
         JTextArea text = new JTextArea();// テキスト表示領域を作成
         text.setEditable(false);//textの編集不可設定
-        String room_name = in.readLine();// 11.5
-        ReadFromTextFile(text,room_name);
+        ReadFromTextFile(text,username,room_name);
         JScrollPane scroll = new JScrollPane();//スクロールバーを追加
         scroll.getViewport().setView(text);
 
-        scroll.setBounds(100, 35, 800, 310);
-        p8.add(scroll);
-        frame.add(p8);
-        frame.setVisible(true);
-        //frame.validate();
-        //frame.repaint();// 画面を書き直す
+        JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
+        if (max == 0){
+            max = verticalScrollBar.getMaximum();
+        }
+        verticalScrollBar.setMaximum(max);
+        verticalScrollBar.setMinimum(min);
+        verticalScrollBar.setValue(scroll_height);
+
+        p8_1.setLayout(new BorderLayout());
+        p8_1.add(scroll, BorderLayout.CENTER);
+        //scroll.setBounds(300, 10, 500, 300); // 上2行の代わりにこれでもOK
+        //p8_1.add(scroll);
+        frame.getContentPane().add(p8_1, BorderLayout.CENTER);
     }
 
 }
