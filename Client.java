@@ -108,6 +108,7 @@ public class Client extends func {
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");
                                     JButton quit_btn = new JButton("QUIT");
+                                    //label_messagelabel.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
                                     //JButton load_btn = new JButton("LOAD");
 
 
