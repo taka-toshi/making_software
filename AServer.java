@@ -126,11 +126,11 @@ class AServerThread extends func{
                                                 chat_log_reader.close();
 
                                                 String message = in.readLine();// 12
-                                                
-                                                if (!(message.equals(""))){
+
+                                                if (!(message.equals(""))){ // 空の送信を拒否
                                                     String chat_log_data = username + " : " +message;
                                                     chat_log_writer.println(chat_log_data);
-                                                } 
+                                                }
 
                                                 chat_log_writer.close();
 

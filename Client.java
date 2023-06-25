@@ -92,7 +92,7 @@ public class Client extends func {
 
                                     JLabel label_chat_success = new JLabel(join_message);
 
-                                    /* 
+                                    /*
                                     // chat_log.txtを表示
                                     JTextArea text = new JTextArea();// テキスト表示領域を作成
                                     text.setEditable(false);//textの編集不可設定
@@ -128,15 +128,14 @@ public class Client extends func {
                                             quit_option[0] = true;
                                         }
                                     });
-                                    /* 
-                                    load_btn.addActionListener(new ActionListener() {
-                                        public void actionPerformed(ActionEvent e) {
-                                            out.println("");//12
-                                    
-                                            load_option[0] = true;
-                                        }
-                                    });
-                                    */
+
+                                    //load_btn.addActionListener(new ActionListener() {
+                                    //    public void actionPerformed(ActionEvent e) {
+                                    //        out.println("LOAD");//12
+                                    //
+                                    //        load_option[0] = true;
+                                    //    }
+                                    //});
 
                                     tf_message.setColumns(10);
                                     //scroll.setBounds(100, 35, 800, 310);
@@ -172,14 +171,12 @@ public class Client extends func {
                                                 out.println("");//12
                                                 Thread.sleep(4000);//4秒おきに更新
                                                 //break;
-                                                
                                                 chat_log_panel(frame, p8, in);// chat_log.txtを表示
 
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
                                         }
-                                        
                                     }
 
                                     if(quit_option[0] != null){
