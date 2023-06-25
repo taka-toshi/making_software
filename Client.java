@@ -157,8 +157,8 @@ public class Client extends func {
                                             break;
                                         }else{
                                             try {
+                                                // out.println("");// 12 // 必要ない
                                                 Thread.sleep(1000);
-
                                                 // ======================================
                                                 // 現在のスクロールの状態を取得
                                                 JScrollPane scroll = null;
@@ -186,7 +186,6 @@ public class Client extends func {
                                                 frame.repaint();// 画面を書き直す
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
-                                                System.out.println("error");
                                             }
                                         }
                                     }
