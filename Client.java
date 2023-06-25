@@ -8,6 +8,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 
 public class Client extends func {
+    private static FileClient file_client;
+
     public static void main(String[] args) throws IOException {
 
         Scanner sc = new Scanner(System.in);
@@ -16,6 +18,8 @@ public class Client extends func {
         InetAddress addr = InetAddress.getByName("localhost"); // IP アドレスへの変換
 
         Socket socket = new Socket(addr, PORT); // ソケットの生成
+        Socket socket2 = new Socket(addr, PORT); // ソケットの生成
+        file_client = new FileClient(socket2);
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())); // データ受信用バッファの設定
@@ -46,7 +50,7 @@ public class Client extends func {
             option = init_panel(frame, out, option); // ログインとサインインのボタンを表示 p1
             /*---------------------------------------------------------------------------------------- */
             frame.getContentPane().removeAll();// パネル取り除く
-            input_panel(frame, out); // ユーザー名とパスワードの入力欄を表示 p2
+            String username = input_panel(frame, out); // ユーザー名とパスワードの入力欄を表示 p2
             /*---------------------------------------------------------------------------------------- */
             if (option[0] == 1) {//ログインしたとき
                 Boolean LOGIN = false;
@@ -97,7 +101,7 @@ public class Client extends func {
                                     p8.setLayout(null);
                                     String room_name = in.readLine();// 11
                                     // スクロールバーを設定
-                                    log_panel(frame, room_name, scroll_height, max, min); // ログを表示 p8_1
+                                    log_panel(frame, username, room_name, scroll_height, max, min); // ログを表示 p8_1
                                     //JLabel label_chat_success = new JLabel(join_message);
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
@@ -177,7 +181,7 @@ public class Client extends func {
                                                 // ======================================
 
                                                 frame.getContentPane().removeAll();// パネルを取り除く
-                                                log_panel(frame, room_name,scroll_height, max, min); // ログを表示 p8_1
+                                                log_panel(frame,username, room_name,scroll_height, max, min); // ログを表示 p8_1
 
                                                 frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                                 frame.setVisible(true);
@@ -270,7 +274,7 @@ public class Client extends func {
         return option;
     }
 
-    private static void input_panel(JFrame frame, PrintWriter out) throws IOException {
+    private static String input_panel(JFrame frame, PrintWriter out) throws IOException {
         // パネルp2の実装
         JPanel p2 = new JPanel();
         p2.setLayout(null);
@@ -282,11 +286,13 @@ public class Client extends func {
         Boolean[] ok = { null };
         Boolean[] noerror = { null };
         JButton ok_btn = new JButton("OK");
+        String[] obj_user = { null };
         ok_btn.setMnemonic(KeyEvent.VK_ENTER);
         ok_btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ok[0] = true;
                 String username = tf_user.getText();
+                obj_user[0] = username;
                 char[] pass = tf_pass.getPassword();
                 String pass_str = new String(pass);
                 String hash_pass = make_hash(pass_str);
@@ -335,6 +341,7 @@ public class Client extends func {
                 break;
             }
         }
+        return obj_user[0];
     }
 
     private static Integer[] chat_action_panel(JFrame frame, PrintWriter out, Integer[] option2) throws IOException {
@@ -874,8 +881,12 @@ public class Client extends func {
         }
     }
 
-    private static void ReadFromTextFile(JTextArea t, String filename) {
+    private static void ReadFromTextFile(JTextArea t,String username, String filename) {
         try {
+            System.out.println("check point 2");
+            file_client.request(filename, username);
+            System.out.println("check point 9");
+            filename = username + "_" + filename;
             File file = new File(filename);
             BufferedReader br = new BufferedReader(new FileReader(file));
             // ファイル末端まで、各行をstrに読み込んでからJTextAreaコンテナに追加していく
@@ -889,15 +900,20 @@ public class Client extends func {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return;
     }
 
-    private static void log_panel(JFrame frame, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
+    private static void log_panel(JFrame frame,String username, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
         JPanel p8_1 = new JPanel();
         p8_1.setLayout(null);
         // chat_log.txtを表示
         JTextArea text = new JTextArea();// テキスト表示領域を作成
         text.setEditable(false);//textの編集不可設定
-        ReadFromTextFile(text,room_name);
+        System.out.println("username: " + username);
+        System.out.println("room_name: " + room_name);
+        System.out.println("check point 1");
+        ReadFromTextFile(text,username,room_name);
+        System.out.println("check point 10");
         JScrollPane scroll = new JScrollPane();//スクロールバーを追加
         scroll.getViewport().setView(text);
 
