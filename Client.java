@@ -882,7 +882,7 @@ public class Client extends func {
         try {
             FileClient file_client = new FileClient();
             file_client.request(filename, username);
-            filename = username + "_" + filename;
+            filename = "client/" + username + "/" + filename;
             File file = new File(filename);
             BufferedReader br = new BufferedReader(new FileReader(file));
             // ファイル末端まで、各行をstrに読み込んでからJTextAreaコンテナに追加していく

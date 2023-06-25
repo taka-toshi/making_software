@@ -34,7 +34,16 @@ public class FileClient {
         byte[] fileContent = byteArrayOutputStream.toByteArray();
 
         // 受信したファイルの内容をファイルに保存
-        fileName = username + "_" + fileName;
+        // client/user_name/file_nameに保存
+        File client = new File("client");
+        if (!client.exists()) {
+            client.mkdirs();
+        }
+        File dir = new File("client/" + username);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        fileName = "client/" + username + "/" + fileName;
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         fileOutputStream.write(fileContent);
         fileOutputStream.close();
