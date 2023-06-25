@@ -235,6 +235,9 @@ public class AServer {
 
     public static void main(String[] args) throws IOException {
 
+        // FileServerをexecで実行する
+        Runtime.getRuntime().exec("java FileServer");
+
         ServerSocket s = new ServerSocket(PORT); // ソケットを作成する
         // Scanner sc = new Scanner(System.in);
 
