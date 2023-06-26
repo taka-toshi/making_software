@@ -113,7 +113,7 @@ class AServerThread extends func{
                                             chat_log = new File(room_name + "_chat_log.txt");
 
                                             while (true) {
-                                                out.println(chat_log);// 11.5
+                                                out.println(chat_log);// 11
 
                                                 BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
                                                 PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
@@ -126,16 +126,18 @@ class AServerThread extends func{
                                                 chat_log_reader.close();
 
                                                 String message = in.readLine();// 12
-                                                
-                                                if (!(message.equals(""))){
+
+                                                if (!(message.equals(""))){ // 空の送信を拒否
                                                     String chat_log_data = username + " : " +message;
                                                     chat_log_writer.println(chat_log_data);
-                                                } 
+                                                }
 
                                                 chat_log_writer.close();
 
                                                 if (message.equals("END")) {
                                                     break;
+                                                //}else if (message.equals("LOAD")){
+                                                    //break;
                                                 }
                                             }
 
@@ -195,7 +197,10 @@ class AServerThread extends func{
             } catch (NumberFormatException e) { // clientが接続を切った場合
                 System.out.println(Thread.currentThread().getName() + "が切断されました");
                 System.out.println("closing...");
-            } catch (IOException e) {//突然接続が切れた場合
+            } catch (SocketException e) { //java.net.SocketException: Connection reset
+                System.out.println(Thread.currentThread().getName() + "が切断されました");
+                System.out.println("closing...");
+            } catch (IOException e) {
                 System.err.println(e);
             } finally {
                 try {
@@ -203,11 +208,13 @@ class AServerThread extends func{
                 } catch (IOException e2) {
                     System.err.println(e2);
                 }
-                /*　以下の"return;"をコメントアウトすると警告は消えるが、 */
-                //return; //スレッド消滅
+                return; //スレッド消滅
             }
 
         } catch ( NumberFormatException e ) { // clientが接続を切った場合
+            System.out.println(Thread.currentThread().getName() + "が切断されました");
+            System.out.println("closing...");
+        } catch (SocketException e) { //java.net.SocketException: Connection reset
             System.out.println(Thread.currentThread().getName() + "が切断されました");
             System.out.println("closing...");
         } catch (IOException e) {
