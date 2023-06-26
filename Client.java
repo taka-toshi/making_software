@@ -175,10 +175,24 @@ public class Client extends func {
                                                 min = verticalScrollBar.getMinimum();
                                                 scroll_height = verticalScrollBar.getValue();
                                                 // ======================================
+                                                // frameのsouthのp8パネルのセンターのJTextField tf_messageを取得する
+                                                JTextField tf_message_2 = null;
+                                                JPanel p8_sub = (JPanel) frame.getContentPane().getComponent(1);
+                                                Component[] components2 = p8_sub.getComponents();
+                                                for (Component component : components2) {
+                                                    if (component instanceof JTextField) {
+                                                        tf_message_2 = (JTextField) component;
+                                                    }
+                                                }
+                                                String obj_message = tf_message_2.getText();
+                                                // tf_message_2のカーソル位置を取得する
+                                                int cursor_position = tf_message_2.getCaretPosition();
 
                                                 frame.getContentPane().removeAll();// パネルを取り除く
                                                 log_panel(frame, room_name,scroll_height, max, min); // ログを表示 p8_1
 
+                                                tf_message.setText(obj_message);
+                                                tf_message.setCaretPosition(cursor_position);
                                                 frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                                 frame.setVisible(true);
                                                 tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
