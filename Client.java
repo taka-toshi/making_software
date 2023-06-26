@@ -187,12 +187,14 @@ public class Client extends func {
                                                 String obj_message = tf_message_2.getText();
                                                 // tf_message_2のカーソル位置を取得する
                                                 int cursor_position = tf_message_2.getCaretPosition();
-
+                                                // p8からテキストフィールドを取り除き
+                                                p8.remove(tf_message);
                                                 frame.getContentPane().removeAll();// パネルを取り除く
                                                 log_panel(frame, room_name,scroll_height, max, min); // ログを表示 p8_1
 
                                                 tf_message.setText(obj_message);
                                                 tf_message.setCaretPosition(cursor_position);
+                                                p8.add(tf_message, BorderLayout.CENTER);
                                                 frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                                 frame.setVisible(true);
                                                 tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
