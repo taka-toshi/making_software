@@ -136,8 +136,6 @@ class AServerThread extends func{
 
                                                 if (message.equals("END")) {
                                                     break;
-                                                //}else if (message.equals("LOAD")){
-                                                    //break;
                                                 }
                                             }
 
@@ -208,7 +206,8 @@ class AServerThread extends func{
                 } catch (IOException e2) {
                     System.err.println(e2);
                 }
-                return; //スレッド消滅
+                /*　以下の"return;"をコメントアウトすると警告は消えるが、 */
+                //return; //スレッド消滅
             }
 
         } catch ( NumberFormatException e ) { // clientが接続を切った場合

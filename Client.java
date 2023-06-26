@@ -189,6 +189,7 @@ public class Client extends func {
                                                 e.printStackTrace();
                                             }
                                         }
+                                        
                                     }
 
                                     if(quit_option[0] != null){
@@ -880,8 +881,9 @@ public class Client extends func {
 
     private static void ReadFromTextFile(JTextArea t,String username, String filename) {
         try {
-            FileClient file_client = new FileClient();
-            file_client.request(filename, username);
+            //FileClient file_client = new FileClient();
+            //file_client.request(filename, username);
+            FileClient.request(filename, username);
             filename = "client/" + username + "/" + filename;
             File file = new File(filename);
             BufferedReader br = new BufferedReader(new FileReader(file));
