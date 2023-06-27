@@ -187,6 +187,8 @@ public class Client extends func {
                                                 String obj_message = tf_message_2.getText();
                                                 // tf_message_2のカーソル位置を取得する
                                                 int cursor_position = tf_message_2.getCaretPosition();
+                                                int selcect_start = tf_message_2.getSelectionStart();
+                                                int selcect_end = tf_message_2.getSelectionEnd();
                                                 // p8からテキストフィールドを取り除き
                                                 p8.remove(tf_message);
                                                 frame.getContentPane().removeAll();// パネルを取り除く
@@ -194,6 +196,8 @@ public class Client extends func {
 
                                                 tf_message.setText(obj_message);
                                                 tf_message.setCaretPosition(cursor_position);
+                                                tf_message.setSelectionStart(selcect_start);
+                                                tf_message.setSelectionEnd(selcect_end);
                                                 p8.add(tf_message, BorderLayout.CENTER);
                                                 frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                                 frame.setVisible(true);
