@@ -185,8 +185,8 @@ public class Client extends func {
                                                     }
                                                 }
                                                 String obj_message = tf_message_2.getText();
-                                                //// tf_message_2のカーソル位置を取得する
-                                                //int cursor_position = tf_message_2.getCaretPosition();
+                                                // tf_message_2のカーソル位置を取得する
+                                                int cursor_position = tf_message_2.getCaretPosition();
                                                 //int selcect_start = tf_message_2.getSelectionStart();
                                                 //int selcect_end = tf_message_2.getSelectionEnd();
                                                 //// p8からテキストフィールドを取り除き
@@ -195,7 +195,6 @@ public class Client extends func {
                                                 log_panel(frame, room_name,scroll_height, max, min); // ログを表示 p8_1
 
                                                 tf_message.setText(obj_message);
-                                                //tf_message.setCaretPosition(cursor_position);
                                                 //tf_message.setSelectionStart(selcect_start);
                                                 //tf_message.setSelectionEnd(selcect_end);
                                                 p8.add(tf_message, BorderLayout.CENTER);
@@ -204,6 +203,7 @@ public class Client extends func {
                                                 tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
                                                 tf_message.setSelectionStart(0);
                                                 tf_message.setSelectionEnd(0);
+                                                tf_message.setCaretPosition(cursor_position);
                                                 frame.validate();
                                                 frame.repaint();// 画面を書き直す
                                             } catch (InterruptedException e) {
