@@ -201,7 +201,7 @@ public class Client extends func {
                                                 p8.add(tf_message, BorderLayout.CENTER);
                                                 frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                                 frame.setVisible(true);
-                                                tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
+                                                tf_message.requestFocusInWindow(); // メーッセージの入力欄にフォーカスを当てる
                                                 frame.validate();
                                                 frame.repaint();// 画面を書き直す
                                             } catch (InterruptedException e) {
