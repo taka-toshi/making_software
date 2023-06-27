@@ -176,32 +176,34 @@ public class Client extends func {
                                                 scroll_height = verticalScrollBar.getValue();
                                                 // ======================================
                                                 // frameのsouthのp8パネルのセンターのJTextField tf_messageを取得する
-                                                //JTextField tf_message_2 = null;
-                                                //JPanel p8_sub = (JPanel) frame.getContentPane().getComponent(1);
-                                                //Component[] components2 = p8_sub.getComponents();
-                                                //for (Component component : components2) {
-                                                //    if (component instanceof JTextField) {
-                                                //        tf_message_2 = (JTextField) component;
-                                                //    }
-                                                //}
-                                                //String obj_message = tf_message_2.getText();
+                                                JTextField tf_message_2 = null;
+                                                JPanel p8_sub = (JPanel) frame.getContentPane().getComponent(1);
+                                                Component[] components2 = p8_sub.getComponents();
+                                                for (Component component : components2) {
+                                                    if (component instanceof JTextField) {
+                                                        tf_message_2 = (JTextField) component;
+                                                    }
+                                                }
+                                                String obj_message = tf_message_2.getText();
                                                 //// tf_message_2のカーソル位置を取得する
                                                 //int cursor_position = tf_message_2.getCaretPosition();
                                                 //int selcect_start = tf_message_2.getSelectionStart();
                                                 //int selcect_end = tf_message_2.getSelectionEnd();
                                                 //// p8からテキストフィールドを取り除き
-                                                //p8.remove(tf_message);
+                                                p8.remove(tf_message);
                                                 frame.getContentPane().removeAll();// パネルを取り除く
                                                 log_panel(frame, room_name,scroll_height, max, min); // ログを表示 p8_1
 
-                                                //tf_message.setText(obj_message);
+                                                tf_message.setText(obj_message);
                                                 //tf_message.setCaretPosition(cursor_position);
                                                 //tf_message.setSelectionStart(selcect_start);
                                                 //tf_message.setSelectionEnd(selcect_end);
-                                                //p8.add(tf_message, BorderLayout.CENTER);
+                                                p8.add(tf_message, BorderLayout.CENTER);
                                                 frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                                 frame.setVisible(true);
-                                                tf_message.requestFocusInWindow(); // メーッセージの入力欄にフォーカスを当てる
+                                                tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
+                                                tf_message.setSelectionStart(0);
+                                                tf_message.setSelectionEnd(0);
                                                 frame.validate();
                                                 frame.repaint();// 画面を書き直す
                                             } catch (InterruptedException e) {
