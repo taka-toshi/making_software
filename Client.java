@@ -78,7 +78,6 @@ public class Client extends func {
                             JOIN = Boolean.parseBoolean(in.readLine());// 10.5
 
                             if (JOIN == true) {// チャットルームに参加できたとき
-
                                 while (true) {
 
                                     frame.getContentPane().removeAll();// パネルを取り除く
@@ -91,11 +90,10 @@ public class Client extends func {
                                     p8.setLayout(null);
 
                                     JLabel label_chat_success = new JLabel(join_message);
-
+                                    String room_name = in.readLine();// 11
                                     // chat_log.txtを表示
                                     JTextArea text = new JTextArea();// テキスト表示領域を作成
                                     text.setEditable(false);//textの編集不可設定
-                                    String room_name = in.readLine();// 11.5
                                     ReadFromTextFile(text,room_name);
                                     JScrollPane scroll = new JScrollPane();//スクロールバーを追加
                                     scroll.getViewport().setView(text);
@@ -104,8 +102,11 @@ public class Client extends func {
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");
+                                    send_btn.setMnemonic(KeyEvent.VK_S);
                                     JButton quit_btn = new JButton("QUIT");
+                                    quit_btn.setMnemonic(KeyEvent.VK_Q);
                                     JButton load_btn = new JButton("LOAD");
+                                    load_btn.setMnemonic(KeyEvent.VK_L);
 
 
                                     send_btn.addActionListener(new ActionListener() {
@@ -133,9 +134,12 @@ public class Client extends func {
                                             load_option[0] = true;
                                         }
                                     });
-
                                     tf_message.setColumns(10);
                                     scroll.setBounds(100, 35, 800, 310);
+                                    
+                                    
+                                    
+                                    
                                     label_chat_success.setBounds(400, 10, 800, 25);
                                     label_messagelabel.setBounds(300, 350, 200,25);
                                     label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -152,9 +156,9 @@ public class Client extends func {
                                     p8.add(load_btn);
                                     frame.add(p8);
                                     frame.setVisible(true);
+                                    tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
                                     frame.validate();
                                     frame.repaint();// 画面を書き直す
-
                                     // optionの値が決まるまで以下のコードを実行しない
                                     while (true) {
                                         if (chat_option [0] != null ) {
