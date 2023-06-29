@@ -11,8 +11,7 @@ public class FileClient {
     public FileClient() {
         try {
             this.addr = InetAddress.getByName("localhost"); // IP アドレスへの変換
-            //this.socket = new Socket(addr, PORT); // ソケットの生成
-            FileClient.socket = new Socket(addr, PORT);//ソケットの生成
+            this.socket = new Socket(addr, PORT); // ソケットの生成
         } catch (IOException e) {
             System.out.println(e);
         }
