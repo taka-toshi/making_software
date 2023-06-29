@@ -934,6 +934,7 @@ public class Client extends func {
         }
     }
 
+    // this function is for mac
     private static void log_panel(JPanel p8 , String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
         // chat_log.txtを表示
         JTextArea text = new JTextArea();// テキスト表示領域を作成
@@ -953,6 +954,7 @@ public class Client extends func {
         p8.add(scroll);
     }
 
+    // this function is for linux
     private static void log_panel(JFrame frame, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
         JPanel p8_1 = new JPanel();
         p8_1.setLayout(null);
