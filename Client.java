@@ -121,9 +121,12 @@ public class Client extends Clientfunc {
                                     send_btn.addActionListener(new ActionListener() {
                                         public void actionPerformed(ActionEvent e) {
                                             String message = tf_message.getText();
-                                            out.println(message);// 12
-
-                                            chat_option[0] = true;
+                                            if (message.equals(null) || message.equals("") || message.equals("END")) {
+                                                JOptionPane.showMessageDialog(null, "無効なメッセージです");
+                                            } else {
+                                                out.println(message);// 12
+                                                chat_option[0] = true;
+                                            }
 
                                         }
                                     });

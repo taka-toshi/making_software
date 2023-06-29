@@ -26,9 +26,9 @@ class AServerThread extends Serverfunc {
                 }
             }
 
-            // usernameとpasswordを保存するテーブルを制作
+            // usernameとpasswordを保存するテーブルを作成
             create_table(db);
-            // チャットルームの名前を保存するテーブルを制作
+            // チャットルームの名前を保存するテーブルを作成
             create_table_chatname(db);
 
             /*---------------------------------------------------------------------------------------- */
