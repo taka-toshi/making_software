@@ -5,7 +5,6 @@ import java.util.List;
 
 //１つのクライアントと通信を行うスレッド
 class AServerThread extends Serverfunc {
-    //static int PORT = 8080; // ポート番号をプログラムの引数で与える
     Socket socket; //このクライアントに対応するソケット
 
     //コンストラクタ（使用するソケットを指定）
@@ -108,22 +107,13 @@ class AServerThread extends Serverfunc {
                                             JOIN_CHAT = true;
                                             out.println(room_name + "に参加できました!");// 10
                                             out.println(JOIN_CHAT);// 10.5
-                                            // out.println(room_name);// 11
 
                                             chat_log = new File(room_name + "_chat_log.txt");
 
                                             while (true) {
                                                 out.println(chat_log);// 11
 
-                                                BufferedReader chat_log_reader = new BufferedReader(new FileReader(chat_log));
                                                 PrintWriter chat_log_writer = new PrintWriter(new BufferedWriter(new FileWriter(chat_log, true)));
-                                                /*
-                                                 * String chat_log_line;
-                                                 * while ((chat_log_line = chat_log_reader.readLine()) != null) {
-                                                 * out.println(chat_log_line);// 13
-                                                 * }
-                                                 */
-                                                chat_log_reader.close();
 
                                                 String message = in.readLine();// 12
 
@@ -136,8 +126,6 @@ class AServerThread extends Serverfunc {
 
                                                 if (message.equals("END")) {
                                                     break;
-                                                //}else if (message.equals("LOAD")){
-                                                    //break;
                                                 }
                                             }
 
@@ -150,10 +138,9 @@ class AServerThread extends Serverfunc {
                                     /*---------------------------------------------------------------------------------------- */
                                     } else if (option2 == 3) {// 3.退出する
                                         break;
-
-                                    /*---------------------------------------------------------------------------------------- */
                                     }
                                 }
+                            /*---------------------------------------------------------------------------------------- */
                             } else {//ログイン失敗の時
                                 out.println(LOGIN); // 5
                             }
@@ -246,7 +233,6 @@ public class AServer {
         Runtime.getRuntime().exec("java FileServer");
 
         ServerSocket s = new ServerSocket(PORT); // ソケットを作成する
-        // Scanner sc = new Scanner(System.in);
 
         try {
             while(true){

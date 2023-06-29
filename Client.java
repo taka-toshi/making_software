@@ -10,9 +10,6 @@ import java.awt.Component;
 public class Client extends Clientfunc {
 
     public static void main(String[] args) throws IOException {
-
-        Scanner sc = new Scanner(System.in);
-
         final int PORT = 8080;
         InetAddress addr = InetAddress.getByName("localhost"); // IP アドレスへの変換
 
@@ -31,16 +28,15 @@ public class Client extends Clientfunc {
             frame.setBounds(table);// frameのサイズを指定→table
             frame.setLocationRelativeTo(null);// 画面の真ん中にframeを表示
 
-            gui(frame, in, out, sc);
+            gui(frame, in, out);
 
         } finally {
             System.out.println("closing...");
             socket.close();
-            sc.close();
         }
     }
 
-    public static void gui(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    public static void gui(JFrame frame, BufferedReader in, PrintWriter out) throws IOException {
         while(true){
             frame.getContentPane().removeAll();// パネルを取り除く
             Integer[] option = { null };
@@ -246,13 +242,13 @@ public class Client extends Clientfunc {
                         /*---------------------------------------------------------------------------------------- */
                         } else if (option2[0] == 3) {// 3.退出する
                             frame.getContentPane().removeAll();// パネルを取り除く
-                            room_exit_panel(frame, in, out, sc); // ルームを退出したパネルを表示 p10 (gui再帰)
+                            room_exit_panel(frame, in, out); // ルームを退出したパネルを表示 p10 (gui再帰)
                         /*---------------------------------------------------------------------------------------- */
                         }
                     }
                 } else {// ログイン失敗のとき
                     frame.getContentPane().removeAll();// パネルを取り除く
-                    fail_login_panel(frame, in, out, sc); // ログイン失敗のパネルを表示 p3 (gui再帰)
+                    fail_login_panel(frame, in, out); // ログイン失敗のパネルを表示 p3 (gui再帰)
                 }
             /*---------------------------------------------------------------------------------------- */
             } else if (option[0] == 2) {// サインインしたとき
@@ -260,9 +256,9 @@ public class Client extends Clientfunc {
                 Boolean SIGNUP = false;
                 SIGNUP = Boolean.parseBoolean(in.readLine()); // 6.0
                 if (SIGNUP == true) {// サインイン成功のとき
-                    succuss_signup_panel(frame, in, out, sc); // signup成功のパネルを表示 p11 (gui再帰)
+                    succuss_signup_panel(frame, in, out); // signup成功のパネルを表示 p11 (gui再帰)
                 } else {// サインアップできなかった場合
-                    fail_signup_panel(frame, in, out, sc); // signup失敗のパネルを表示 p12 (gui再帰)
+                    fail_signup_panel(frame, in, out); // signup失敗のパネルを表示 p12 (gui再帰)
                 }
             }
         }
@@ -704,7 +700,7 @@ public class Client extends Clientfunc {
         }
     }
 
-    private static void room_exit_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    private static void room_exit_panel(JFrame frame, BufferedReader in, PrintWriter out) throws IOException {
         // パネルp10の実装
         JPanel p10 = new JPanel();
         p10.setLayout(null);
@@ -752,13 +748,13 @@ public class Client extends Clientfunc {
                     e.printStackTrace();
                 }
             } else {
-                gui(frame, in, out, sc);
+                gui(frame, in, out);
                 break;
             }
         }
     }
 
-    private static void fail_login_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    private static void fail_login_panel(JFrame frame, BufferedReader in, PrintWriter out) throws IOException {
         // パネルp3の実装
         JPanel p3 = new JPanel();
         p3.setLayout(null);
@@ -807,13 +803,13 @@ public class Client extends Clientfunc {
                     e.printStackTrace();
                 }
             } else {
-                gui(frame, in, out, sc);
+                gui(frame, in, out);
                 break;
             }
         }
     }
 
-    private static void succuss_signup_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    private static void succuss_signup_panel(JFrame frame, BufferedReader in, PrintWriter out) throws IOException {
         // パネルp11の実装
         JPanel p11 = new JPanel();
         p11.setLayout(null);
@@ -861,13 +857,13 @@ public class Client extends Clientfunc {
                     e.printStackTrace();
                 }
             } else {
-                gui(frame, in, out, sc);
+                gui(frame, in, out);
                 break;
             }
         }
     }
 
-    private static void fail_signup_panel(JFrame frame, BufferedReader in, PrintWriter out, Scanner sc) throws IOException {
+    private static void fail_signup_panel(JFrame frame, BufferedReader in, PrintWriter out) throws IOException {
         // パネル12の実装
         JPanel p12 = new JPanel();
         p12.setLayout(null);
@@ -916,7 +912,7 @@ public class Client extends Clientfunc {
                     e.printStackTrace();
                 }
             } else {
-                gui(frame, in, out, sc);
+                gui(frame, in, out);
                 break;
             }
         }
