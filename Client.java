@@ -101,6 +101,7 @@ public class Client extends func {
                                     String room_name = in.readLine();// 11
                                     // chat_log.txtを表示
                                     log_panel(frame, room_name, scroll_height, max, min); // ログを表示 p8_1
+
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");

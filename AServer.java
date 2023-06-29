@@ -197,6 +197,9 @@ class AServerThread extends func{
             } catch (NumberFormatException e) { // clientが接続を切った場合
                 System.out.println(Thread.currentThread().getName() + "が切断されました");
                 System.out.println("closing...");
+            } catch (NullPointerException e) { // clientが接続を切った場合
+                System.out.println(Thread.currentThread().getName() + "が切断されました");
+                System.out.println("closing...");
             } catch (SocketException e) { //java.net.SocketException: Connection reset
                 System.out.println(Thread.currentThread().getName() + "が切断されました");
                 System.out.println("closing...");
@@ -213,6 +216,9 @@ class AServerThread extends func{
             }
 
         } catch ( NumberFormatException e ) { // clientが接続を切った場合
+            System.out.println(Thread.currentThread().getName() + "が切断されました");
+            System.out.println("closing...");
+        } catch (NullPointerException e) { // clientが接続を切った場合
             System.out.println(Thread.currentThread().getName() + "が切断されました");
             System.out.println("closing...");
         } catch (SocketException e) { //java.net.SocketException: Connection reset
