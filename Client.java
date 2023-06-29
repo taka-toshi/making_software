@@ -80,12 +80,10 @@ public class Client extends Clientfunc {
                                 Integer max = 0;
                                 Integer min = 0;
                                 while (true) {
+                                    frame.getContentPane().removeAll();// パネルを取り除く
                                     if(! isMac){
                                         // frameのlayoutを初期化
                                         frame.setLayout(null);
-                                    }
-                                    frame.getContentPane().removeAll();// パネルを取り除く
-                                    if(! isMac){
                                         // frameにBorderLayoutを設定
                                         frame.setLayout(new BorderLayout());
                                     }
