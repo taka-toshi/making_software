@@ -4,6 +4,7 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.Rectangle;
 import java.awt.event.*;
+import java.awt.Component;
 
 public class Client extends func {
     public static void main(String[] args) throws IOException {
@@ -95,18 +96,7 @@ public class Client extends func {
                                     JLabel label_chat_success = new JLabel(join_message);
                                     String room_name = in.readLine();// 11
                                     // chat_log.txtを表示
-                                    JTextArea text = new JTextArea();// テキスト表示領域を作成
-                                    text.setEditable(false);//textの編集不可設定
-                                    ReadFromTextFile(text,room_name);
-                                    JScrollPane scroll = new JScrollPane();//スクロールバーを追加
-                                    scroll.getViewport().setView(text);
-                                    JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
-                                    if (max == 0){
-                                        max = verticalScrollBar.getMaximum();
-                                    }
-                                    verticalScrollBar.setMaximum(max);
-                                    verticalScrollBar.setMinimum(min);
-                                    verticalScrollBar.setValue(scroll_height);
+                                    log_panel(p8, room_name, scroll_height, max, min); // ログを表示
 
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
@@ -149,7 +139,7 @@ public class Client extends func {
                                     
                                     
                                     
-                                    scroll.setBounds(100, 35, 800, 310);
+                                    //scroll.setBounds(100, 35, 800, 310);
                                     label_chat_success.setBounds(400, 10, 800, 25);
                                     label_messagelabel.setBounds(300, 350, 200,25);
                                     label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -158,7 +148,7 @@ public class Client extends func {
                                     quit_btn.setBounds(500, 400, 60,25);
                                     load_btn.setBounds(420, 400, 60, 25);
                                     p8.add(label_chat_success);
-                                    p8.add(scroll);
+                                    //p8.add(scroll);
                                     p8.add(label_messagelabel);
                                     p8.add(tf_message);
                                     p8.add(send_btn);
@@ -182,7 +172,16 @@ public class Client extends func {
                                                 Thread.sleep(100);
                                                 // ======================================
                                                 // 現在のスクロールの状態を取得
-                                                
+                                                JScrollPane scroll = null;
+                                                // frameのp8パネルのJScrollPane scrollを取得する
+                                                JPanel p8_tmp = (JPanel) frame.getContentPane().getComponents()[0];
+                                                Component[] components = p8_tmp.getComponents();
+                                                for (Component component : components) {
+                                                    if (component instanceof JScrollPane) {
+                                                        scroll = (JScrollPane) component;
+                                                    }
+                                                }
+                                                JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
                                                 max = verticalScrollBar.getMaximum();
                                                 min = verticalScrollBar.getMinimum();
                                                 scroll_height = verticalScrollBar.getValue();
@@ -892,6 +891,26 @@ public class Client extends func {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void log_panel(JPanel p8 , String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
+        // chat_log.txtを表示
+        JTextArea text = new JTextArea();// テキスト表示領域を作成
+        text.setEditable(false);//textの編集不可設定
+        ReadFromTextFile(text,room_name);
+        JScrollPane scroll = new JScrollPane();//スクロールバーを追加
+        scroll.getViewport().setView(text);
+
+        JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
+        if (max == 0){
+            max = verticalScrollBar.getMaximum();
+        }
+        verticalScrollBar.setMaximum(max);
+        verticalScrollBar.setMinimum(min);
+        verticalScrollBar.setValue(scroll_height);
+        scroll.setBounds(100, 35, 800, 310);
+        //scroll.setBounds(300, 10, 500, 300);
+        p8.add(scroll);
     }
 
 }
