@@ -909,7 +909,6 @@ public class Client extends func {
         verticalScrollBar.setMinimum(min);
         verticalScrollBar.setValue(scroll_height);
         scroll.setBounds(100, 35, 800, 310);
-        //scroll.setBounds(300, 10, 500, 300);
         p8.add(scroll);
     }
 
