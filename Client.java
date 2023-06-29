@@ -78,6 +78,9 @@ public class Client extends func {
                             JOIN = Boolean.parseBoolean(in.readLine());// 10.5
 
                             if (JOIN == true) {// チャットルームに参加できたとき
+                                Integer scroll_height = 0;
+                                Integer max = 0;
+                                Integer min = 0;
                                 while (true) {
 
                                     frame.getContentPane().removeAll();// パネルを取り除く
@@ -97,7 +100,13 @@ public class Client extends func {
                                     ReadFromTextFile(text,room_name);
                                     JScrollPane scroll = new JScrollPane();//スクロールバーを追加
                                     scroll.getViewport().setView(text);
-
+                                    JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
+                                    if (max == 0){
+                                        max = verticalScrollBar.getMaximum();
+                                    }
+                                    verticalScrollBar.setMaximum(max);
+                                    verticalScrollBar.setMinimum(min);
+                                    verticalScrollBar.setValue(scroll_height);
 
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
@@ -135,11 +144,12 @@ public class Client extends func {
                                         }
                                     });
                                     tf_message.setColumns(10);
+                                    
+                                    
+                                    
+                                    
+                                    
                                     scroll.setBounds(100, 35, 800, 310);
-                                    
-                                    
-                                    
-                                    
                                     label_chat_success.setBounds(400, 10, 800, 25);
                                     label_messagelabel.setBounds(300, 350, 200,25);
                                     label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -170,6 +180,13 @@ public class Client extends func {
                                         }else{
                                             try {
                                                 Thread.sleep(100);
+                                                // ======================================
+                                                // 現在のスクロールの状態を取得
+                                                
+                                                max = verticalScrollBar.getMaximum();
+                                                min = verticalScrollBar.getMinimum();
+                                                scroll_height = verticalScrollBar.getValue();
+                                                // ======================================
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
