@@ -127,7 +127,7 @@ class AServerThread extends func{
 
                                                 String message = in.readLine();// 12
 
-                                                if (!(message.equals(""))){ // 空の送信を拒否
+                                                if (!(message.equals(""))){
                                                     String chat_log_data = username + " : " +message;
                                                     chat_log_writer.println(chat_log_data);
                                                 }
@@ -136,6 +136,8 @@ class AServerThread extends func{
 
                                                 if (message.equals("END")) {
                                                     break;
+                                                //}else if (message.equals("LOAD")){
+                                                    //break;
                                                 }
                                             }
 
@@ -195,6 +197,9 @@ class AServerThread extends func{
             } catch (NumberFormatException e) { // clientが接続を切った場合
                 System.out.println(Thread.currentThread().getName() + "が切断されました");
                 System.out.println("closing...");
+            } catch (NullPointerException e) { // clientが接続を切った場合
+                System.out.println(Thread.currentThread().getName() + "が切断されました");
+                System.out.println("closing...");
             } catch (SocketException e) { //java.net.SocketException: Connection reset
                 System.out.println(Thread.currentThread().getName() + "が切断されました");
                 System.out.println("closing...");
@@ -211,6 +216,9 @@ class AServerThread extends func{
             }
 
         } catch ( NumberFormatException e ) { // clientが接続を切った場合
+            System.out.println(Thread.currentThread().getName() + "が切断されました");
+            System.out.println("closing...");
+        } catch (NullPointerException e) { // clientが接続を切った場合
             System.out.println(Thread.currentThread().getName() + "が切断されました");
             System.out.println("closing...");
         } catch (SocketException e) { //java.net.SocketException: Connection reset

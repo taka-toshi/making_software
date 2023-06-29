@@ -81,31 +81,45 @@ public class Client extends func {
                             JOIN = Boolean.parseBoolean(in.readLine());// 10.5
 
                             if (JOIN == true) {// チャットルームに参加できたとき
+                                Boolean isMac = System.getProperty("os.name").toLowerCase().startsWith("mac");
                                 Integer scroll_height = 0;
                                 Integer max = 0;
                                 Integer min = 0;
                                 while (true) {
-                                    // frameのlayoutを初期化
-                                    frame.setLayout(null);
+                                    if(! isMac){
+                                        // frameのlayoutを初期化
+                                        frame.setLayout(null);
+                                    }
                                     frame.getContentPane().removeAll();// パネルを取り除く
-                                    // frameにBorderLayoutを設定
-                                    frame.setLayout(new BorderLayout());
+                                    if(! isMac){
+                                        // frameにBorderLayoutを設定
+                                        frame.setLayout(new BorderLayout());
+                                    }
 
                                     Boolean chat_option []= { null };
                                     Boolean quit_option []= { null };
+                                    Boolean load_option []= { null }; // mac is used
 
                                     JPanel p8 = new JPanel();
                                     p8.setLayout(null);
+
+                                    JLabel label_chat_success = new JLabel(join_message); // mac is used
                                     String room_name = in.readLine();// 11
-                                    // スクロールバーを設定
-                                    log_panel(frame, username, room_name, scroll_height, max, min); // ログを表示 p8_1
-                                    //JLabel label_chat_success = new JLabel(join_message);
+                                    // chat_log.txtを表示
+                                    if (isMac){
+                                        log_panel(p8, username, room_name, scroll_height, max, min); // ログを表示
+                                    } else {
+                                        log_panel(frame, username, room_name, scroll_height, max, min); // ログを表示 p8_1
+                                    }
+
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");
                                     send_btn.setMnemonic(KeyEvent.VK_S);
                                     JButton quit_btn = new JButton("QUIT");
                                     quit_btn.setMnemonic(KeyEvent.VK_Q);
+                                    JButton load_btn = new JButton("LOAD"); // mac is used
+                                    load_btn.setMnemonic(KeyEvent.VK_L); // mac is used
 
 
                                     send_btn.addActionListener(new ActionListener() {
@@ -126,26 +140,42 @@ public class Client extends func {
                                         }
                                     });
 
+                                    if (isMac){
+                                        load_btn.addActionListener(new ActionListener() {
+                                            public void actionPerformed(ActionEvent e) {
+                                                out.println("");//12
+                                                load_option[0] = true;
+                                            }
+                                        });
+                                    }
                                     tf_message.setColumns(10);
-                                    p8.setLayout(new BorderLayout());
-                                    p8.add(label_messagelabel, BorderLayout.WEST);
-                                    p8.add(tf_message, BorderLayout.CENTER);
-                                    p8.add(send_btn, BorderLayout.EAST);
-                                    p8.add(quit_btn, BorderLayout.SOUTH);
-                                    //label_messagelabel.setBounds(300, 350, 200,25);
-                                    //label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
-                                    //tf_message.setBounds(500, 350, 200,25);
-                                    //send_btn.setBounds(700, 350, 60,25);
-                                    //quit_btn.setBounds(500, 400, 60,25);
-                                    ////label_chat_success.setBounds(400, 10, 800, 25);
-                                    //p8.add(label_messagelabel);
-                                    //p8.add(tf_message);
-                                    //p8.add(send_btn);
-                                    //p8.add(quit_btn);
-                                    ////p8.add(label_chat_success);
-
-                                    frame.getContentPane().add(p8, BorderLayout.SOUTH);
-                                    //frame.add(p8);
+                                    if(! isMac){
+                                        p8.setLayout(new BorderLayout());
+                                        p8.add(label_messagelabel, BorderLayout.WEST);
+                                        p8.add(tf_message, BorderLayout.CENTER);
+                                        p8.add(send_btn, BorderLayout.EAST);
+                                        p8.add(quit_btn, BorderLayout.SOUTH);
+                                    } else {
+                                        //scroll.setBounds(100, 35, 800, 310);
+                                        label_chat_success.setBounds(400, 10, 800, 25);
+                                        label_messagelabel.setBounds(300, 350, 200,25);
+                                        label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
+                                        tf_message.setBounds(500, 350, 200,25);
+                                        send_btn.setBounds(700, 350, 60,25);
+                                        quit_btn.setBounds(500, 400, 60,25);
+                                        load_btn.setBounds(420, 400, 60, 25);
+                                        p8.add(label_chat_success);
+                                        // p8.add(scroll);
+                                        p8.add(label_messagelabel);
+                                        p8.add(tf_message);
+                                        p8.add(send_btn);
+                                        p8.add(quit_btn);
+                                        p8.add(load_btn);
+                                        frame.add(p8);
+                                    }
+                                    if (! isMac){
+                                        frame.getContentPane().add(p8, BorderLayout.SOUTH);
+                                    }
                                     frame.setVisible(true);
                                     tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
                                     frame.validate();
@@ -156,16 +186,27 @@ public class Client extends func {
                                             break;
                                         }else if (quit_option [0] != null){
                                             break;
+                                        }else if (isMac && load_option [0] != null){
+                                            break;
                                         }else{
                                             try {
-                                                // out.println("");// 12 // 必要ない
-                                                Thread.sleep(1000);
+                                                if (isMac){
+                                                    Thread.sleep(100);
+                                                } else {
+                                                    Thread.sleep(1000);
+                                                }
                                                 // ======================================
                                                 // 現在のスクロールの状態を取得
                                                 JScrollPane scroll = null;
-                                                // frameのcenterのp8_1パネルのセンターのJScrollPane scrollを取得する
-                                                JPanel p8_1 = (JPanel) frame.getContentPane().getComponent(0);
-                                                Component[] components = p8_1.getComponents();
+                                                JPanel p8_tmp = null;
+                                                if (isMac) {
+                                                    // frameのp8パネルのJScrollPane scrollを取得する
+                                                    p8_tmp = (JPanel) frame.getContentPane().getComponents()[0];
+                                                } else {
+                                                    // frameのcenterのp8_1パネルのセンターのJScrollPane scrollを取得する
+                                                    p8_tmp = (JPanel) frame.getContentPane().getComponent(0);
+                                                }
+                                                Component[] components = p8_tmp.getComponents();
                                                 for (Component component : components) {
                                                     if (component instanceof JScrollPane) {
                                                         scroll = (JScrollPane) component;
@@ -177,19 +218,21 @@ public class Client extends func {
                                                 scroll_height = verticalScrollBar.getValue();
                                                 // ======================================
 
-                                                frame.getContentPane().removeAll();// パネルを取り除く
-                                                log_panel(frame,username, room_name,scroll_height, max, min); // ログを表示 p8_1
+                                                if (! isMac) {
+                                                    frame.getContentPane().removeAll();// パネルを取り除く
+                                                    log_panel(frame,username, room_name,scroll_height, max, min); // ログを表示 p8_1
 
-                                                frame.getContentPane().add(p8, BorderLayout.SOUTH);
-                                                frame.setVisible(true);
-                                                tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
-                                                frame.validate();
-                                                frame.repaint();// 画面を書き直す
+                                                    frame.getContentPane().add(p8, BorderLayout.SOUTH);
+                                                    frame.setVisible(true);
+                                                    tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
+                                                    frame.validate();
+                                                    frame.repaint();// 画面を書き直す
+                                                }
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
                                         }
-                                        
+
                                     }
 
                                     if(quit_option[0] != null){
@@ -898,9 +941,29 @@ public class Client extends func {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // return;
     }
 
+    // this function is for mac
+    private static void log_panel(JPanel p8 ,String username, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
+        // chat_log.txtを表示
+        JTextArea text = new JTextArea();// テキスト表示領域を作成
+        text.setEditable(false);//textの編集不可設定
+        ReadFromTextFile(text,username,room_name);
+        JScrollPane scroll = new JScrollPane();//スクロールバーを追加
+        scroll.getViewport().setView(text);
+
+        JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
+        if (max == 0){
+            max = verticalScrollBar.getMaximum();
+        }
+        verticalScrollBar.setMaximum(max);
+        verticalScrollBar.setMinimum(min);
+        verticalScrollBar.setValue(scroll_height);
+        scroll.setBounds(100, 35, 800, 310);
+        p8.add(scroll);
+    }
+
+    // this function is for linux
     private static void log_panel(JFrame frame,String username, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
         JPanel p8_1 = new JPanel();
         p8_1.setLayout(null);
@@ -921,8 +984,6 @@ public class Client extends func {
 
         p8_1.setLayout(new BorderLayout());
         p8_1.add(scroll, BorderLayout.CENTER);
-        //scroll.setBounds(300, 10, 500, 300); // 上2行の代わりにこれでもOK
-        //p8_1.add(scroll);
         frame.getContentPane().add(p8_1, BorderLayout.CENTER);
     }
 
