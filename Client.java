@@ -4,6 +4,7 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.Rectangle;
 import java.awt.event.*;
+import java.awt.BorderLayout;
 import java.awt.Component;
 
 public class Client extends func {
@@ -79,24 +80,36 @@ public class Client extends func {
                             JOIN = Boolean.parseBoolean(in.readLine());// 10.5
 
                             if (JOIN == true) {// チャットルームに参加できたとき
+                                Boolean isMac = System.getProperty("os.name").toLowerCase().startsWith("mac");
                                 Integer scroll_height = 0;
                                 Integer max = 0;
                                 Integer min = 0;
                                 while (true) {
-
+                                    if(! isMac){
+                                        // frameのlayoutを初期化
+                                        frame.setLayout(null);
+                                    }
                                     frame.getContentPane().removeAll();// パネルを取り除く
+                                    if(! isMac){
+                                        // frameにBorderLayoutを設定
+                                        frame.setLayout(new BorderLayout());
+                                    }
 
                                     Boolean chat_option []= { null };
                                     Boolean quit_option []= { null };
-                                    Boolean load_option []= { null };
+                                    Boolean load_option []= { null }; // mac is used
 
                                     JPanel p8 = new JPanel();
                                     p8.setLayout(null);
 
-                                    JLabel label_chat_success = new JLabel(join_message);
+                                    JLabel label_chat_success = new JLabel(join_message); // mac is used
                                     String room_name = in.readLine();// 11
                                     // chat_log.txtを表示
-                                    log_panel(p8, room_name, scroll_height, max, min); // ログを表示
+                                    if (isMac){
+                                        log_panel(p8, room_name, scroll_height, max, min); // ログを表示
+                                    } else {
+                                        log_panel(frame, room_name, scroll_height, max, min); // ログを表示
+                                    }
 
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
@@ -104,8 +117,8 @@ public class Client extends func {
                                     send_btn.setMnemonic(KeyEvent.VK_S);
                                     JButton quit_btn = new JButton("QUIT");
                                     quit_btn.setMnemonic(KeyEvent.VK_Q);
-                                    JButton load_btn = new JButton("LOAD");
-                                    load_btn.setMnemonic(KeyEvent.VK_L);
+                                    JButton load_btn = new JButton("LOAD"); // mac is used
+                                    load_btn.setMnemonic(KeyEvent.VK_L); // mac is used
 
 
                                     send_btn.addActionListener(new ActionListener() {
@@ -126,35 +139,42 @@ public class Client extends func {
                                         }
                                     });
 
-                                    load_btn.addActionListener(new ActionListener() {
-                                        public void actionPerformed(ActionEvent e) {
-                                            out.println("");//12
-                                    
-                                            load_option[0] = true;
-                                        }
-                                    });
+                                    if (isMac){
+                                        load_btn.addActionListener(new ActionListener() {
+                                            public void actionPerformed(ActionEvent e) {
+                                                out.println("");//12
+                                                load_option[0] = true;
+                                            }
+                                        });
+                                    }
                                     tf_message.setColumns(10);
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    //scroll.setBounds(100, 35, 800, 310);
-                                    label_chat_success.setBounds(400, 10, 800, 25);
-                                    label_messagelabel.setBounds(300, 350, 200,25);
-                                    label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
-                                    tf_message.setBounds(500, 350, 200,25);
-                                    send_btn.setBounds(700, 350, 60,25);
-                                    quit_btn.setBounds(500, 400, 60,25);
-                                    load_btn.setBounds(420, 400, 60, 25);
-                                    p8.add(label_chat_success);
-                                    //p8.add(scroll);
-                                    p8.add(label_messagelabel);
-                                    p8.add(tf_message);
-                                    p8.add(send_btn);
-                                    p8.add(quit_btn);
-                                    p8.add(load_btn);
-                                    frame.add(p8);
+                                    if(! isMac){
+                                        p8.setLayout(new BorderLayout());
+                                        p8.add(label_messagelabel, BorderLayout.WEST);
+                                        p8.add(tf_message, BorderLayout.CENTER);
+                                        p8.add(send_btn, BorderLayout.EAST);
+                                        p8.add(quit_btn, BorderLayout.SOUTH);
+                                    } else {
+                                        //scroll.setBounds(100, 35, 800, 310);
+                                        label_chat_success.setBounds(400, 10, 800, 25);
+                                        label_messagelabel.setBounds(300, 350, 200,25);
+                                        label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
+                                        tf_message.setBounds(500, 350, 200,25);
+                                        send_btn.setBounds(700, 350, 60,25);
+                                        quit_btn.setBounds(500, 400, 60,25);
+                                        load_btn.setBounds(420, 400, 60, 25);
+                                        p8.add(label_chat_success);
+                                        // p8.add(scroll);
+                                        p8.add(label_messagelabel);
+                                        p8.add(tf_message);
+                                        p8.add(send_btn);
+                                        p8.add(quit_btn);
+                                        p8.add(load_btn);
+                                        frame.add(p8);
+                                    }
+                                    if (! isMac){
+                                        frame.getContentPane().add(p8, BorderLayout.SOUTH);
+                                    }
                                     frame.setVisible(true);
                                     tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
                                     frame.validate();
@@ -165,16 +185,26 @@ public class Client extends func {
                                             break;
                                         }else if (quit_option [0] != null){
                                             break;
-                                        }else if (load_option [0] != null){
+                                        }else if (isMac && load_option [0] != null){
                                             break;
                                         }else{
                                             try {
-                                                Thread.sleep(100);
+                                                if (isMac){
+                                                    Thread.sleep(100);
+                                                } else {
+                                                    Thread.sleep(1000);
+                                                }
                                                 // ======================================
                                                 // 現在のスクロールの状態を取得
                                                 JScrollPane scroll = null;
-                                                // frameのp8パネルのJScrollPane scrollを取得する
-                                                JPanel p8_tmp = (JPanel) frame.getContentPane().getComponents()[0];
+                                                JPanel p8_tmp = null;
+                                                if (isMac) {
+                                                    // frameのp8パネルのJScrollPane scrollを取得する
+                                                    p8_tmp = (JPanel) frame.getContentPane().getComponents()[0];
+                                                } else {
+                                                    // frameのcenterのp8_1パネルのセンターのJScrollPane scrollを取得する
+                                                    p8_tmp = (JPanel) frame.getContentPane().getComponent(0);
+                                                }
                                                 Component[] components = p8_tmp.getComponents();
                                                 for (Component component : components) {
                                                     if (component instanceof JScrollPane) {
@@ -186,6 +216,17 @@ public class Client extends func {
                                                 min = verticalScrollBar.getMinimum();
                                                 scroll_height = verticalScrollBar.getValue();
                                                 // ======================================
+
+                                                if (! isMac) {
+                                                    frame.getContentPane().removeAll();// パネルを取り除く
+                                                    log_panel(frame, room_name,scroll_height, max, min); // ログを表示 p8_1
+
+                                                    frame.getContentPane().add(p8, BorderLayout.SOUTH);
+                                                    frame.setVisible(true);
+                                                    tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
+                                                    frame.validate();
+                                                    frame.repaint();// 画面を書き直す
+                                                }
                                             } catch (InterruptedException e) {
                                                 e.printStackTrace();
                                             }
@@ -910,6 +951,29 @@ public class Client extends func {
         verticalScrollBar.setValue(scroll_height);
         scroll.setBounds(100, 35, 800, 310);
         p8.add(scroll);
+    }
+
+    private static void log_panel(JFrame frame, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
+        JPanel p8_1 = new JPanel();
+        p8_1.setLayout(null);
+        // chat_log.txtを表示
+        JTextArea text = new JTextArea();// テキスト表示領域を作成
+        text.setEditable(false);//textの編集不可設定
+        ReadFromTextFile(text,room_name);
+        JScrollPane scroll = new JScrollPane();//スクロールバーを追加
+        scroll.getViewport().setView(text);
+
+        JScrollBar verticalScrollBar = scroll.getVerticalScrollBar();
+        if (max == 0){
+            max = verticalScrollBar.getMaximum();
+        }
+        verticalScrollBar.setMaximum(max);
+        verticalScrollBar.setMinimum(min);
+        verticalScrollBar.setValue(scroll_height);
+
+        p8_1.setLayout(new BorderLayout());
+        p8_1.add(scroll, BorderLayout.CENTER);
+        frame.getContentPane().add(p8_1, BorderLayout.CENTER);
     }
 
 }
