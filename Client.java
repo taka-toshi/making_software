@@ -898,7 +898,7 @@ public class Client extends func {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return;
+        // return;
     }
 
     private static void log_panel(JFrame frame,String username, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
