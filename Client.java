@@ -92,19 +92,23 @@ public class Client extends func {
 
                                     Boolean chat_option []= { null };
                                     Boolean quit_option []= { null };
+                                    // Boolean load_option []= { null };
 
                                     JPanel p8 = new JPanel();
                                     p8.setLayout(null);
-                                    String room_name = in.readLine();// 11
-                                    // スクロールバーを設定
-                                    log_panel(frame, room_name, scroll_height, max, min); // ログを表示 p8_1
+
                                     //JLabel label_chat_success = new JLabel(join_message);
+                                    String room_name = in.readLine();// 11
+                                    // chat_log.txtを表示
+                                    log_panel(frame, room_name, scroll_height, max, min); // ログを表示 p8_1
                                     JLabel label_messagelabel = new JLabel("メッセージ：");
                                     JTextField tf_message = new JTextField();
                                     JButton send_btn = new JButton("SEND");
                                     send_btn.setMnemonic(KeyEvent.VK_S);
                                     JButton quit_btn = new JButton("QUIT");
                                     quit_btn.setMnemonic(KeyEvent.VK_Q);
+                                    //JButton load_btn = new JButton("LOAD");
+                                    //load_btn.setMnemonic(KeyEvent.VK_L);
 
 
                                     send_btn.addActionListener(new ActionListener() {
@@ -125,26 +129,35 @@ public class Client extends func {
                                         }
                                     });
 
+                                    //load_btn.addActionListener(new ActionListener() {
+                                    //    public void actionPerformed(ActionEvent e) {
+                                    //        out.println("");//12
+                                    //
+                                    //        load_option[0] = true;
+                                    //    }
+                                    //});
                                     tf_message.setColumns(10);
                                     p8.setLayout(new BorderLayout());
                                     p8.add(label_messagelabel, BorderLayout.WEST);
                                     p8.add(tf_message, BorderLayout.CENTER);
                                     p8.add(send_btn, BorderLayout.EAST);
                                     p8.add(quit_btn, BorderLayout.SOUTH);
+                                    //label_chat_success.setBounds(400, 10, 800, 25);
                                     //label_messagelabel.setBounds(300, 350, 200,25);
                                     //label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
                                     //tf_message.setBounds(500, 350, 200,25);
                                     //send_btn.setBounds(700, 350, 60,25);
                                     //quit_btn.setBounds(500, 400, 60,25);
-                                    ////label_chat_success.setBounds(400, 10, 800, 25);
+                                    //load_btn.setBounds(420, 400, 60, 25);
+                                    //p8.add(label_chat_success);
+                                    //p8.add(scroll);
                                     //p8.add(label_messagelabel);
                                     //p8.add(tf_message);
                                     //p8.add(send_btn);
                                     //p8.add(quit_btn);
-                                    ////p8.add(label_chat_success);
-
-                                    frame.getContentPane().add(p8, BorderLayout.SOUTH);
+                                    //p8.add(load_btn);
                                     //frame.add(p8);
+                                    frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                     frame.setVisible(true);
                                     tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
                                     frame.validate();
@@ -157,7 +170,6 @@ public class Client extends func {
                                             break;
                                         }else{
                                             try {
-                                                // out.println("");// 12 // 必要ない
                                                 Thread.sleep(1000);
                                                 // ======================================
                                                 // 現在のスクロールの状態を取得
