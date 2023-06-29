@@ -24,8 +24,7 @@ public class func extends Thread {
         try {
             Process p = Runtime.getRuntime().exec(cmd);
             p.waitFor();
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(p.getInputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
                 data.add(line);
@@ -50,7 +49,7 @@ public class func extends Thread {
         execute_sql(db, sql);
     }
 
-    // add user to database
+    // add user and password to database
     public static void add_user(File db, String username, String password) {
         String sql = "INSERT INTO userstable(username,password) VALUES ('" +
                 username +
@@ -69,10 +68,7 @@ public class func extends Thread {
     }
 
     // login user
-    public static List<String> login_user(
-            File db,
-            String username,
-            String password) {
+    public static List<String> login_user(File db,String username,String password) {
         String sql = "SELECT * FROM userstable WHERE username = '" +
                 username +
                 "' AND password = '" +
@@ -112,13 +108,5 @@ public class func extends Thread {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static Boolean checkname(String name){
-        if (name.contains("\\") || name.contains("/") || name.contains(":")|| name.contains("*") || name.contains("?")|| name.contains("\"") || name.contains("<")|| name.contains(">") || name.contains("|")){
-            return false;
-        }else{
-            return true;
-            }
     }
 }
