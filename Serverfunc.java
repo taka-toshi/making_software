@@ -7,13 +7,18 @@ public class Serverfunc extends Thread {
     // execute sql
     public static void execute_sql(File db, String sql) {
         String[] cmd = { "sqlite3", db.getAbsolutePath(), sql };
+        Process p = null;
         try {
-            Process p = Runtime.getRuntime().exec(cmd);
+            p = Runtime.getRuntime().exec(cmd);
             p.waitFor();
         } catch (IOException e) {
             System.out.println(e);
         } catch (InterruptedException e) {
             System.out.println(e);
+        } finally {
+            if (p != null) {
+                p.destroy();
+            }
         }
     }
 
@@ -21,8 +26,9 @@ public class Serverfunc extends Thread {
     public static List<String> execute_sql_return_data(File db, String sql) {
         List<String> data = new ArrayList<String>();
         String[] cmd = { "sqlite3", db.getAbsolutePath(), sql };
+        Process p = null;
         try {
-            Process p = Runtime.getRuntime().exec(cmd);
+            p = Runtime.getRuntime().exec(cmd);
             p.waitFor();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line;
@@ -33,6 +39,10 @@ public class Serverfunc extends Thread {
             System.out.println(e);
         } catch (InterruptedException e) {
             System.out.println(e);
+        } finally {
+            if (p != null) {
+                p.destroy();
+            }
         }
         return data;
     }
