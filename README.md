@@ -1,6 +1,6 @@
 # making_software
 
-This repository is made as part of university coursework. So it is **NOT** expected to be used in <u>real life</u> **INCLUDING** for <u>commercial purpose</u>.
+This repository is made as part of university coursework. So it is **NOT** expected to be used in *real life* **INCLUDING** for *commercial purpose*.
 
 ***
 ## Requirement
