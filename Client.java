@@ -68,9 +68,7 @@ public class Client extends Clientfunc {
                         } else if (option2[0] == 2) {// 2. 既存に参加
                             frame.getContentPane().removeAll();// パネルを取り除く
 
-                            //String get_room_name [] = { null};
-
-                            join_chat_panel(frame, out/* , get_room_name*/); // チャットルームの参加のパネルを表示 p7
+                            join_chat_panel(frame, out); // チャットルームの参加のパネルを表示 p7
 
                             String join_message = in.readLine();// 10
                             Boolean JOIN = false;
@@ -139,14 +137,6 @@ public class Client extends Clientfunc {
                                         }
                                     });
 
-                                    if (isMac){
-                                        load_btn.addActionListener(new ActionListener() {
-                                            public void actionPerformed(ActionEvent e) {
-                                                out.println("");//12
-                                                load_option[0] = true;
-                                            }
-                                        });
-                                    }
                                     tf_message.setColumns(10);
                                     if(! isMac){
                                         p8.setLayout(new BorderLayout());
@@ -154,8 +144,14 @@ public class Client extends Clientfunc {
                                         p8.add(tf_message, BorderLayout.CENTER);
                                         p8.add(send_btn, BorderLayout.EAST);
                                         p8.add(quit_btn, BorderLayout.SOUTH);
+                                        frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                     } else {
-                                        //scroll.setBounds(100, 35, 800, 310);
+                                        load_btn.addActionListener(new ActionListener() {
+                                            public void actionPerformed(ActionEvent e) {
+                                                out.println("");//12
+                                                load_option[0] = true;
+                                            }
+                                        });
                                         label_chat_success.setBounds(400, 10, 800, 25);
                                         label_messagelabel.setBounds(300, 350, 200,25);
                                         label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -164,16 +160,12 @@ public class Client extends Clientfunc {
                                         quit_btn.setBounds(500, 400, 60,25);
                                         load_btn.setBounds(420, 400, 60, 25);
                                         p8.add(label_chat_success);
-                                        // p8.add(scroll);
                                         p8.add(label_messagelabel);
                                         p8.add(tf_message);
                                         p8.add(send_btn);
                                         p8.add(quit_btn);
                                         p8.add(load_btn);
                                         frame.add(p8);
-                                    }
-                                    if (! isMac){
-                                        frame.getContentPane().add(p8, BorderLayout.SOUTH);
                                     }
                                     frame.setVisible(true);
                                     tf_message.requestFocus(); // メーッセージの入力欄にフォーカスを当てる
@@ -884,11 +876,11 @@ public class Client extends Clientfunc {
     }
 
     // this function is for mac
-    private static void log_panel(JPanel p8 ,String username, String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
+    private static void log_panel(JPanel p8 ,String username,String room_name, Integer scroll_height, Integer max, Integer min) throws IOException {
         // chat_log.txtを表示
         JTextArea text = new JTextArea();// テキスト表示領域を作成
         text.setEditable(false);//textの編集不可設定
-        ReadFromTextFile(text,username,room_name);
+        ReadFromTextFile(text,username,room_name); // 注意 usernameとroom_nameの順番
         JScrollPane scroll = new JScrollPane();//スクロールバーを追加
         scroll.getViewport().setView(text);
 
