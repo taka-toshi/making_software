@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //１つのクライアントと通信を行うスレッド
-class AServerThread extends func{
+class AServerThread extends Serverfunc {
     //static int PORT = 8080; // ポート番号をプログラムの引数で与える
     Socket socket; //このクライアントに対応するソケット
 

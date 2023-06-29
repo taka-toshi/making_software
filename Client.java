@@ -7,7 +7,7 @@ import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.Component;
 
-public class Client extends func {
+public class Client extends Clientfunc {
 
     public static void main(String[] args) throws IOException {
 
