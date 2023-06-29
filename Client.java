@@ -142,6 +142,7 @@ public class Client extends func {
                                     p8.add(tf_message, BorderLayout.CENTER);
                                     p8.add(send_btn, BorderLayout.EAST);
                                     p8.add(quit_btn, BorderLayout.SOUTH);
+                                    //scroll.setBounds(100, 35, 800, 310);
                                     //label_chat_success.setBounds(400, 10, 800, 25);
                                     //label_messagelabel.setBounds(300, 350, 200,25);
                                     //label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -168,6 +169,8 @@ public class Client extends func {
                                             break;
                                         }else if (quit_option [0] != null){
                                             break;
+                                        //}else if (load_option [0] != null){
+                                        //    break;
                                         }else{
                                             try {
                                                 Thread.sleep(1000);
