@@ -589,64 +589,6 @@ public class Client extends Clientfunc {
         }
     }
 
-    /*
-    // chat_optionとquit_optionを返す
-    private static List<Boolean[]> main_chat_panel(JFrame frame, PrintWriter out, String join_message, List<Boolean[]> option3) throws IOException {
-        //Boolean[] chat_option = option3.get(0);
-        //Boolean[] quit_option = option3.get(1);
-        // パネルp8の実装
-        JPanel p8 = new JPanel();
-        p8.setLayout(null);
-
-        JLabel label_chat_success = new JLabel(join_message);
-        // chat_log.txtを表示
-        JLabel label_messagelabel = new JLabel("メッセージ：");
-        JTextField tf_message = new JTextField();
-        JButton send_btn = new JButton("SEND");
-        JButton quit_btn = new JButton("QUIT");
-
-        send_btn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String message = tf_message.getText();
-                out.println(message);// 12
-                //System.out.println(message);
-
-                chat_option[0] = true;
-
-            }
-        });
-
-        quit_btn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                out.println("END");// 12
-
-                quit_option[0] = true;
-            }
-        });
-
-        tf_message.setColumns(10);
-        label_chat_success.setBounds(400, 10, 800, 25);
-        label_messagelabel.setBounds(300, 350, 200,25);
-        label_messagelabel.setHorizontalAlignment(JLabel.RIGHT);
-        tf_message.setBounds(500, 350, 200,25);
-        send_btn.setBounds(700, 350, 60,25);
-        quit_btn.setBounds(480, 400, 35,25);
-        p8.add(label_chat_success);
-        p8.add(label_messagelabel);
-        p8.add(tf_message);
-        p8.add(send_btn);
-        p8.add(quit_btn);
-        frame.add(p8);
-        frame.setVisible(true);
-        frame.validate();
-        frame.repaint();// 画面を書き直す
-
-        //System.out.println(quit_option[0]);
-        //System.out.println(chat_option[0]);
-        //return Arrays.asList(chat_option, quit_option);
-    }
-    */
-
     private static void fail_join_panel(JFrame frame, String join_message) throws IOException {
         // パネルp9の実装
         JPanel p9 = new JPanel();
