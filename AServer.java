@@ -181,15 +181,10 @@ class AServerThread extends Serverfunc {
                     }
                 }
             /*---------------------------------------------------------------------------------------- */
-            } catch (NumberFormatException e) { // clientが接続を切った場合
+            } catch (NumberFormatException | NullPointerException e) { // clientが接続を切った場合
                 System.out.println(Thread.currentThread().getName() + "が切断されました");
-                System.out.println("closing...");
-            } catch (NullPointerException e) { // clientが接続を切った場合
-                System.out.println(Thread.currentThread().getName() + "が切断されました");
-                System.out.println("closing...");
             } catch (SocketException e) { //java.net.SocketException: Connection reset
                 System.out.println(Thread.currentThread().getName() + "が切断されました");
-                System.out.println("closing...");
             } catch (IOException e) {
                 System.err.println(e);
             } finally {
@@ -202,15 +197,10 @@ class AServerThread extends Serverfunc {
                 //return; //スレッド消滅
             }
 
-        } catch ( NumberFormatException e ) { // clientが接続を切った場合
+        } catch ( NumberFormatException | NullPointerException e ) { // clientが接続を切った場合
             System.out.println(Thread.currentThread().getName() + "が切断されました");
-            System.out.println("closing...");
-        } catch (NullPointerException e) { // clientが接続を切った場合
-            System.out.println(Thread.currentThread().getName() + "が切断されました");
-            System.out.println("closing...");
         } catch (SocketException e) { //java.net.SocketException: Connection reset
             System.out.println(Thread.currentThread().getName() + "が切断されました");
-            System.out.println("closing...");
         } catch (IOException e) {
             System.err.println(e);
         } finally {
