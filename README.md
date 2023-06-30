@@ -2,28 +2,24 @@
 
 This repository is made as part of university coursework. So it is **NOT** expected to be used in *real life* **INCLUDING** for *commercial purpose*.
 
-***
 ## Requirement
 
 - sqlite3
 
-***
 ## Supported OS
 
 - Linux ( including WSL )
 
 - Mac
 
-***
 ## Installation
 
-~~~
+~~~ bash
 git clone https://github.com/taka-toshi/making_software.git
 ~~~
 
-***
 ## Execution
-~~~
+~~~ bash
 make
 java AServer
 java Client
@@ -31,7 +27,6 @@ java Client
 
 "java FileServer" is called by `AServer.java`
 
-***
 ## makefile
 
 - make
@@ -56,9 +51,30 @@ java Client
   - `client/*`
   - `*.db` : Server-side database
 
-***
 ## Files created as needed
 
 - `database.db` : Server-side database
 - `*_log.txt` : Server-side chat log file
 - `client/*` : Client-side chat log file's directory
+
+## Error
+
+If you get the following error, there are two possible reasons.
+~~~ shell-session
+java.net.ConnectException : Connection refused
+~~~
+
+1. local host's port(8080 or 8070) is already in use.
+
+2. This is known issue on particular OS. This error can be fixed by following steps.
+  * First, comment out line 223 of `AServer.java`.
+  ~~~ java
+  //Runtime.getRuntime().exec("java FileServer");
+  ~~~
+  * Then, `AServer.java` compile again by `make`.
+  * Finally, executing the following command.
+  ~~~ bash
+    java AServer
+    java FileServer
+    java Client
+  ~~~
