@@ -66,7 +66,7 @@ java.net.ConnectException : Connection refused
 
 1. local host's port(8080 or 8070) is already in use.
 
-2. This is known issue on particular OS. This error can be fixed by following steps.
+2. This is **known issue** on particular OS. This error can be fixed by following steps.
   * First, comment out line 223 of `AServer.java`.
   ~~~ java
   //Runtime.getRuntime().exec("java FileServer");
