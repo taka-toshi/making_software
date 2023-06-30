@@ -5,7 +5,7 @@ public class FileClient {
 
     private final int PORT = 8070;
     private InetAddress addr;
-    private static Socket socket;
+    private static Socket socket = null;
 
     public FileClient() {
         try {
@@ -15,7 +15,7 @@ public class FileClient {
             System.out.println(e);
         }
         // socketがnullなら待つ
-        while (socket == null) {
+        while ( this.socket == null ) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
