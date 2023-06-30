@@ -14,6 +14,14 @@ public class FileClient {
         } catch (IOException e) {
             System.out.println(e);
         }
+        // socketがnullなら待つ
+        while (socket == null) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                //System.out.println(e);
+            }
+        }
     }
 
     public static void request(String fileName,String username) throws IOException {
