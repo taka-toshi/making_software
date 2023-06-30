@@ -19,6 +19,7 @@ git clone https://github.com/taka-toshi/making_software.git
 ~~~
 
 ## Execution
+
 ~~~ bash
 make
 java AServer
@@ -57,24 +58,44 @@ java Client
 - `*_log.txt` : Server-side chat log file
 - `client/*` : Client-side chat log file's directory
 
-## Error
+## Known issues
+
+### Java's error
 
 If you get the following error, there are two possible reasons.
+
 ~~~ shell-session
 java.net.ConnectException : Connection refused
 ~~~
 
 1. local host's port(8080 or 8070) is already in use.
 
-2. This is **known issue** on particular OS. This error can be fixed by following steps.
-  * First, comment out line 223 of `AServer.java`.
-  ~~~ java
-  //Runtime.getRuntime().exec("java FileServer");
-  ~~~
-  * Then, `AServer.java` compile again by `make`.
-  * Finally, executing the following command.
+2. This is **known error** on particular environment(OS, Java version, etc). This error can be fixed by following steps.
+    - First, comment out line 223 of `AServer.java`.
+    ~~~ java
+    //Runtime.getRuntime().exec("java FileServer");
+    ~~~
+    - Then, `AServer.java` compile again by `make`.
+    - Finally, executing the following command.
+    ~~~ bash
+      java AServer
+      java FileServer
+      java Client
+    ~~~
+
+### keyboard input's issue
+
+In WSL, there is sometimes a mismatch between the actual key you are pressing on the keyboard and the character displayed on the screen.
+
+This issue can be fixed by following steps.
+
+  - First, execute Client.java by `java Client`.
+  - Then, interrupt the execution by pressing `<ctrl>-C`.
+  - Next, set the keyboard layout. For example, `setxkbmap -layout jp`
+  - Finally, execute Client.java by `java Client`.
+
   ~~~ bash
-    java AServer
-    java FileServer
-    java Client
+  java Client
+  setxkbmap -layout jp
+  java Client
   ~~~
