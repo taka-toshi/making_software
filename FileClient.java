@@ -24,7 +24,7 @@ public class FileClient {
         }
     }
 
-    public static void request(String fileName,String username) throws IOException {
+    public void request(String fileName,String username) throws IOException {
         // サーバーにファイルの内容をリクエストして受信
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())),true);
         out.println(fileName);
