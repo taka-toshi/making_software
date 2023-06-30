@@ -5,7 +5,7 @@ public class FileClient {
 
     private final int PORT = 8070;
     private InetAddress addr;
-    private static Socket socket = null;
+    private Socket socket = null;
 
     public FileClient() {
         try {
